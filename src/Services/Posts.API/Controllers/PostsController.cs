@@ -17,17 +17,60 @@ namespace Posts.API.Controllers
         {
             _context = context;
         }
+
+        [HttpGet]
+        [Route("/Posts/Get")]
+        public async Task<ActionResult<Post>> Get(int id)
+            => await _context.Post.FirstAsync(p => p.Id == id);
         
-        public async Task<ActionResult<IEnumerable<Post>>> GetPostsByUser(int userId) 
+        [HttpGet]
+        [Route("/Posts/GetByUser")]
+        public async Task<ActionResult<IEnumerable<Post>>> GetByUser(int userId) 
             => await _context.Post.Where(p => p.UserId == userId).ToListAsync();
 
-        public async Task<ActionResult<IEnumerable<Post>>> GetPostsByGroup(int groupId)
+        [HttpGet]
+        [Route("/Posts/GetByGroup")]
+        public async Task<ActionResult<IEnumerable<Post>>> GetByGroup(int groupId)
             => await _context.Post.Where(p => p.GroupId == groupId).ToListAsync();
         
-        public async Task<ActionResult<IEnumerable<Post>>> GetPostsByUserAndGroup(int userId, int groupId)
+        [HttpGet]
+        [Route("/Posts/GetByUserAndGroup")]
+        public async Task<ActionResult<IEnumerable<Post>>> GetByUserAndGroup(int userId, int groupId)
             => await _context
                 .Post
                 .Where(p => p.UserId == userId && p.GroupId == groupId)
                 .ToListAsync();
+
+        [HttpPost]
+        [Route("/Posts/Create")]
+        public async Task Create(int userId, int groupId, string text)
+        {
+            await _context.AddAsync(new Post(userId, groupId, text));
+            await _context.SaveChangesAsync();
+        }
+        
+        [HttpPost]
+        [Route("/Posts/Update")]
+        public async Task Update(int id, string text)
+        {
+            var post = await _context.Post.FirstAsync(p => p.Id == id);
+            post.Text = text;
+            await _context.SaveChangesAsync();
+        }
+
+        [HttpPost]
+        [Route("/Posts/Delete")]
+        public async Task Delete(int id)
+        {
+            var post = await _context
+                .Post
+                .Include(p => p.Comments)
+                .Include(p => p.Files)
+                .FirstAsync(p => p.Id == id);
+            post.Comments.ForEach(c => _context.Comment.Remove(c));
+            post.Files.ForEach(f => _context.File.Remove(f));
+            _context.Post.Remove(post);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 namespace Posts.API.Entities
 {
     public class Post
@@ -11,5 +10,16 @@ namespace Posts.API.Entities
         
         public List<Comment> Comments { get; set; }
         public List<File> Files { get; set; }
+
+        public Post(int userId, int groupId, string text)
+        {
+            UserId = userId;
+            GroupId = groupId;
+            Text = text;
+        }
+        
+        public Post()
+        {
+        }
     }
 }
