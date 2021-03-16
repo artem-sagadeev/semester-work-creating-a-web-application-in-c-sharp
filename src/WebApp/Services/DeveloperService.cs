@@ -55,5 +55,25 @@ namespace WebApp.Services
         {
             throw new System.NotImplementedException();
         }
+
+        public async Task<IEnumerable<CompanyModel>> Get()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<CompanyModel> GetCompany(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<IEnumerable<UserModel>> GetCompanyUsers(int companyId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<IEnumerable<ProjectModel>> GetCompanyProjects(int companyId)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
