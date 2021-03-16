@@ -8,7 +8,6 @@ using FileInfo = Files.API.Entities.FileInfo;
 namespace Files.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class FilesController : Controller
     {
         private readonly IFileRepository _fileRepository;
@@ -18,8 +17,9 @@ namespace Files.API.Controllers
             _fileRepository = fileRepository;
         }
         
-        [HttpGet("{id}")]
-        public async Task<FileResult> GetFileAsync(string id)
+        [HttpGet]
+        [Route("/Files/Get")]
+        public async Task<FileResult> Get(string id)
         {
             var file = await _fileRepository.GetFileAsync(id);
             
@@ -28,7 +28,8 @@ namespace Files.API.Controllers
         }
 
         [HttpPost]
-        public async Task CreateFileAsync(IFormFile uploadedFile)
+        [Route("/Files/Create")]
+        public async Task Create(IFormFile uploadedFile)
         {
             if (uploadedFile == null) return;
             var file = new FileInfo(uploadedFile.FileName, uploadedFile.ContentType);
@@ -40,7 +41,8 @@ namespace Files.API.Controllers
         }
         
         [HttpPost]
-        public async Task DeleteFileAsync(string id)
+        [Route("/Files/Delete")]
+        public async Task Delete(string id)
         {
             await _fileRepository.DeleteFileAsync(id);
         }
