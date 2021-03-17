@@ -7,9 +7,6 @@ namespace Developer.API.Entities
     {
         public int Id { get; set; }
         public string Login { get; set; }
-        
-        public List<Company> OwnedCompanies { get; set; }
-        public List<Project> OwnedProjects { get; set; }
         public List<Project> Projects { get; set; }
         public List<Company> Companies { get; set; }
 

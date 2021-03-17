@@ -1,0 +1,7 @@
+﻿@page
+@model WebApp.Pages.User.Projects
+
+@foreach (var project in Model.ProjectModels)
+{
+    <p><a asp-page="/Project/Details" asp-route-id="@project.Id">@project.Id - @project.Name</a></p>
+}

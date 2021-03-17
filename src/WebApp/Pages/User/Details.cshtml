@@ -1,0 +1,10 @@
+﻿@page
+@model WebApp.Pages.User.Details
+
+<p>
+    @Model.UserModel.Id - @Model.UserModel.Login
+</p>
+<p>
+    <a asp-page="/User/Projects" asp-route-userId="@Model.UserModel.Id">Projects</a>
+    <a asp-page="/User/Companies" asp-route-userId="@Model.UserModel.Id">Companies</a>
+</p>

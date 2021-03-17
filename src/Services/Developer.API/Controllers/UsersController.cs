@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using Developer.API.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -18,26 +19,31 @@ namespace Developer.API.Controllers
 
         [HttpGet]
         [Route("/Users/Get")]
-        public async Task<ActionResult<User>> Get(int id)
-            => await _context.User.FirstAsync(u => u.Id == id);
+        public ActionResult<IEnumerable<User>> Get()
+            => _context.User.ToList();
+        
+        [HttpGet]
+        [Route("/Users/Get/{id}")]
+        public ActionResult<User> Get(int id)
+            => _context.User.First(u => u.Id == id);
 
         [HttpGet]
-        [Route("/Users/GetByCompany")]
-        public async Task<ActionResult<IEnumerable<User>>> GetByCompany(int companyId)
-            => (await _context
-                    .Company
-                    .Include(c => c.Users)
-                    .FirstAsync(c => c.Id == companyId))
-                .Users;
+        [Route("/Users/GetByCompany/{companyId}")]
+        public ActionResult<IEnumerable<User>> GetByCompany(int companyId)
+            => _context
+                .Company
+                .Where(c => c.Id == companyId)
+                .Select(c => c.Users)
+                .First();
 
         [HttpGet]
-        [Route("/Users/GetByProject")]
-        public async Task<ActionResult<IEnumerable<User>>> GetByProject(int projectId)
-            => (await _context
-                    .Project
-                    .Include(p => p.Users)
-                    .FirstAsync(p => p.Id == projectId))
-                .Users;
+        [Route("/Users/GetByProject/{projectId}")]
+        public ActionResult<IEnumerable<User>> GetByProject(int projectId)
+            => _context
+                .Project
+                .Where(p => p.Id == projectId)
+                .Select(p => p.Users)
+                .First();
 
         [HttpPost]
         [Route("/Users/Create")]

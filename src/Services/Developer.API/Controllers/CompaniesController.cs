@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using Developer.API.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Developer.API.Controllers
 {
@@ -17,26 +18,31 @@ namespace Developer.API.Controllers
 
         [HttpGet]
         [Route("/Companies/Get")]
-        public async Task<ActionResult<Company>> Get(int id)
-            => await _context.Company.FirstAsync(c => c.Id == id);
+        public ActionResult<IEnumerable<Company>> Get()
+            => _context.Company.ToList();
+        
+        [HttpGet]
+        [Route("/Companies/Get/{id}")]
+        public ActionResult<Company> Get(int id)
+            => _context.Company.First(c => c.Id == id);
 
         [HttpGet]
-        [Route("/Companies/GetByUser")]
-        public async Task<ActionResult<IEnumerable<Company>>> GetByUser(int userId)
-            => (await _context
-                    .User
-                    .Include(u => u.Companies)
-                    .FirstAsync(u => u.Id == userId))
-                .Companies;
+        [Route("/Companies/GetByUser/{userId}")]
+        public ActionResult<IEnumerable<Company>> GetByUser(int userId)
+            => _context
+                .User
+                .Where(u => u.Id == userId)
+                .Select(u => u.Companies)
+                .First();
 
-
-        [HttpPost]
-        [Route("/Companies/Create")]
-        public async Task Create(string name, int ownerId)
-        {
-            await _context.Company.AddAsync(new Company(name, ownerId));
-            await _context.SaveChangesAsync();
-        }
+        [HttpGet]
+        [Route("/Companies/GetByProject/{projectId}")]
+        public ActionResult<Company> GetByProject(int projectId)
+            => _context
+                .Project
+                .Where(p => p.Id == projectId)
+                .Select(p => p.Company)
+                .First();
 
         [HttpPost]
         [Route("/Companies/Delete")]

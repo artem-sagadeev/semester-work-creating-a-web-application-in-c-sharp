@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Developer.API.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Developer.API.Controllers
 {
@@ -20,30 +20,31 @@ namespace Developer.API.Controllers
 
         [HttpGet]
         [Route("/Projects/Get")]
-        public async Task<ActionResult<Project>> Get(int id)
-            => await _context.Project.FirstAsync(p => p.Id == id);
+        public ActionResult<IEnumerable<Project>> Get()
+            => _context.Project.ToList();
+        
+        [HttpGet]
+        [Route("/Projects/Get/{id}")]
+        public ActionResult<Project> Get(int id)
+            => _context.Project.First(p => p.Id == id);
 
         [HttpGet]
-        [Route("/Projects/GetByCompany")]
-        public async Task<ActionResult<IEnumerable<Project>>> GetByCompany(int companyId)
-            => await _context.Project.Where(p => p.CompanyId == companyId).ToListAsync();
+        [Route("/Projects/GetByCompany/{companyId}")]
+        public ActionResult<IEnumerable<Project>> GetByCompany(int companyId)
+            => _context
+                .Company
+                .Where(c => c.Id == companyId)
+                .Select(c => c.Projects)
+                .First();
 
         [HttpGet]
-        [Route("/Projects/GetByUser")]
-        public async Task<ActionResult<IEnumerable<Project>>> GetByUser(int userId)
-            => (await _context
-                    .User
-                    .Include(u => u.Projects)
-                    .FirstAsync(u => u.Id == userId))
-                .Projects;
-
-        [HttpPost]
-        [Route("/Projects/Create")]
-        public async Task Create(string name, int ownerId)
-        {
-            await _context.Project.AddAsync(new Project(name, ownerId));
-            await _context.SaveChangesAsync();
-        }
+        [Route("/Projects/GetByUser/{userId}")]
+        public ActionResult<IEnumerable<Project>> GetByUser(int userId)
+            => _context
+                .User
+                .Where(u => u.Id == userId)
+                .Select(u => u.Projects)
+                .First();
 
         [HttpPost]
         [Route("/Projects/Delete")]
