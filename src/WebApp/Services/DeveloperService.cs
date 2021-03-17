@@ -17,8 +17,8 @@ namespace WebApp.Services
 
         public async Task<IEnumerable<UserModel>> GetUsers()
         {
-            var response = await _client.GetAsync("/Developers/GetUsers");
-            return await response.ReadContentAs<List<UserModel>>();
+            var response = await _client.GetAsync($"/Developers/GetUsers");
+            return await response.ReadContentAs<IEnumerable<UserModel>>();
         }
 
         public async Task<UserModel> GetUser(int id)
@@ -29,54 +29,62 @@ namespace WebApp.Services
 
         public async Task<IEnumerable<ProjectModel>> GetUserProjects(int userId)
         {
-            var response = await _client.GetAsync($"/Developes/GetUserProjects/{userId}");
-            return await response.ReadContentAs<List<ProjectModel>>();
+            var response = await _client.GetAsync($"/Developers/GetUserProjects?userId={userId}");
+            return await response.ReadContentAs<IEnumerable<ProjectModel>>();
         }
 
         public async Task<IEnumerable<CompanyModel>> GetUserCompanies(int userId)
         {
-            var response = await _client.GetAsync($"/Developers/GetUserCompanies/{userId}");
-            return await response.ReadContentAs<List<CompanyModel>>();
+            var response = await _client.GetAsync($"/Developers/GetUserCompanies?userId={userId}");
+            return await response.ReadContentAs<IEnumerable<CompanyModel>>();
         }
 
         public async Task<IEnumerable<ProjectModel>> GetProjects()
         {
-            throw new System.NotImplementedException();
+            var response = await _client.GetAsync($"/Developers/GetProjects");
+            return await response.ReadContentAs<IEnumerable<ProjectModel>>();
         }
 
         public async Task<ProjectModel> GetProject(int id)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.GetAsync($"/Developers/GetProject/{id}");
+            return await response.ReadContentAs<ProjectModel>();
         }
 
         public async Task<IEnumerable<UserModel>> GetProjectUsers(int projectId)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.GetAsync($"/Developers/GetProjectUsers?projectId={projectId}");
+            return await response.ReadContentAs<IEnumerable<UserModel>>();
         }
 
         public async Task<CompanyModel> GetProjectCompany(int projectId)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.GetAsync($"/Developers/GetProjectCompany?projectId={projectId}");
+            return await response.ReadContentAs<CompanyModel>();
         }
 
         public async Task<IEnumerable<CompanyModel>> GetCompanies()
         {
-            throw new System.NotImplementedException();
+            var response = await _client.GetAsync($"/Developers/GetCompanies");
+            return await response.ReadContentAs<IEnumerable<CompanyModel>>();
         }
 
         public async Task<CompanyModel> GetCompany(int id)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.GetAsync($"/Developers/GetCompany/{id}");
+            return await response.ReadContentAs<CompanyModel>();
         }
 
         public async Task<IEnumerable<UserModel>> GetCompanyUsers(int companyId)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.GetAsync($"/Developers/GetCompanyUsers?companyId={companyId}");
+            return await response.ReadContentAs<IEnumerable<UserModel>>();
         }
 
         public async Task<IEnumerable<ProjectModel>> GetCompanyProjects(int companyId)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.GetAsync($"/Developers/GetCompanyProjects?companyId={companyId}");
+            return await response.ReadContentAs<IEnumerable<ProjectModel>>();
         }
     }
 }

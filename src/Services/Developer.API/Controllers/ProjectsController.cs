@@ -20,13 +20,22 @@ namespace Developer.API.Controllers
 
         [HttpGet]
         [Route("/Projects/Get")]
-        public async Task<ActionResult<Project>> Get(int id)
-            => await _context.Project.FirstAsync(p => p.Id == id);
+        public ActionResult<IEnumerable<Project>> Get()
+            => _context.Project.ToList();
+        
+        [HttpGet]
+        [Route("/Projects/Get/{id}")]
+        public ActionResult<Project> Get(int id)
+            => _context.Project.First(p => p.Id == id);
 
         [HttpGet]
-        [Route("/Projects/GetByCompany")]
-        public async Task<ActionResult<IEnumerable<Project>>> GetByCompany(int companyId)
-            => await _context.Project.Where(p => p.CompanyId == companyId).ToListAsync();
+        [Route("/Projects/GetByCompany/{companyId}")]
+        public ActionResult<IEnumerable<Project>> GetByCompany(int companyId)
+            => _context
+                .Company
+                .Where(c => c.Id == companyId)
+                .Select(c => c.Projects)
+                .First();
 
         [HttpGet]
         [Route("/Projects/GetByUser/{userId}")]

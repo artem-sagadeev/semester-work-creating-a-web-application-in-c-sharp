@@ -16,11 +16,11 @@ namespace WebApp.Pages.User
             _developerService = developerService;
         }
 
-        public IEnumerable<UserModel> Users { get; set; }
+        public IEnumerable<UserModel> UserModels { get; set; }
         
-        public async Task<ActionResult> OnGet()
+        public async Task<ActionResult> OnGetAsync()
         {
-            Users = await _developerService.GetUsers();
+            UserModels = await _developerService.GetUsers();
             return Page();
         }
     }

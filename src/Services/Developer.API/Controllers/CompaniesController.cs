@@ -18,8 +18,13 @@ namespace Developer.API.Controllers
 
         [HttpGet]
         [Route("/Companies/Get")]
-        public async Task<ActionResult<Company>> Get(int id)
-            => await _context.Company.FirstAsync(c => c.Id == id);
+        public ActionResult<IEnumerable<Company>> Get()
+            => _context.Company.ToList();
+        
+        [HttpGet]
+        [Route("/Companies/Get/{id}")]
+        public ActionResult<Company> Get(int id)
+            => _context.Company.First(c => c.Id == id);
 
         [HttpGet]
         [Route("/Companies/GetByUser/{userId}")]
@@ -28,6 +33,15 @@ namespace Developer.API.Controllers
                 .User
                 .Where(u => u.Id == userId)
                 .Select(u => u.Companies)
+                .First();
+
+        [HttpGet]
+        [Route("/Companies/GetByProject/{projectId}")]
+        public ActionResult<Company> GetByProject(int projectId)
+            => _context
+                .Project
+                .Where(p => p.Id == projectId)
+                .Select(p => p.Company)
                 .First();
 
         [HttpPost]

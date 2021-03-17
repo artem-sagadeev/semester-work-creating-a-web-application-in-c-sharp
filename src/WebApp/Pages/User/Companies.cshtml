@@ -1,9 +1,9 @@
 ﻿@page
 @model WebApp.Pages.User.Companies
 
-@foreach (var company in Model.UserCompanies)
+@foreach (var company in Model.CompanyModels)
 {
     <p>
-        @company.Id - @company.Name
+        <a asp-page="/Company/Details" asp-route-id="@company.Id">@company.Id - @company.Name</a>
     </p>
 }

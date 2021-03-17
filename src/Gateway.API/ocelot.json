@@ -1,5 +1,6 @@
 ﻿{
   "Routes": [
+    //Get users
     {
       "DownStreamPathTemplate": "/Users/Get",
       "DownstreamScheme": "http",
@@ -25,6 +26,55 @@
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
+      "DownStreamPathTemplate": "/Users/GetByProject/{projectId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/GetProjectUsers?projectId={projectId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownStreamPathTemplate": "/Users/GetByCompany/{companyId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/GetCompanyUsers?companyId={companyId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    //Get projects
+    {
+      "DownStreamPathTemplate": "/Projects/Get",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/GetProjects",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownStreamPathTemplate": "/Projects/Get/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/GetProject/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
       "DownStreamPathTemplate": "/Projects/GetByUser/{userId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -33,7 +83,56 @@
           "Port": 5003
         }
       ],
-      "UpstreamPathTemplate": "/Developers/GetUserProjects/{userId}",
+      "UpstreamPathTemplate": "/Developers/GetUserProjects?userId={userId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownStreamPathTemplate": "/Projects/GetByCompany/{companyId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/GetCompanyProjects?companyId={companyId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    //Get companies
+    {
+      "DownStreamPathTemplate": "/Companies/Get",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/GetCompanies",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownStreamPathTemplate": "/Companies/Get/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/GetCompany/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownStreamPathTemplate": "/Companies/GetByProject/{projectId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/GetProjectCompany?projectId={projectId}",
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
@@ -45,7 +144,7 @@
           "Port": 5003
         }
       ],
-      "UpstreamPathTemplate": "/Developers/GetUserCompanies/{userId}",
+      "UpstreamPathTemplate": "/Developers/GetUserCompanies?userId={userId}",
       "UpstreamHttpMethod": [ "GET" ]
     }
   ],

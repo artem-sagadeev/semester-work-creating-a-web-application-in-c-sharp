@@ -1,0 +1,10 @@
+﻿@page
+@model WebApp.Pages.Company.Details
+
+<p>
+    @Model.CompanyModel.Id - @Model.CompanyModel.Name
+</p>
+<p>
+    <a asp-page="/Company/Projects" asp-route-companyId="@Model.CompanyModel.Id">Projects</a>
+    <a asp-page="/Company/Users" asp-route-companyId="@Model.CompanyModel.Id">Users</a>
+</p>

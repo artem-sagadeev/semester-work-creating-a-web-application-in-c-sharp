@@ -5,22 +5,22 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Models;
 using WebApp.Services;
 
-namespace WebApp.Pages.User
+namespace WebApp.Pages.Company
 {
-    public class Projects : PageModel
+    public class Users : PageModel
     {
         private readonly IDeveloperService _developerService;
 
-        public Projects(IDeveloperService developerService)
+        public Users(IDeveloperService developerService)
         {
             _developerService = developerService;
         }
-
-        public IEnumerable<ProjectModel> ProjectModels { get; set; }
         
-        public async Task<ActionResult> OnGetAsync(int userId)
+        public IEnumerable<UserModel> UserModels { get; set; }
+
+        public async Task<ActionResult> OnGetAsync(int companyId)
         {
-            ProjectModels = await _developerService.GetUserProjects(userId);
+            UserModels = await _developerService.GetCompanyUsers(companyId);
             return Page();
         }
     }
