@@ -1,19 +1,55 @@
 ﻿{
-  "ReRoutes": [
+  "Routes": [
     {
-      "DownStreamPathTemplate": "/Posts/Get?id={id}",
+      "DownStreamPathTemplate": "/Users/Get",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "5002"
+          "Port": 5003
         }
       ],
-      "UpstreamPathTemplate": "/Posts/{id}",
+      "UpstreamPathTemplate": "/Developers/GetUsers",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownStreamPathTemplate": "/Users/Get/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/GetUser/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownStreamPathTemplate": "/Projects/GetByUser/{userId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/GetUserProjects/{userId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownStreamPathTemplate": "/Companies/GetByUser/{userId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/GetUserCompanies/{userId}",
       "UpstreamHttpMethod": [ "GET" ]
     }
   ],
   "GlobalConfiguration" : {
-    "BaseUrl": "http://localhost:5000" 
+    "BaseUrl": "http://localhost:5010" 
   }
 }

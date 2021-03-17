@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Developer.API.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Developer.API.Controllers
 {
@@ -29,21 +29,13 @@ namespace Developer.API.Controllers
             => await _context.Project.Where(p => p.CompanyId == companyId).ToListAsync();
 
         [HttpGet]
-        [Route("/Projects/GetByUser")]
-        public async Task<ActionResult<IEnumerable<Project>>> GetByUser(int userId)
-            => (await _context
-                    .User
-                    .Include(u => u.Projects)
-                    .FirstAsync(u => u.Id == userId))
-                .Projects;
-
-        [HttpPost]
-        [Route("/Projects/Create")]
-        public async Task Create(string name, int ownerId)
-        {
-            await _context.Project.AddAsync(new Project(name, ownerId));
-            await _context.SaveChangesAsync();
-        }
+        [Route("/Projects/GetByUser/{userId}")]
+        public ActionResult<IEnumerable<Project>> GetByUser(int userId)
+            => _context
+                .User
+                .Where(u => u.Id == userId)
+                .Select(u => u.Projects)
+                .First();
 
         [HttpPost]
         [Route("/Projects/Delete")]

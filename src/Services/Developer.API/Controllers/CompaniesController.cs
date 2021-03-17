@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using Developer.API.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Developer.API.Controllers
 {
@@ -21,22 +22,13 @@ namespace Developer.API.Controllers
             => await _context.Company.FirstAsync(c => c.Id == id);
 
         [HttpGet]
-        [Route("/Companies/GetByUser")]
-        public async Task<ActionResult<IEnumerable<Company>>> GetByUser(int userId)
-            => (await _context
-                    .User
-                    .Include(u => u.Companies)
-                    .FirstAsync(u => u.Id == userId))
-                .Companies;
-
-
-        [HttpPost]
-        [Route("/Companies/Create")]
-        public async Task Create(string name, int ownerId)
-        {
-            await _context.Company.AddAsync(new Company(name, ownerId));
-            await _context.SaveChangesAsync();
-        }
+        [Route("/Companies/GetByUser/{userId}")]
+        public ActionResult<IEnumerable<Company>> GetByUser(int userId)
+            => _context
+                .User
+                .Where(u => u.Id == userId)
+                .Select(u => u.Companies)
+                .First();
 
         [HttpPost]
         [Route("/Companies/Delete")]

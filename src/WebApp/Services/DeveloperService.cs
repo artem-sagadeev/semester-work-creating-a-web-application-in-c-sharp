@@ -17,23 +17,26 @@ namespace WebApp.Services
 
         public async Task<IEnumerable<UserModel>> GetUsers()
         {
-            var response = await _client.GetAsync("/Users/Get");
+            var response = await _client.GetAsync("/Developers/GetUsers");
             return await response.ReadContentAs<List<UserModel>>();
         }
 
         public async Task<UserModel> GetUser(int id)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.GetAsync($"/Developers/GetUser/{id}");
+            return await response.ReadContentAs<UserModel>();
         }
 
         public async Task<IEnumerable<ProjectModel>> GetUserProjects(int userId)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.GetAsync($"/Developes/GetUserProjects/{userId}");
+            return await response.ReadContentAs<List<ProjectModel>>();
         }
 
         public async Task<IEnumerable<CompanyModel>> GetUserCompanies(int userId)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.GetAsync($"/Developers/GetUserCompanies/{userId}");
+            return await response.ReadContentAs<List<CompanyModel>>();
         }
 
         public async Task<IEnumerable<ProjectModel>> GetProjects()

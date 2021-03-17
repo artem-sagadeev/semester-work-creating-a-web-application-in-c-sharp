@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using Developer.API.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -18,8 +19,13 @@ namespace Developer.API.Controllers
 
         [HttpGet]
         [Route("/Users/Get")]
-        public async Task<ActionResult<User>> Get(int id)
-            => await _context.User.FirstAsync(u => u.Id == id);
+        public ActionResult<IEnumerable<User>> Get()
+            => _context.User.ToList();
+        
+        [HttpGet]
+        [Route("/Users/Get/{id}")]
+        public ActionResult<User> Get(int id)
+            => _context.User.First(u => u.Id == id);
 
         [HttpGet]
         [Route("/Users/GetByCompany")]
