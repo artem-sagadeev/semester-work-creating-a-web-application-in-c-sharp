@@ -7,20 +7,20 @@ using WebApp.Services;
 
 namespace WebApp.Pages.User
 {
-    public class Index : PageModel
+    public class Projects : PageModel
     {
         private readonly IDeveloperService _developerService;
 
-        public Index(IDeveloperService developerService)
+        public Projects(IDeveloperService developerService)
         {
             _developerService = developerService;
         }
 
-        public IEnumerable<UserModel> Users { get; set; }
-        
-        public async Task<ActionResult> OnGet()
+        public IEnumerable<ProjectModel> UserProjects { get; set; }
+
+        public async Task<ActionResult> OnGetAsync(int id)
         {
-            Users = await _developerService.GetUsers();
+            UserProjects = await _developerService.GetUserProjects(id);
             return Page();
         }
     }

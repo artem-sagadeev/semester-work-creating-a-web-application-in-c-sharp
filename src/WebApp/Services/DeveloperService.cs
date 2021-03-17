@@ -56,7 +56,7 @@ namespace WebApp.Services
             throw new System.NotImplementedException();
         }
 
-        public async Task<IEnumerable<CompanyModel>> Get()
+        public async Task<IEnumerable<CompanyModel>> GetCompanies()
         {
             throw new System.NotImplementedException();
         }

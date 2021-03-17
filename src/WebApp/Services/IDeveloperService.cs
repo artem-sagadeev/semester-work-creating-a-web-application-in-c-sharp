@@ -19,7 +19,7 @@ namespace WebApp.Services
         Task<CompanyModel> GetProjectCompany(int projectId);
         
         //Companies
-        Task<IEnumerable<CompanyModel>> Get();
+        Task<IEnumerable<CompanyModel>> GetCompanies();
         Task<CompanyModel> GetCompany(int id);
         Task<IEnumerable<UserModel>> GetCompanyUsers(int companyId);
         Task<IEnumerable<ProjectModel>> GetCompanyProjects(int companyId);

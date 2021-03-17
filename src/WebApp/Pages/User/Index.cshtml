@@ -1,8 +1,8 @@
 ﻿@page
 @model WebApp.Pages.User.Index
 
-@foreach (var developer in Model.Developers)
+@foreach (var user in Model.Users)
 {
-    <p>@developer.Id - @developer.Login</p>
+    <p>@user.Id - @user.Login</p>
 }
 

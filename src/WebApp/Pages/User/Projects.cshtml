@@ -1,0 +1,7 @@
+﻿@page
+@model WebApp.Pages.User.Projects
+
+@foreach (var project in Model.UserProjects)
+{
+    <p>@project.Id - @project.Name</p>
+}

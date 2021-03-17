@@ -1,0 +1,9 @@
+﻿@page
+@model WebApp.Pages.User.Companies
+
+@foreach (var company in Model.UserCompanies)
+{
+    <p>
+        @company.Id - @company.Name
+    </p>
+}

@@ -1,7 +1,10 @@
-﻿namespace WebApp.Models
+﻿using System.Dynamic;
+
+namespace WebApp.Models
 {
     public class ProjectModel
     {
-        
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Models;
@@ -7,20 +6,20 @@ using WebApp.Services;
 
 namespace WebApp.Pages.User
 {
-    public class Index : PageModel
+    public class Details : PageModel
     {
         private readonly IDeveloperService _developerService;
 
-        public Index(IDeveloperService developerService)
+        public Details(IDeveloperService developerService)
         {
             _developerService = developerService;
         }
 
-        public IEnumerable<UserModel> Users { get; set; }
-        
-        public async Task<ActionResult> OnGet()
+        public UserModel UserInfo { get; set; }
+
+        public async Task<ActionResult> OnGetAsync(int id)
         {
-            Users = await _developerService.GetUsers();
+            UserInfo = await _developerService.GetUser(id);
             return Page();
         }
     }
