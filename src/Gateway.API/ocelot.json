@@ -146,6 +146,44 @@
       ],
       "UpstreamPathTemplate": "/Developers/GetUserCompanies?userId={userId}",
       "UpstreamHttpMethod": [ "GET" ]
+    },
+    //Get posts
+    {
+      "DownStreamPathTemplate": "/Posts/GetByGroup/{groupId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
+      "UpstreamPathTemplate": "/Posts/GetGroupPosts?groupId={groupId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownStreamPathTemplate": "/Posts/Get/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
+      "UpstreamPathTemplate": "/Posts/GetPost/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    //Get comments
+    {
+      "DownStreamPathTemplate": "/Comments/GetByPost/{postId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
+      "UpstreamPathTemplate": "/Posts/GetPostComments?postId={postId}",
+      "UpstreamHttpMethod": [ "GET" ]
     }
   ],
   "GlobalConfiguration" : {

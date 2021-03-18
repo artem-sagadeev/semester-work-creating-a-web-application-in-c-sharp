@@ -20,17 +20,17 @@ namespace Posts.API.Controllers
         }
 
         [HttpGet]
-        [Route("/Comments/Get")]
+        [Route("/Comments/Get/{id}")]
         public async Task<ActionResult<Comment>> Get(int id) 
             => await _context.Comment.FirstAsync(c => c.Id == id);
 
         [HttpGet]
-        [Route("/Comments/GetByPost")]
+        [Route("/Comments/GetByPost/{postId}")]
         public async Task<ActionResult<IEnumerable<Comment>>> GetByPost(int postId)
             => await _context.Comment.Where(c => c.PostId == postId).ToListAsync();
 
         [HttpGet]
-        [Route("/Comments/GetByUser")]
+        [Route("/Comments/GetByUser/{userId}")]
         public async Task<ActionResult<IEnumerable<Comment>>> GetByUser(int userId)
             => await _context.Comment.Where(c => c.UserId == userId).ToListAsync();
 

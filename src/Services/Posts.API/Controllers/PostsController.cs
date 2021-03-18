@@ -19,17 +19,17 @@ namespace Posts.API.Controllers
         }
 
         [HttpGet]
-        [Route("/Posts/Get")]
+        [Route("/Posts/Get/{id}")]
         public async Task<ActionResult<Post>> Get(int id)
             => await _context.Post.FirstAsync(p => p.Id == id);
         
         [HttpGet]
-        [Route("/Posts/GetByUser")]
+        [Route("/Posts/GetByUser/{userId}")]
         public async Task<ActionResult<IEnumerable<Post>>> GetByUser(int userId) 
             => await _context.Post.Where(p => p.UserId == userId).ToListAsync();
 
         [HttpGet]
-        [Route("/Posts/GetByGroup")]
+        [Route("/Posts/GetByGroup/{groupId}")]
         public async Task<ActionResult<IEnumerable<Post>>> GetByGroup(int groupId)
             => await _context.Post.Where(p => p.GroupId == groupId).ToListAsync();
         
