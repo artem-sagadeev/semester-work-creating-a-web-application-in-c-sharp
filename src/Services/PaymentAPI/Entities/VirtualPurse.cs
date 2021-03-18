@@ -7,7 +7,7 @@ namespace PaymentAPI
 {
     public class VirtualPurse
     {
-        public int User_Id { get; set; }
+        public int UserID { get; set; }
 
         public int Money { get; set; }
     }

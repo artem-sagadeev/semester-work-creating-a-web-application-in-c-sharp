@@ -8,8 +8,8 @@ namespace PaymentAPI
     public class Transfer
     {
         public DateTime DateTime { get; set; }
-        public int User_From { get; set; }
-        public int User_To { get; set; }
+        public int UserFrom { get; set; }
+        public int UserTo { get; set; }
         public int MoneySum { get; set; }
     }
 }

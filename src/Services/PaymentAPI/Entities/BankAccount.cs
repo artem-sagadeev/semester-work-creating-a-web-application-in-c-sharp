@@ -7,7 +7,7 @@ namespace PaymentAPI
 {
     public class BankAccount
     {
-        public int User_Id { get; set; }
+        public int UserID { get; set; }
         public int Number { get; set; }
     }
 }
