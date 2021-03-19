@@ -1,13 +1,11 @@
-﻿using System.IO;
-using System.Linq;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Files.API.Entities
 {
-    public class FileInfo
+    public class File
     {
-        public FileInfo(string name, string type)
+        public File(string name, string type)
         {
             Name = name;
             Type = type;
@@ -19,7 +17,7 @@ namespace Files.API.Entities
         public string Type { get; set; }
         public string Path => "Files/" + Name;
 
-        public FileInfo()
+        public File()
         {
         }
     }

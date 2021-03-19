@@ -1,0 +1,14 @@
+﻿@page
+@model WebApp.Pages.File
+
+<pre>
+    <code id="code"></code>
+</pre>
+
+<script>
+    window.onload = async function () {
+        document.getElementById("code").innerText = await fetch("@Model.Uri")
+                                                            .then(x => x.text());
+        hljs.highlightAll();
+    }
+</script>

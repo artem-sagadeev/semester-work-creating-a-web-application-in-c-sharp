@@ -8,7 +8,8 @@ namespace Files.API.Repositories
 {
     public class FileRepository : IFileRepository
     {
-        private IMongoCollection<FileInfo> Files;
+        private readonly IMongoCollection<File> _files;
+        private readonly IMongoCollection<Link> _links;
 
         public FileRepository()
         {
@@ -16,25 +17,45 @@ namespace Files.API.Repositories
             var connection = new MongoUrlBuilder(connectionString);
             var client = new MongoClient(connectionString);
             var database = client.GetDatabase(connection.DatabaseName);
-            Files = database.GetCollection<FileInfo>("Files");
+            _files = database.GetCollection<File>("Files");
+            _links = database.GetCollection<Link>("Links");
         }
 
-        public async Task<FileInfo> GetFileAsync(string id)
+        public async Task<File> GetFileAsync(string id)
         {
-            var filter = Builders<FileInfo>.Filter.Eq("Id", id);
-            var files = await Files.FindAsync(filter);
+            var filter = Builders<File>.Filter.Eq("Id", id);
+            var files = await _files.FindAsync(filter);
             return await files.FirstAsync();
         }
 
-        public async Task CreateFileAsync(FileInfo file)
+        public async Task CreateFileAsync(File file)
         {
-            await Files.InsertOneAsync(file);
+            await _files.InsertOneAsync(file);
         }
 
         public async Task DeleteFileAsync(string id)
         {
-            var filter = Builders<FileInfo>.Filter.Eq("Id", id);
-            await Files.FindOneAndDeleteAsync(filter);
+            var filter = Builders<File>.Filter.Eq("Id", id);
+            await _files.FindOneAndDeleteAsync(filter);
+        }
+
+        public async Task<Link> GetLinkAsync(string fileId, string token)
+        {
+            var builder = Builders<Link>.Filter;
+            var filter = builder.Eq("FileId", fileId) & builder.Eq("Token", token);
+            var links = await _links.FindAsync(filter);
+            return await links.FirstAsync();
+        }
+
+        public async Task CreateLinkAsync(Link link)
+        {
+            await _links.InsertOneAsync(link);
+        }
+
+        public async Task DeleteLinkAsync(string id)
+        {
+            var filter = Builders<Link>.Filter.Eq("Id", id);
+            await _links.FindOneAndDeleteAsync(filter);
         }
     }
 }

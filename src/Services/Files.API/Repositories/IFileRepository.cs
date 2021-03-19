@@ -6,8 +6,11 @@ namespace Files.API.Repositories
 {
     public interface IFileRepository
     {
-        public Task<FileInfo> GetFileAsync(string id);
-        public Task CreateFileAsync(FileInfo file);
+        public Task<File> GetFileAsync(string id);
+        public Task CreateFileAsync(File file);
         public Task DeleteFileAsync(string id);
+        public Task<Link> GetLinkAsync(string fileId, string token);
+        public Task CreateLinkAsync(Link link);
+        public Task DeleteLinkAsync(string id);
     }
 }
