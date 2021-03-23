@@ -9,12 +9,17 @@ namespace PaymentAPI
 {
     public class PaymentContext : DbContext
     {
+        private string connectionString = "Host=localhost;Database=Payment;Username=postgres;Password=postgres";
         public PaymentContext()
         {
-
         }
         public PaymentContext(DbContextOptions options) : base(options)
         {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql(connectionString);
         }
 
         public DbSet<BankAccount> BankAccounts { get; set; }
