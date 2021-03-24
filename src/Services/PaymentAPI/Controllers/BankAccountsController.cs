@@ -22,7 +22,7 @@ namespace PaymentAPI.Controllers
             => _context.BankAccounts.ToList();
 
         [HttpGet]
-        [Route("/BankAccounts/GetByUser/{userId}")]
+        [Route("/BankAccounts/Get/{userId}")]
         public ActionResult<BankAccount> Get(int userId)
             => _context.BankAccounts.First(c => c.UserId == userId);
 
