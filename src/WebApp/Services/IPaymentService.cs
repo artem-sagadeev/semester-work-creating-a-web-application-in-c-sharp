@@ -12,13 +12,15 @@ namespace WebApp.Services
         //BankAccounts
         public Task<IEnumerable<BankAccountModel>> GetBankAccounts();
         public Task<BankAccountModel> GetBankAccount(int userId);
+
         public Task DeleteBankAccount(int userId);
-        public Task AddBankAccount(int number, int userId);
+
+        public Task AddBankAccount(int userId, int num);
 
         //Transfers
-        public Task<IEnumerable<TransferModel>> GetTransferModels();
-        public Task<TransferModel> GetTransferModelByUserFrom(int userId);
-        public Task<TransferModel> GetTransferModelByUserTo(int userId);
+        public Task<IEnumerable<TransferModel>> GetTransfers();
+        public Task<IEnumerable<TransferModel>> GetTransfersByUserFrom(int userId);
+        public Task<IEnumerable<TransferModel>> GetTransfersByUserTo(int userId);
 
         public Task AddTransfer(int userFrom, int userTo, int money);
 
@@ -31,8 +33,8 @@ namespace WebApp.Services
         public Task AddVirtualPurse(int userId, int money);
 
         //Withdrawals
-        public Task<IEnumerable<VirtualPurseModel>> GetWithdrawals();
-        public Task<IEnumerable<VirtualPurseModel>> GetWithdrawals(int userId);
+        public Task<IEnumerable<WithdrawalModel>> GetWithdrawals();
+        public Task<IEnumerable<WithdrawalModel>> GetWithdrawals(int userId);
         public Task AddWithdrawal(int userId, int sum);
 
 

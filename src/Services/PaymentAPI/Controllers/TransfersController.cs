@@ -22,14 +22,14 @@ namespace PaymentAPI.Controllers
 
         [HttpGet]
         [Route("/Transfers/GetByUsersFrom/{userId}")]
-        public ActionResult<Transfer> GetByUsersFrom(int userId)
-            => _context.Transfers.First(c => c.UserFrom == userId);
+        public ActionResult<IEnumerable<Transfer>> GetByUsersFrom(int userId)
+            => _context.Transfers.Where(c => c.UserFrom == userId).ToList();
 
 
         [HttpGet]
         [Route("/Transfers/GetByUserTo/{userId}")]
-        public ActionResult<Transfer> GetByUserTo(int userId)
-            => _context.Transfers.First(c => c.UserTo == userId);
+        public ActionResult<IEnumerable<Transfer>> GetByUserTo(int userId)
+            => _context.Transfers.Where(c => c.UserTo == userId).ToList();
 
         //TODO: Нужно ли удаление??? 
         //[HttpPost]

@@ -171,19 +171,95 @@
             ],
             "UpstreamPathTemplate": "/Payment/GetBankAccounts",
             "UpstreamHttpMethod": [ "GET" ]
+        },
+        //GetTransfer
+        {
+            "DownStreamPathTemplate": "/Transfers/Get",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5005
+                }
+            ],
+            "UpstreamPathTemplate": "/Payment/GetTransfers",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownStreamPathTemplate": "/Transfers/GetByUsersFrom/{userId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5005
+                }
+            ],
+            "UpstreamPathTemplate": "/Payment/GetTransfersByUserFrom?userId={userId}",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownStreamPathTemplate": "/Transfers/GetByUserTo/{userId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5005
+                }
+            ],
+            "UpstreamPathTemplate": "/Payment/GetTransfersByUserTo?userId={userId}",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        //GetVirtualPurse
+        {
+            "DownStreamPathTemplate": "/VirtualPurses/Get",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5005
+                }
+            ],
+            "UpstreamPathTemplate": "/Payment/GetVirtualPurses",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownStreamPathTemplate": "/VirtualPurses/Get/{userId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5005
+                }
+            ],
+            "UpstreamPathTemplate": "/Payment/GetVirtualPurse?userId={userId}",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        //GetWithdrawals
+        {
+            "DownStreamPathTemplate": "/Withdrawals/Get",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5005
+                }
+            ],
+            "UpstreamPathTemplate": "/Payment/GetWithdrawals",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownStreamPathTemplate": "/Withdrawals/Get/{userId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5005
+                }
+            ],
+            "UpstreamPathTemplate": "/Payment/GetWithdrawals?userId={userId}",
+            "UpstreamHttpMethod": [ "GET" ]
         }
-        //{
-        //    "DownStreamPathTemplate": "/BankAccounts/AddBankAccount",
-        //    "DownstreamScheme": "http",
-        //    "DownstreamHostAndPorts": [
-        //        {
-        //            "Host": "localhost",
-        //            "Port": 5005
-        //        }
-        //    ],
-        //    "UpstreamPathTemplate": "/Payment/GetBankAccounts",
-        //    "UpstreamHttpMethod": [ "GET" ]
-        //}
+
     ],
   "GlobalConfiguration" : {
     "BaseUrl": "http://localhost:5010" 
