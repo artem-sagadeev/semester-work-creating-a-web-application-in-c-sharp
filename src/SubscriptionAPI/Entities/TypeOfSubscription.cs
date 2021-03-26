@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace SubscriptionAPI.Entities
 {
-    public class Tariff
+    public class TypeOfSubscription
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public int PricePerMonth { get; set; }
-
-        public TypeOfSubscription Type { get; set; }
-
+        public string Type { get; set; } // на проект, на команду
     }
 }

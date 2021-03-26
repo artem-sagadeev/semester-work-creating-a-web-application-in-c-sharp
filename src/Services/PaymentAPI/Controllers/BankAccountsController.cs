@@ -38,7 +38,7 @@ namespace PaymentAPI.Controllers
         [HttpPost]
         [Route("/BankAccounts/AddBankAccount")]
         public async Task AddBankAccount(int userId, int number)
-        {            
+        {
             var newBankAccount = new BankAccount()
             {
                 Number = number,
@@ -48,5 +48,5 @@ namespace PaymentAPI.Controllers
             await _context.SaveChangesAsync();
         }
 
-           }
+    }
 }
