@@ -7,22 +7,21 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Models;
 using WebApp.Services;
 
-namespace WebApp.Pages.BankAccount
+namespace WebApp.Pages.Transfer
 {
-    public class DetailsModel : PageModel
+    public class DetailsByUserFromModel : PageModel
     {
         private readonly IPaymentService _paymentService;
+        public IEnumerable<TransferModel> TransferModels { get; set; }
 
-        public DetailsModel(IPaymentService paymentService)
+        public DetailsByUserFromModel(IPaymentService paymentService)
         {
             _paymentService = paymentService;
         }
 
-        public BankAccountModel BankAccountModel { get; set; }
-
         public async Task<ActionResult> OnGetAsync(int userId)
         {
-            BankAccountModel = await _paymentService.GetBankAccount(userId);
+            TransferModels = await _paymentService.GetTransfersByUserFrom(userId);
             return Page();
         }
     }

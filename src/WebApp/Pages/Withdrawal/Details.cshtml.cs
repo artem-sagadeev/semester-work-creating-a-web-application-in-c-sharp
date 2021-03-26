@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Models;
 using WebApp.Services;
 
-namespace WebApp.Pages.BankAccount
+namespace WebApp.Pages.Withdrawal
 {
     public class DetailsModel : PageModel
     {
@@ -18,11 +18,11 @@ namespace WebApp.Pages.BankAccount
             _paymentService = paymentService;
         }
 
-        public BankAccountModel BankAccountModel { get; set; }
+        public IEnumerable<WithdrawalModel> WithdrawalModels { get; set; }
 
         public async Task<ActionResult> OnGetAsync(int userId)
         {
-            BankAccountModel = await _paymentService.GetBankAccount(userId);
+            WithdrawalModels = await _paymentService.GetWithdrawals(userId);
             return Page();
         }
     }

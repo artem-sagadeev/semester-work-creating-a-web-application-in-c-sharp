@@ -1,0 +1,6 @@
+﻿@page
+@model WebApp.Pages.VirtualPurse.IndexModel
+@foreach (var virtualPurse in Model.VirtualPursesModels)
+{
+    <p><a asp-page="/VirtualPurse/Details" asp-route-userId="@virtualPurse.UserId">@virtualPurse.UserId - @virtualPurse.Money</a></p>
+}

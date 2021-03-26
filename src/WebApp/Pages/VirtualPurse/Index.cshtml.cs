@@ -7,22 +7,21 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Models;
 using WebApp.Services;
 
-namespace WebApp.Pages.BankAccount
+namespace WebApp.Pages.VirtualPurse
 {
-    public class DetailsModel : PageModel
+    public class IndexModel : PageModel
     {
         private readonly IPaymentService _paymentService;
+        public IEnumerable<VirtualPurseModel> VirtualPursesModels { get; set; }
 
-        public DetailsModel(IPaymentService paymentService)
+        public IndexModel(IPaymentService paymentService)
         {
             _paymentService = paymentService;
         }
 
-        public BankAccountModel BankAccountModel { get; set; }
-
-        public async Task<ActionResult> OnGetAsync(int userId)
+        public async Task<ActionResult> OnGetAsync()
         {
-            BankAccountModel = await _paymentService.GetBankAccount(userId);
+            VirtualPursesModels = await _paymentService.GetVirtualPurses();
             return Page();
         }
     }

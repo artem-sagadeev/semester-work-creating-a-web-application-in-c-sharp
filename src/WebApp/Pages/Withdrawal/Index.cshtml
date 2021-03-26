@@ -1,0 +1,6 @@
+﻿@page
+@model WebApp.Pages.Withdrawal.IndexModel
+@foreach (var transferModel in Model.WithdrawalModels)
+{
+    <p>@transferModel.Id<a asp-page="/Withdrawal/Details" asp-route-userId="@transferModel.UserID">@transferModel.UserID</a> вывел @transferModel.Sum rub @transferModel.DateTime</p>
+}
