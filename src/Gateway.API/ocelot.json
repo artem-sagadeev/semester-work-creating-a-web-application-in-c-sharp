@@ -172,6 +172,18 @@
             "UpstreamPathTemplate": "/Payment/GetBankAccounts",
             "UpstreamHttpMethod": [ "GET" ]
         }
+        //{
+        //    "DownStreamPathTemplate": "/BankAccounts/AddBankAccount",
+        //    "DownstreamScheme": "http",
+        //    "DownstreamHostAndPorts": [
+        //        {
+        //            "Host": "localhost",
+        //            "Port": 5005
+        //        }
+        //    ],
+        //    "UpstreamPathTemplate": "/Payment/GetBankAccounts",
+        //    "UpstreamHttpMethod": [ "GET" ]
+        //}
     ],
   "GlobalConfiguration" : {
     "BaseUrl": "http://localhost:5010" 

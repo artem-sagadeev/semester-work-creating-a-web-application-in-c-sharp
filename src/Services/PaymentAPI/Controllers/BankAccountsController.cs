@@ -37,7 +37,7 @@ namespace PaymentAPI.Controllers
 
         [HttpPost]
         [Route("/BankAccounts/AddBankAccount")]
-        public async Task AddBankAccount(int number, int userId)
+        public async Task AddBankAccount(int userId, int number)
         {            
             var newBankAccount = new BankAccount()
             {
