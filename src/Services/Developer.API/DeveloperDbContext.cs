@@ -12,7 +12,6 @@ namespace Developer.API
         public DbSet<Company> Company { get; set; }
         public DbSet<Project> Project { get; set; }
         public DbSet<Tag> Tag { get; set; }
-        public DbSet<Image> Image { get; set; }
         
         public DeveloperDbContext()
         {
