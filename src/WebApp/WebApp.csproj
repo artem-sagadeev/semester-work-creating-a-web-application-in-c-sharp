@@ -37,6 +37,7 @@
       <_ContentIncludedByDefault Remove="Pages\Project\Index.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\Project\Posts.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\Project\Users.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Developers\Index.cshtml" />
     </ItemGroup>
 
     <ItemGroup>

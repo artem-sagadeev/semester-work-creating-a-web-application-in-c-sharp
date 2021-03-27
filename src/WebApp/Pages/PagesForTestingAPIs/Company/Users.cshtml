@@ -4,6 +4,6 @@
 @foreach (var user in Model.UserModels)
 {
     <p>
-        <a asp-page="/User/Details" asp-route-id="@user.Id">@user.Id - @user.Login</a>
+        <a asp-page="/User/Details" asp-route-id="@user.Id">@user.Id - @user.Name</a>
     </p>
 }

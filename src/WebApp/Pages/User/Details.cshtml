@@ -2,7 +2,7 @@
 @model WebApp.Pages.User.Details
 
 <p>
-    @Model.UserModel.Id - @Model.UserModel.Login
+    @Model.UserModel.Id - @Model.UserModel.Name
 </p>
 <p>
     <a asp-page="/User/Projects" asp-route-userId="@Model.UserModel.Id">Projects</a>

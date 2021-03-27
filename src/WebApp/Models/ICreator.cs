@@ -1,8 +1,6 @@
-﻿using System.Dynamic;
-
-namespace WebApp.Models
+﻿namespace WebApp.Models
 {
-    public class ProjectModel : ICreator
+    public interface ICreator
     {
         public int Id { get; set; }
         public string Name { get; set; }

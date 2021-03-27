@@ -21,6 +21,11 @@ namespace WebApp.Services
             return await response.ReadContentAs<IEnumerable<UserModel>>();
         }
 
+        public Task<IEnumerable<UserModel>> GetUsersByName(string name)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async Task<UserModel> GetUser(int id)
         {
             var response = await _client.GetAsync($"/Developers/GetUser/{id}");
@@ -45,6 +50,11 @@ namespace WebApp.Services
             return await response.ReadContentAs<IEnumerable<ProjectModel>>();
         }
 
+        public Task<IEnumerable<ProjectModel>> GetProjectsByName(string name)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async Task<ProjectModel> GetProject(int id)
         {
             var response = await _client.GetAsync($"/Developers/GetProject/{id}");
@@ -67,6 +77,11 @@ namespace WebApp.Services
         {
             var response = await _client.GetAsync($"/Developers/GetCompanies");
             return await response.ReadContentAs<IEnumerable<CompanyModel>>();
+        }
+
+        public Task<IEnumerable<CompanyModel>> GetCompaniesByName(string name)
+        {
+            throw new System.NotImplementedException();
         }
 
         public async Task<CompanyModel> GetCompany(int id)
