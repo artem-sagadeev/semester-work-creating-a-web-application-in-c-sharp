@@ -1,2 +1,23 @@
-﻿@model WebApp.Models.ICreator
+﻿@using WebApp.Models
+@model WebApp.Models.ICreator
+@{
+    var creatorType = Model switch
+    {
+        UserModel => "Users",
+        ProjectModel => "Projects",
+        CompanyModel => "Companies",
+        _ => throw new NotSupportedException()
+    };
+}
+
+<div>
+    <a asp-page="/@creatorType/Details" asp-route-id="@Model.Id">@Model.Name</a>
+    <img src="@Model.ImagePath">
+    @foreach (var tag in Model.Tags)
+    {
+        <div>
+            @tag.Text
+        </div>
+    }
+</div>
 

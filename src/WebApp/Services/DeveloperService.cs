@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Routing.Matching;
 using WebApp.Extensions;
 using WebApp.Models;
 
@@ -100,6 +102,35 @@ namespace WebApp.Services
         {
             var response = await _client.GetAsync($"/Developers/GetCompanyProjects?companyId={companyId}");
             return await response.ReadContentAs<IEnumerable<ProjectModel>>();
+        }
+
+        public async Task<IEnumerable<TagModel>> GetTags(ICreator creator)
+        {
+            return creator switch
+            {
+                UserModel => await GetUserTags(creator.Id),
+                ProjectModel => await GetProjectTags(creator.Id),
+                CompanyModel => await GetCompanyTags(creator.Id),
+                _ => throw new NotSupportedException()
+            };
+        }
+
+        private async Task<IEnumerable<TagModel>> GetUserTags(int userId)
+        {
+            var response = await _client.GetAsync($"/Developers/GetUserTags?userId={userId}");
+            return await response.ReadContentAs<IEnumerable<TagModel>>();
+        }
+        
+        private async Task<IEnumerable<TagModel>> GetProjectTags(int projectId)
+        {
+            var response = await _client.GetAsync($"/Developers/GetProjectTags?projectId={projectId}");
+            return await response.ReadContentAs<IEnumerable<TagModel>>();
+        }
+        
+        private async Task<IEnumerable<TagModel>> GetCompanyTags(int companyId)
+        {
+            var response = await _client.GetAsync($"/Developers/GetCompanyTags?companyId={companyId}");
+            return await response.ReadContentAs<IEnumerable<TagModel>>();
         }
     }
 }

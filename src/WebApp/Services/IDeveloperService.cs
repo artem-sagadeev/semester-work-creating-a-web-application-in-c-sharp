@@ -26,5 +26,8 @@ namespace WebApp.Services
         Task<CompanyModel> GetCompany(int id);
         Task<IEnumerable<UserModel>> GetCompanyUsers(int companyId);
         Task<IEnumerable<ProjectModel>> GetCompanyProjects(int companyId);
+        
+        //Tags
+        Task<IEnumerable<TagModel>> GetTags(ICreator creator);
     }
 }

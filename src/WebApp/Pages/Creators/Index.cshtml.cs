@@ -26,6 +26,8 @@ namespace WebApp.Pages.Creators
             string searchString,
             string sortOption)
         {
+            Creators = new List<ICreator>();
+            
             if (needUsers == "on")
                 Creators.AddRange(sortOption == null ? 
                     await _developerService.GetUsers() : 
@@ -43,6 +45,11 @@ namespace WebApp.Pages.Creators
             
             if (sortOption != null)
                 Sort(sortOption);
+
+            foreach (var creator in Creators)
+            {
+                creator.Tags = await _developerService.GetTags(creator);
+            }
             
             return Page();
         }

@@ -1,6 +1,6 @@
 ﻿{
   "Routes": [
-    //Get users
+    //Users
     {
       "DownStreamPathTemplate": "/Users/Get",
       "DownstreamScheme": "http",
@@ -49,7 +49,7 @@
       "UpstreamPathTemplate": "/Developers/GetCompanyUsers?companyId={companyId}",
       "UpstreamHttpMethod": [ "GET" ]
     },
-    //Get projects
+    //Projects
     {
       "DownStreamPathTemplate": "/Projects/Get",
       "DownstreamScheme": "http",
@@ -98,7 +98,7 @@
       "UpstreamPathTemplate": "/Developers/GetCompanyProjects?companyId={companyId}",
       "UpstreamHttpMethod": [ "GET" ]
     },
-    //Get companies
+    //Companies
     {
       "DownStreamPathTemplate": "/Companies/Get",
       "DownstreamScheme": "http",
@@ -147,7 +147,44 @@
       "UpstreamPathTemplate": "/Developers/GetUserCompanies?userId={userId}",
       "UpstreamHttpMethod": [ "GET" ]
     },
-    //Get posts
+    //Tags
+    {
+      "DownStreamPathTemplate": "/Tags/GetByUser/{userId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/GetUserTags?userId={userId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownStreamPathTemplate": "/Tags/GetByProject/{projectId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/GetProjectTags?projectId={projectId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownStreamPathTemplate": "/Tags/GetByCompany/{companyId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/GetCompanyTags?companyId={companyId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    //Posts
     {
       "DownStreamPathTemplate": "/Posts/GetByGroup/{groupId}",
       "DownstreamScheme": "http",
@@ -172,7 +209,7 @@
       "UpstreamPathTemplate": "/Posts/GetPost/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     },
-    //Get comments
+    //Comments
     {
       "DownStreamPathTemplate": "/Comments/GetByPost/{postId}",
       "DownstreamScheme": "http",
@@ -185,7 +222,7 @@
       "UpstreamPathTemplate": "/Posts/GetPostComments?postId={postId}",
       "UpstreamHttpMethod": [ "GET" ]
     },
-    //Get files
+    //Files
     {
       "DownStreamPathTemplate": "/Files/GetLink/{id}",
       "DownstreamScheme": "http",

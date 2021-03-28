@@ -38,6 +38,10 @@
       <_ContentIncludedByDefault Remove="Pages\Project\Posts.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\Project\Users.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\Developers\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\User\Companies.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\User\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\User\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\User\Projects.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
