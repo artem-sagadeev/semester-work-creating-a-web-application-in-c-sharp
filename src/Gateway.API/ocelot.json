@@ -209,6 +209,18 @@
       "UpstreamPathTemplate": "/Posts/GetPost/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     },
+    {
+      "DownStreamPathTemplate": "/Posts/GetByUser/{userId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
+      "UpstreamPathTemplate": "/Posts/GetUserPosts?userId={userId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
     //Comments
     {
       "DownStreamPathTemplate": "/Comments/GetByPost/{postId}",
