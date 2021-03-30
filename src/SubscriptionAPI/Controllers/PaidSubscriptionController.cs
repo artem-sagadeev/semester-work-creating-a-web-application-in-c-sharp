@@ -19,17 +19,42 @@ namespace SubscriptionAPI.Controllers
         [HttpGet]
         [Route("/PaidSubscriptions/Get")]
         public ActionResult<IEnumerable<PaidSubscription>> Get()
-            => _context.PaidSubscriptions.ToList();
+        {
+            var temp = _context.PaidSubscriptions.ToList();
+            foreach (var t in temp)
+            {
+                _context.Entry(t).Reference(x => x.Tariff).Load();
+            }
+            return temp;
+        }
+        //=> _context.PaidSubscriptions.ToList();
 
         [HttpGet]
         [Route("/PaidSubscriptions/GetByUser/{userId}")]
         public ActionResult<IEnumerable<PaidSubscription>> GetByUser(int userId)
-            => _context.PaidSubscriptions.Where(c => c.UserId == userId).ToList();
+        {
+            var temp = _context.PaidSubscriptions.Where(c => c.UserId == userId).ToList();
+            foreach (var t in temp)
+            {
+                _context.Entry(t).Reference(x => x.Tariff).Load();
+            }
+            return temp;
+        }
+        // => _context.PaidSubscriptions.Where(c => c.UserId == userId).ToList();
 
         [HttpGet]
-        [Route("/PaidSubscriptions/GetBySubscibedToId/{subscibedToId}")]
-        public ActionResult<IEnumerable<PaidSubscription>> GetBySubscibedToId(int subscibedToId)
-            => _context.PaidSubscriptions.Where(c => c.SubscribedToId == subscibedToId).ToList();
+        [Route("/PaidSubscriptions/GetBySubscribedToId/{subscribedToId}")]
+        public ActionResult<IEnumerable<PaidSubscription>> GetBySubscribedToId(int subscribedToId)
+        {
+            var temp = _context.PaidSubscriptions.Where(c => c.SubscribedToId == subscribedToId).ToList();
+            foreach (var t in temp)
+            {
+                _context.Entry(t).Reference(x => x.Tariff).Load();
+            }
+            return temp;
+
+        }
+       //     => _context.PaidSubscriptions.Where(c => c.SubscribedToId == subscribedToId).ToList();
 
         [HttpPost]
         [Route("/PaidSubscriptions/Delete")]
@@ -46,11 +71,11 @@ namespace SubscriptionAPI.Controllers
         {
             var newTypeOfSubscription = new PaidSubscription()
             {
-             UserId  = userId,
-             EndDate = DateTime.Now.AddMonths(1),
-             SubscribedToId = subscribedToId,
-             IsAutorenewal = true,
-             Tariff = _context.Tariffs.First(x=> x.Id == tariffId)
+                UserId = userId,
+                EndDate = DateTime.Now.AddMonths(1),
+                SubscribedToId = subscribedToId,
+                IsAutorenewal = true,
+                Tariff = _context.Tariffs.First(x => x.Id == tariffId)
             };
             _context.PaidSubscriptions.Add(newTypeOfSubscription);
             await _context.SaveChangesAsync();

@@ -256,7 +256,7 @@
                     "Port": 5005
                 }
             ],
-            "UpstreamPathTemplate": "/Payment/GetWithdrawals?userId={userId}",
+            "UpstreamPathTemplate": "/Payment/GetWithdrawalsByUserId?userId={userId}",
             "UpstreamHttpMethod": [ "GET" ]
         },
         //GetTariffs
@@ -320,7 +320,47 @@
             ],
             "UpstreamPathTemplate": "/Subscription/GetTypeOfSubscription?id={id}",
             "UpstreamHttpMethod": [ "GET" ]
+        },
+        //GetPaidSubscription
+        {
+            "DownStreamPathTemplate": "/PaidSubscriptions/Get",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5006
+                }
+            ],
+            "UpstreamPathTemplate": "/Subscription/GetPaidSubscriptions",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownStreamPathTemplate": "/PaidSubscriptions/GetByUser/{userId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5006
+                }
+            ],
+            "UpstreamPathTemplate": "/Subscription/GetPaidSubscriptionsByUserId?userId={userId}",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownStreamPathTemplate": "/PaidSubscriptions/GetBySubscribedToId/{subscribedToId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5006
+                }
+            ],
+            "UpstreamPathTemplate": "/Subscription/GetPaidSubscriptionsBySubscribedToId?subscribedToId={subscribedToId}",
+            "UpstreamHttpMethod": [ "GET" ]
         }
+
+
+
     ],
   "GlobalConfiguration" : {
     "BaseUrl": "http://localhost:5010" 

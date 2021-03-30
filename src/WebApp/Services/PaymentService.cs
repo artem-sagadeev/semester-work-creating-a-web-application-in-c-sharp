@@ -74,9 +74,9 @@ namespace WebApp.Services
         }
 
         //TODO: Не работает GetWithdrawals(int userId);
-        public async Task<IEnumerable<WithdrawalModel>> GetWithdrawals(int userId)
+        public async Task<IEnumerable<WithdrawalModel>> GetWithdrawalsByUserId(int userId)
         {
-            var response = await _client.GetAsync($"/Payment/GetWithdrawals?userId={userId}");
+            var response = await _client.GetAsync($"/Payment/GetWithdrawalsByUserId?userId={userId}");
             return await response.ReadContentAs<IEnumerable<WithdrawalModel>>();
         }
 

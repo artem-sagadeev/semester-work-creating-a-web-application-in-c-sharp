@@ -22,7 +22,7 @@ namespace WebApp.Pages.Withdrawal
 
         public async Task<ActionResult> OnGetAsync(int userId)
         {
-            WithdrawalModels = await _paymentService.GetWithdrawals(userId);
+            WithdrawalModels = await _paymentService.GetWithdrawalsByUserId(userId);
             return Page();
         }
     }

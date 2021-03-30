@@ -34,7 +34,7 @@ namespace WebApp.Services
 
         //Withdrawals
         public Task<IEnumerable<WithdrawalModel>> GetWithdrawals();
-        public Task<IEnumerable<WithdrawalModel>> GetWithdrawals(int userId);
+        public Task<IEnumerable<WithdrawalModel>> GetWithdrawalsByUserId(int userId);
         //public Task AddWithdrawal(int userId, int sum);
 
 
