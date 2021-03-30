@@ -2,6 +2,10 @@
 @model WebApp.Pages.Tariff.IndexModel
 @foreach (var tariffodel in Model.TariffModels)
 {
-<p>Id = <a asp-page="/Tariffs/DetailsByTariffId" asp-route-tariffId="@tariffodel.Id">@tariffodel.Id</a>; SubscribedTypeId = <a asp-page="/Tariffs/DetailsBySubscriptionTypeId" asp-route-subscriptionTypeId="@tariffodel.Type"> @tariffodel.Type</a> @tariffodel.Name @tariffodel.PricePerMonth руб</p>
+    <p>
+        Id = <a asp-page="/Tariffs/DetailsByTariffId" asp-route-tariffId="@tariffodel.Id">@tariffodel.Id</a>;
+        SubscribedTypeId = <a asp-page="/Tariffs/DetailsBySubscriptionTypeId" asp-route-subscriptionTypeId="@tariffodel.TypeOfSubscription"> @tariffodel.TypeOfSubscription.Id</a>;
+        @tariffodel.Name @tariffodel.PricePerMonth руб
+    </p>
 }
 

@@ -19,17 +19,35 @@ namespace SubscriptionAPI.Controllers
         [HttpGet]
         [Route("/Tariffs/Get")]
         public ActionResult<IEnumerable<Tariff>> Get()
-            => _context.Tariffs.ToList();
+        {
+            var temp = _context.Tariffs.ToList();
+            foreach (var t in temp)
+            {
+                _context.Entry(t).Reference(x => x.TypeOfSubscription).Load();
+            }
+
+            return temp;
+        }
 
         [HttpGet]
         [Route("/Tariffs/GetByTariffId/{tariffId}")]
         public ActionResult<Tariff> GetByTariffId(int tariffId)
-            => _context.Tariffs.First(c => c.Id == tariffId);
+        {
+            var temp = _context.Tariffs.First(c => c.Id == tariffId);
+            _context.Entry(temp).Reference(x => x.TypeOfSubscription).Load();
+            return temp;
+        }
+        // => _context.Tariffs.First(c => c.Id == tariffId);
 
         [HttpGet]
         [Route("/Tariffs/GetBySubscriptionType/{subscriptionTypeId}")]
         public ActionResult<Tariff> GetBySubscriptionType(int subscriptionTypeId)
-            => _context.Tariffs.First(c => c.Type.Id == subscriptionTypeId);
+        {
+            var temp = _context.Tariffs.First(c => c.TypeOfSubscription.Id == subscriptionTypeId);
+            _context.Entry(temp).Reference(x => x.TypeOfSubscription).Load();
+            return temp;
+        }
+           // => _context.Tariffs.First(c => c.TypeOfSubscription.Id == subscriptionTypeId);
 
         [HttpPost]
         [Route("/Tariffs/Delete")]
@@ -42,11 +60,11 @@ namespace SubscriptionAPI.Controllers
 
         [HttpPost]
         [Route("/Tariffs/Add")]
-        public async Task AddBankAccount(string name,  int pricePerMonth, int typeOfSubscriptionId)
+        public async Task AddBankAccount(string name, int pricePerMonth, int typeOfSubscriptionId)
         {
             var newBankAccount = new Tariff()
             {
-                Type = _context.TypeOfSubscriptions.First(x=> x.Id == typeOfSubscriptionId),
+                TypeOfSubscription = _context.TypeOfSubscriptions.First(x => x.Id == typeOfSubscriptionId),
                 Name = name,
                 PricePerMonth = pricePerMonth
             };

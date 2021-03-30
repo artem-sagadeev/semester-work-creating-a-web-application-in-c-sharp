@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,7 +14,8 @@ namespace SubscriptionAPI.Entities
         public string Name { get; set; }
         public int PricePerMonth { get; set; }
 
-        public TypeOfSubscription Type { get; set; }
+        //[ForeignKey("TypeOfSubscription")]
+        public TypeOfSubscription TypeOfSubscription { get; set; }
 
     }
 }

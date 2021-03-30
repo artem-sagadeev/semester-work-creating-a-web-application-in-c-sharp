@@ -26,6 +26,7 @@ namespace SubscriptionAPI
         {
             modelBuilder.Entity<PaidSubscription>()
                 .HasKey(c => new {c.UserId, c.SubscribedToId, c.Tariff});
+           
         }
 
         public DbSet<Tariff> Tariffs { get; set; }

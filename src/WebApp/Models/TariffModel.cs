@@ -11,6 +11,6 @@ namespace WebApp.Models
         public string Name { get; set; }
         public int PricePerMonth { get; set; }
 
-        public TypeOfSubscriptionModel Type { get; set; }
+        public TypeOfSubscriptionModel TypeOfSubscription { get; set; }
     }
 }
