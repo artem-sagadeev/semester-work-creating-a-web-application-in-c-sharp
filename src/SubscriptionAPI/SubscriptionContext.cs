@@ -25,8 +25,8 @@ namespace SubscriptionAPI
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PaidSubscription>()
-                .HasKey(c => new {c.UserId, c.SubscribedToId, c.Tariff});
-           
+                .HasKey(c => new {c.UserId, c.SubscribedToId, c.TariffId});
+             //
         }
 
         public DbSet<Tariff> Tariffs { get; set; }

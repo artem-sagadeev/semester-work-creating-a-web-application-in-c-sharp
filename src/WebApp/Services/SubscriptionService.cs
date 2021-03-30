@@ -30,23 +30,23 @@ namespace WebApp.Services
             return await response.ReadContentAs<TariffModel>();
         }
 
-        public async Task<TariffModel> GetTariffBySubscriptionType(int subscriptionTypeId)
+        public async Task<IEnumerable<TariffModel>> GetTariffBySubscriptionType(int subscriptionTypeId)
         {
             var response = await _client.GetAsync($"/Subscription/GetTariffBySubscriptionType?subscriptionTypeId={subscriptionTypeId}");
-            return await response.ReadContentAs<TariffModel>();
+            return await response.ReadContentAs<IEnumerable<TariffModel>>();
         }
 
-        //Transfers
-        public async Task<IEnumerable<TransferModel>> GetTypesOfSubscription()
+        //TypeOfSubscription
+        public async Task<IEnumerable<TypeOfSubscriptionModel>> GetTypesOfSubscription()
         {
             var response = await _client.GetAsync($"/Subscription/GetTypesOfSubscription");
-            return await response.ReadContentAs<IEnumerable<TransferModel>>();
+            return await response.ReadContentAs<IEnumerable<TypeOfSubscriptionModel>>();
         }
 
-        public async Task<TransferModel> GetTypeOfSubscription(int id)
+        public async Task<TypeOfSubscriptionModel> GetTypeOfSubscription(int id)
         {
             var response = await _client.GetAsync($"/Subscription/GetTypeOfSubscription?id={id}");
-            return await response.ReadContentAs<TransferModel>();
+            return await response.ReadContentAs<TypeOfSubscriptionModel>();
         }
 
         //PaidSubscriptions

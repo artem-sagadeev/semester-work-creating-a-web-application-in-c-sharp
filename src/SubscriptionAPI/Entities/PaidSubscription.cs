@@ -11,9 +11,9 @@ namespace SubscriptionAPI.Entities
     public class PaidSubscription
     {
         public int UserId { get; set; }
-        //public Tariff Tariff { get; set; }
-        [ForeignKey("Tariff")]
-        public int Tariff { get; set; }
+        [ForeignKey("TariffId")]
+        public Tariff Tariff { get; set; }
+        public int TariffId { get; set; }
         public int SubscribedToId { get; set; }
         public DateTime EndDate { get; set; }
         public bool IsAutorenewal {get;set; }

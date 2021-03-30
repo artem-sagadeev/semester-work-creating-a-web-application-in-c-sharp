@@ -1,0 +1,10 @@
+﻿@page
+@model WebApp.Pages.TypeOfSubscription.IndexModel
+@foreach (var subscriptionModel in Model.TypesOfSubscrubtionModels)
+{
+    <p>
+        Id = <a asp-page="/TypeOfSubscription/Details" asp-route-id="@subscriptionModel.Id">@subscriptionModel.Id</a>;
+        Name = @subscriptionModel.Type
+    </p>
+}
+

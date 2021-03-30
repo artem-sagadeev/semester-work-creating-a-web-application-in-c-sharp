@@ -295,6 +295,31 @@
             ],
             "UpstreamPathTemplate": "/Subscription/GetTariffBySubscriptionType?subscriptionTypeId={subscriptionTypeId}",
             "UpstreamHttpMethod": [ "GET" ]
+        },
+        //GetTypeOfSubscription
+        {
+            "DownStreamPathTemplate": "/TypeOfSubscriptions/Get",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5006
+                }
+            ],
+            "UpstreamPathTemplate": "/Subscription/GetTypesOfSubscription",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownStreamPathTemplate": "/TypeOfSubscriptions/Get/{id}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5006
+                }
+            ],
+            "UpstreamPathTemplate": "/Subscription/GetTypeOfSubscription?id={id}",
+            "UpstreamHttpMethod": [ "GET" ]
         }
     ],
   "GlobalConfiguration" : {

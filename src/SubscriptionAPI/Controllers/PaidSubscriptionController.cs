@@ -35,7 +35,7 @@ namespace SubscriptionAPI.Controllers
         [Route("/PaidSubscriptions/Delete")]
         public async Task Delete(int userId, int tariffId, int subscribedToId)
         {
-            var type = await _context.PaidSubscriptions.FirstAsync(c => c.UserId == userId && c.Tariff == tariffId && c.SubscribedToId == subscribedToId);
+            var type = await _context.PaidSubscriptions.FirstAsync(c => c.UserId == userId && c.Tariff.Id == tariffId && c.SubscribedToId == subscribedToId);
             _context.PaidSubscriptions.Remove(type);
             await _context.SaveChangesAsync();
         }
@@ -50,7 +50,7 @@ namespace SubscriptionAPI.Controllers
              EndDate = DateTime.Now.AddMonths(1),
              SubscribedToId = subscribedToId,
              IsAutorenewal = true,
-             Tariff = _context.Tariffs.Select(x=> x.Id).First(x=>x == tariffId)
+             Tariff = _context.Tariffs.First(x=> x.Id == tariffId)
             };
             _context.PaidSubscriptions.Add(newTypeOfSubscription);
             await _context.SaveChangesAsync();

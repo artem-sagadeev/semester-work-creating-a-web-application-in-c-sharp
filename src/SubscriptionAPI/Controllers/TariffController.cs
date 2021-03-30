@@ -25,7 +25,6 @@ namespace SubscriptionAPI.Controllers
             {
                 _context.Entry(t).Reference(x => x.TypeOfSubscription).Load();
             }
-
             return temp;
         }
 
@@ -41,10 +40,13 @@ namespace SubscriptionAPI.Controllers
 
         [HttpGet]
         [Route("/Tariffs/GetBySubscriptionType/{subscriptionTypeId}")]
-        public ActionResult<Tariff> GetBySubscriptionType(int subscriptionTypeId)
+        public ActionResult<IEnumerable<Tariff>> GetBySubscriptionType(int subscriptionTypeId)
         {
-            var temp = _context.Tariffs.First(c => c.TypeOfSubscription.Id == subscriptionTypeId);
-            _context.Entry(temp).Reference(x => x.TypeOfSubscription).Load();
+            var temp = _context.Tariffs.Where(c => c.TypeOfSubscription.Id == subscriptionTypeId).ToList();
+            foreach (var t in temp)
+            {
+                _context.Entry(t).Reference(x => x.TypeOfSubscription).Load();
+            }
             return temp;
         }
            // => _context.Tariffs.First(c => c.TypeOfSubscription.Id == subscriptionTypeId);
