@@ -35,6 +35,8 @@ namespace WebApp
 
             services.AddHttpClient<IPaymentService, PaymentService>(c =>
                 c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
+            services.AddHttpClient<ISubscriptionService, SubscriptionService>(c =>
+                c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

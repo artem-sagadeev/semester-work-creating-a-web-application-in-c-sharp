@@ -22,6 +22,12 @@ namespace SubscriptionAPI
             optionsBuilder.UseNpgsql(connectionString);
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PaidSubscription>()
+                .HasKey(c => new {c.UserId, c.SubscribedToId, c.Tariff});
+        }
+
         public DbSet<Tariff> Tariffs { get; set; }
         public DbSet<TypeOfSubscription> TypeOfSubscriptions { get; set; }
         public DbSet<PaidSubscription> PaidSubscriptions { get; set; }

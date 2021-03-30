@@ -258,8 +258,44 @@
             ],
             "UpstreamPathTemplate": "/Payment/GetWithdrawals?userId={userId}",
             "UpstreamHttpMethod": [ "GET" ]
+        },
+        //GetTariffs
+        {
+            "DownStreamPathTemplate": "/Tariffs/Get",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5006
+                }
+            ],
+            "UpstreamPathTemplate": "/Subscription/GetTariffs",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownStreamPathTemplate": "/Tariffs/GetByTariffId/{tariffId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5006
+                }
+            ],
+            "UpstreamPathTemplate": "/Subscription/GetTariffById?tariffId={tariffId}",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownStreamPathTemplate": "/Tariffs/GetBySubscriptionType/{subscriptionTypeId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5006
+                }
+            ],
+            "UpstreamPathTemplate": "/Subscription/GetTariffBySubscriptionType?subscriptionTypeId={subscriptionTypeId}",
+            "UpstreamHttpMethod": [ "GET" ]
         }
-
     ],
   "GlobalConfiguration" : {
     "BaseUrl": "http://localhost:5010" 

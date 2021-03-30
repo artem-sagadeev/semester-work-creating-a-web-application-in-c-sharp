@@ -21,7 +21,7 @@ namespace WebApp.Services
         //PaidSubscription
         public Task<IEnumerable<PaidSubscriptionModel>> GetPaidSubscriptions();
         public Task<IEnumerable<PaidSubscriptionModel>> GetPaidSubscriptionsByUserId(int userId);
-        public Task<IEnumerable<PaidSubscriptionModel>> GetPaidSubscriptionsBySubscibedToId(int subscribedToId);
+        public Task<IEnumerable<PaidSubscriptionModel>> GetPaidSubscriptionsBySubscribedToId(int subscribedToId);
 
     }
 }
