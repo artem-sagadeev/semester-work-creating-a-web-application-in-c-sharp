@@ -1,0 +1,11 @@
+﻿@page
+@model WebApp.Pages.ChatMember.DetailsByUserIdModel
+@foreach (var chatMemberModel in Model.ChatMembers)
+{
+    <p>
+
+        UserId = <a asp-page="/ChatMember/DetailsByUserId" asp-route-userId="@chatMemberModel.UserId">@chatMemberModel.UserId</a>;
+        ProjectId = <a asp-page="/ChatMember/DetailsByProjectId" asp-route-projectId="@chatMemberModel.ProjectId">@chatMemberModel.ProjectId</a>
+        IsAuthor =@chatMemberModel.IsAuthor
+    </p>
+}

@@ -357,6 +357,43 @@
             ],
             "UpstreamPathTemplate": "/Subscription/GetPaidSubscriptionsBySubscribedToId?subscribedToId={subscribedToId}",
             "UpstreamHttpMethod": [ "GET" ]
+        },
+        //GetChatMembers
+        {
+            "DownStreamPathTemplate": "/ChatsMembers/Get",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5007
+                }
+            ],
+            "UpstreamPathTemplate": "/Chats/GetChatMembers",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownStreamPathTemplate": "/ChatsMembers/GetByProjectId/{projectId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5007
+                }
+            ],
+            "UpstreamPathTemplate": "/Chats/GetChatMembersByProjectId?projectId={projectId}",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownStreamPathTemplate": "/ChatsMembers/GetByUserId/{userId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5007
+                }
+            ],
+            "UpstreamPathTemplate": "/Chats/GetChatMembersByUserId?userId={userId}",
+            "UpstreamHttpMethod": [ "GET" ]
         }
 
 
