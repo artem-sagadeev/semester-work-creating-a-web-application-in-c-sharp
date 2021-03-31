@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentAPI", "Services\Paym
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubscriptionAPI", "SubscriptionAPI\SubscriptionAPI.csproj", "{3CCE4723-A3F7-436C-8199-E1561388D607}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatsAPI", "ChatsAPI\ChatsAPI.csproj", "{4E3641A8-56C1-4ABE-98F4-DE44F3F7DA0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{3CCE4723-A3F7-436C-8199-E1561388D607}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CCE4723-A3F7-436C-8199-E1561388D607}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CCE4723-A3F7-436C-8199-E1561388D607}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E3641A8-56C1-4ABE-98F4-DE44F3F7DA0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E3641A8-56C1-4ABE-98F4-DE44F3F7DA0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E3641A8-56C1-4ABE-98F4-DE44F3F7DA0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E3641A8-56C1-4ABE-98F4-DE44F3F7DA0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +69,7 @@ Global
 		{90FBC987-BA29-47CC-9B77-5C1A932C4E3D} = {CE8EEBAF-90C2-401E-8D5C-DAA1C30603B7}
 		{E62F0BC5-8E0A-4031-BAB4-A81E7300AFB9} = {CE8EEBAF-90C2-401E-8D5C-DAA1C30603B7}
 		{3CCE4723-A3F7-436C-8199-E1561388D607} = {CE8EEBAF-90C2-401E-8D5C-DAA1C30603B7}
+		{4E3641A8-56C1-4ABE-98F4-DE44F3F7DA0D} = {CE8EEBAF-90C2-401E-8D5C-DAA1C30603B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F565DABB-B37A-48BA-B946-23982893122F}
