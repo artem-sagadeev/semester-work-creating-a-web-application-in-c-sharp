@@ -45,10 +45,10 @@ namespace WebApp.Services
             return await response.ReadContentAs<IEnumerable<MessageModel>>();
         }
 
-        public async Task<IEnumerable<MessageModel>> GetMessagesById(int messageId)
+        public async Task<MessageModel> GetMessagesById(int messageId)
         {
             var response = await _client.GetAsync($"/Chats/GetMessagesById?messageId={messageId}");
-            return await response.ReadContentAs<IEnumerable<MessageModel>>();
+            return await response.ReadContentAs<MessageModel>();
         }
 
         public async Task<IEnumerable<MessageModel>> GetMessagesByProjectId(int projectId)
@@ -59,7 +59,7 @@ namespace WebApp.Services
 
         public async Task<IEnumerable<MessageModel>> GetMessagesByUserIdAndProjectId(int userId, int projectId)
         {
-            var response = await _client.GetAsync($"/Chats/GetMessagesByUserIdAndProjectId?projectId={projectId}&userId={userId}");
+            var response = await _client.GetAsync($"/Chats/GetMessagesByUserIdAndProjectId?userId={userId}&projectId={projectId}");
             return await response.ReadContentAs<IEnumerable<MessageModel>>();
         }
     }

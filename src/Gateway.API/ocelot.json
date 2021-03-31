@@ -394,8 +394,56 @@
             ],
             "UpstreamPathTemplate": "/Chats/GetChatMembersByUserId?userId={userId}",
             "UpstreamHttpMethod": [ "GET" ]
+        },
+        //GetMessages
+        {
+            "DownStreamPathTemplate": "/Messages/Get",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5007
+                }
+            ],
+            "UpstreamPathTemplate": "/Chats/GetMessages",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownStreamPathTemplate": "/Messages/GetByProjectId/{projectId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5007
+                }
+            ],
+            "UpstreamPathTemplate": "/Chats/GetMessagesByProjectId?projectId={projectId}",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownStreamPathTemplate": "/Messages/GetById/{messageId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5007
+                }
+            ],
+            "UpstreamPathTemplate": "/Chats/GetMessagesById?messageId={messageId}",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownStreamPathTemplate": "/Messages/GetByUserIdAndProjectId/{userId}/{projectId}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5007
+                }
+            ],
+            "UpstreamPathTemplate": "/Chats/GetMessagesByUserIdAndProjectId?userId={userId}&projectId={projectId}",
+            "UpstreamHttpMethod": [ "GET" ]
         }
-
 
 
     ],

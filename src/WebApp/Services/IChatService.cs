@@ -16,7 +16,7 @@ namespace WebApp.Services
 
         //Messages
         public Task<IEnumerable<MessageModel>> GetMessages();
-        public Task<IEnumerable<MessageModel>> GetMessagesById(int messageId);
+        public Task<MessageModel> GetMessagesById(int messageId);
 
         public Task<IEnumerable<MessageModel>> GetMessagesByProjectId(int projectId);
         public Task<IEnumerable<MessageModel>> GetMessagesByUserIdAndProjectId(int userId, int projectId);

@@ -27,12 +27,12 @@ namespace ChatsAPI.Controllers
 
         [HttpGet]
         [Route("/Messages/GetById/{messageId}")]
-        public ActionResult<IEnumerable<Message>> GetById(int messageId) =>
-            _context.Messages.Where(c => c.Id == messageId).ToList();
+        public ActionResult<Message> GetById(int messageId) =>
+            _context.Messages.First(c => c.Id == messageId);
 
 
         [HttpGet]
-        [Route("/Messages/GetByUserIdAndProjectId")]
+        [Route("/Messages/GetByUserIdAndProjectId/{userId}/{projectId}")]
         public ActionResult<IEnumerable<Message>> GetByUserIdAndProjectId(int userId, int projectId) =>
             _context.Messages.Where(c => c.UserId == userId && c.ProjectId == projectId).ToList();
 

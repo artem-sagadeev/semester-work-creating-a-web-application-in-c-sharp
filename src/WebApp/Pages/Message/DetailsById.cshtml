@@ -1,0 +1,13 @@
+﻿@page
+@model WebApp.Pages.Message.DetailsByIdModel
+
+    <p>
+        Id = <a asp-page="/Message/DetailsById" asp-route-messageId="@Model.MessageModel.Id">@Model.MessageModel.Id</a>;
+        ProjectId = <a asp-page="/Message/DetailsByProjectId" asp-route-projectId="@Model.MessageModel.ProjectId">@Model.MessageModel.ProjectId</a>;
+        UserId = @Model.MessageModel.UserId
+        Text = @Model.MessageModel.Text
+        DateTime = @Model.MessageModel.DateTime
+        <a asp-page="/Message/DetailsByUserIdAndProjectId" asp-route-userId="@Model.MessageModel.UserId" asp-route-projectId="@Model.MessageModel.ProjectId">Все сообщения данного проекта данного пользователя</a>
+    </p>
+
+

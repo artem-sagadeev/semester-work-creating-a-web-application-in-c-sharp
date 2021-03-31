@@ -1,0 +1,13 @@
+﻿@page
+@model WebApp.Pages.Message.IndexModel
+@foreach (var messageModel in Model.MessageModels)
+{
+<p>
+    Id = <a asp-page="/Message/DetailsById" asp-route-messageId="@messageModel.Id">@messageModel.Id</a>;
+    ProjectId = <a asp-page="/Message/DetailsByProjectId" asp-route-projectId="@messageModel.ProjectId">@messageModel.ProjectId</a>;
+    UserId = @messageModel.UserId
+    Text = @messageModel.Text
+    DateTime = @messageModel.DateTime
+    <a asp-page="/Message/DetailsByUserIdAndProjectId" asp-route-userId="@messageModel.UserId" asp-route-projectId="@messageModel.ProjectId">Все сообщения данного проекта данного пользователя</a>
+</p>
+}
