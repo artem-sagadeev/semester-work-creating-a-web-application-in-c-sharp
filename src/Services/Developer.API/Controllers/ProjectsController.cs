@@ -46,6 +46,14 @@ namespace Developer.API.Controllers
                 .Select(u => u.Projects)
                 .First();
 
+        [HttpGet]
+        [Route("/Projects/GetByName/{name}")]
+        public ActionResult<IEnumerable<Project>> GetByName(string name)
+            => _context
+                .Project
+                .Where(p => p.Name.Contains(name))
+                .ToList();
+
         [HttpPost]
         [Route("/Projects/Delete")]
         public async Task Delete(int id)

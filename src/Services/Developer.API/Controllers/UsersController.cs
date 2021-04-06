@@ -45,6 +45,14 @@ namespace Developer.API.Controllers
                 .Select(p => p.Users)
                 .First();
 
+        [HttpGet]
+        [Route("/Users/GetByName/{name}")]
+        public ActionResult<IEnumerable<User>> GetByName(string name)
+            => _context
+                .User
+                .Where(u => u.Name.Contains(name))
+                .ToList();
+
         [HttpPost]
         [Route("/Users/Create")]
         public async Task Create(string login)

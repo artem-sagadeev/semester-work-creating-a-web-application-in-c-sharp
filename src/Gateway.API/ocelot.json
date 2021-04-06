@@ -49,6 +49,18 @@
       "UpstreamPathTemplate": "/Developers/GetCompanyUsers?companyId={companyId}",
       "UpstreamHttpMethod": [ "GET" ]
     },
+    {
+      "DownStreamPathTemplate": "/Users/GetByName/{name}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/GetUsersByName?name={name}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
     //Projects
     {
       "DownStreamPathTemplate": "/Projects/Get",
@@ -98,6 +110,18 @@
       "UpstreamPathTemplate": "/Developers/GetCompanyProjects?companyId={companyId}",
       "UpstreamHttpMethod": [ "GET" ]
     },
+    {
+      "DownStreamPathTemplate": "/Projects/GetByName/{name}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/GetProjectsByName?name={name}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
     //Companies
     {
       "DownStreamPathTemplate": "/Companies/Get",
@@ -145,6 +169,18 @@
         }
       ],
       "UpstreamPathTemplate": "/Developers/GetUserCompanies?userId={userId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownStreamPathTemplate": "/Companies/GetByName/{name}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/GetCompaniesByName?name={name}",
       "UpstreamHttpMethod": [ "GET" ]
     },
     //Tags
