@@ -10,17 +10,21 @@ namespace WebApp.Areas.Identity.Data
 {
     public class ApplicationContext : IdentityDbContext<IdentityUser>
     {
+        private const string ConnectionString = "Host=localhost;Database=identity_db;Username=postgres;Password=qweasd123";
+
+        private const string HerokuConnectionString = "Host=ec2-54-74-77-126.eu-west-1.compute.amazonaws.com;Database=d9umm2cnp2i9fc;Username=speaobxrqbrqel;Password=1a691003ab0ed12c836a33c97ab2ee75137ac8057f72a85968e9d39d49d43d30;sslmode=Require;TrustServerCertificate=true";
+        
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
         }
-
-        protected override void OnModelCreating(ModelBuilder builder)
+        
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnModelCreating(builder);
-            // Customize the ASP.NET Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseNpgsql(HerokuConnectionString);
+            }
         }
     }
 }
