@@ -1,0 +1,9 @@
+﻿@page
+@model WebApp.Pages.TypeOfSubscription.DetailsModel
+
+<p>
+    Id = <a asp-page="/Tariff/DetailsByTariffId" asp-route-tariffId="@Model.TypesOfSubscrubtionModels.Id">@Model.TypesOfSubscrubtionModels.Id</a>;
+    Name = @Model.TypesOfSubscrubtionModels.Type
+</p>
+
+<p><a asp-page="/TypeOfSubscription/Index">Все</a></p>

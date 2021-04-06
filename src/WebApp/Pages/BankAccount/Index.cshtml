@@ -1,0 +1,8 @@
+﻿@page
+@model WebApp.Pages.BankAccount.IndexModel
+
+    @foreach (var bankAccount in Model.BankAccountModels)
+    {
+        <p><a asp-page="/BankAccount/Details" asp-route-userId="@bankAccount.UserId">@bankAccount.UserId - @bankAccount.Number</a></p>
+    }
+

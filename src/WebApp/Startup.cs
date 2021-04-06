@@ -36,6 +36,13 @@ namespace WebApp
             
             services.AddHealthChecks()
                 .AddUrlGroup(new Uri(Configuration["ApiSettings:GatewayAddress"]), "Gateway.API", HealthStatus.Degraded);
+
+            services.AddHttpClient<IPaymentService, PaymentService>(c =>
+                c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
+            services.AddHttpClient<ISubscriptionService, SubscriptionService>(c =>
+                c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
+            services.AddHttpClient<IChatService, ChatService>(c =>
+                c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

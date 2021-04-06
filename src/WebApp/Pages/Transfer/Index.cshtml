@@ -1,0 +1,7 @@
+﻿@page
+@model WebApp.Pages.Transfer.IndexModel
+@foreach (var transferModel in Model.TransferModels)
+{
+    <p><a asp-page="/Transfer/DetailsByUserFrom" asp-route-userId="@transferModel.UserFrom">@transferModel.UserFrom</a> перевел <a asp-page="/Transfer/DetailsByUserTo" asp-route-userId="@transferModel.UserTo"> - @transferModel.UserTo </a> @transferModel.MoneySum руб @transferModel.DateTime</p>
+                                                                                                                    
+}
