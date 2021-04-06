@@ -1,0 +1,28 @@
+﻿@page
+@model WebApp.Pages.Creators.Index
+
+<form method="get">
+    <div>
+        <input type="text" name="searchString" placeholder="What are you searching for?">
+    </div>
+    <div>
+        <label>Users</label>
+        <input type="checkbox" name="needUsers">
+    </div>
+    <div>
+        <label>Projects</label>
+        <input type="checkbox" name="needProjects">
+    </div>
+    <div>
+        <label>Companies</label>
+        <input type="checkbox" name="needCompanies">
+    </div>
+    <button>Search</button>
+</form>
+
+
+
+@foreach (var creator in Model.Creators)
+{
+    @await Html.PartialAsync("Shared/_CreatorPreviewPartial", creator)
+}

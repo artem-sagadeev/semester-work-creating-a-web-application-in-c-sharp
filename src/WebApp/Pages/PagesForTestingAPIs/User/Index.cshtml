@@ -1,0 +1,8 @@
+﻿@page
+@model WebApp.Pages.User.Index
+
+@foreach (var user in Model.UserModels)
+{
+    <p><a asp-page="/User/Details" asp-route-id="@user.Id">@user.Id - @user.Name</a></p>
+}
+

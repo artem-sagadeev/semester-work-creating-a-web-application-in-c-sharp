@@ -6,13 +6,15 @@ namespace Developer.API.Entities
     public class User
     {
         public int Id { get; set; }
-        public string Login { get; set; }
+        public string Name { get; set; }
+        public string ImagePath { get; set; }
         public List<Project> Projects { get; set; }
         public List<Company> Companies { get; set; }
+        public List<Tag> Tags { get; set; }
 
-        public User(string login)
+        public User(string name)
         {
-            Login = login;
+            Name = name;
         }
 
         public User()

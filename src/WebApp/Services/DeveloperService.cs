@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Routing.Matching;
 using WebApp.Extensions;
 using WebApp.Models;
 
@@ -19,6 +21,11 @@ namespace WebApp.Services
         {
             var response = await _client.GetAsync($"/Developers/GetUsers");
             return await response.ReadContentAs<IEnumerable<UserModel>>();
+        }
+
+        public Task<IEnumerable<UserModel>> GetUsersByName(string name)
+        {
+            throw new System.NotImplementedException();
         }
 
         public async Task<UserModel> GetUser(int id)
@@ -45,6 +52,11 @@ namespace WebApp.Services
             return await response.ReadContentAs<IEnumerable<ProjectModel>>();
         }
 
+        public Task<IEnumerable<ProjectModel>> GetProjectsByName(string name)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async Task<ProjectModel> GetProject(int id)
         {
             var response = await _client.GetAsync($"/Developers/GetProject/{id}");
@@ -69,6 +81,11 @@ namespace WebApp.Services
             return await response.ReadContentAs<IEnumerable<CompanyModel>>();
         }
 
+        public Task<IEnumerable<CompanyModel>> GetCompaniesByName(string name)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async Task<CompanyModel> GetCompany(int id)
         {
             var response = await _client.GetAsync($"/Developers/GetCompany/{id}");
@@ -85,6 +102,35 @@ namespace WebApp.Services
         {
             var response = await _client.GetAsync($"/Developers/GetCompanyProjects?companyId={companyId}");
             return await response.ReadContentAs<IEnumerable<ProjectModel>>();
+        }
+
+        public async Task<IEnumerable<TagModel>> GetTags(ICreator creator)
+        {
+            return creator switch
+            {
+                UserModel => await GetUserTags(creator.Id),
+                ProjectModel => await GetProjectTags(creator.Id),
+                CompanyModel => await GetCompanyTags(creator.Id),
+                _ => throw new NotSupportedException()
+            };
+        }
+
+        private async Task<IEnumerable<TagModel>> GetUserTags(int userId)
+        {
+            var response = await _client.GetAsync($"/Developers/GetUserTags?userId={userId}");
+            return await response.ReadContentAs<IEnumerable<TagModel>>();
+        }
+        
+        private async Task<IEnumerable<TagModel>> GetProjectTags(int projectId)
+        {
+            var response = await _client.GetAsync($"/Developers/GetProjectTags?projectId={projectId}");
+            return await response.ReadContentAs<IEnumerable<TagModel>>();
+        }
+        
+        private async Task<IEnumerable<TagModel>> GetCompanyTags(int companyId)
+        {
+            var response = await _client.GetAsync($"/Developers/GetCompanyTags?companyId={companyId}");
+            return await response.ReadContentAs<IEnumerable<TagModel>>();
         }
     }
 }

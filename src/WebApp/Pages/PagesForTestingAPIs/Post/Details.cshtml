@@ -1,0 +1,12 @@
+﻿@page
+@model WebApp.Pages.Post.Details
+
+<p>
+    @Model.PostModel.Id - @Model.PostModel.Text
+</p>
+@foreach (var comment in Model.CommentModels)
+{
+    <p>
+        @comment.Id - @comment.Text
+    </p>
+}
