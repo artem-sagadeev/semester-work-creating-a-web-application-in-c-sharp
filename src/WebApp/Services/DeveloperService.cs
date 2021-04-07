@@ -23,9 +23,10 @@ namespace WebApp.Services
             return await response.ReadContentAs<IEnumerable<UserModel>>();
         }
 
-        public Task<IEnumerable<UserModel>> GetUsersByName(string name)
+        public async Task<IEnumerable<UserModel>> GetUsersByName(string name)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.GetAsync($"/Developers/GetUsersByName?name={name}");
+            return await response.ReadContentAs<IEnumerable<UserModel>>();
         }
 
         public async Task<UserModel> GetUser(int id)
@@ -52,9 +53,10 @@ namespace WebApp.Services
             return await response.ReadContentAs<IEnumerable<ProjectModel>>();
         }
 
-        public Task<IEnumerable<ProjectModel>> GetProjectsByName(string name)
+        public async Task<IEnumerable<ProjectModel>> GetProjectsByName(string name)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.GetAsync("/Developers/GetProjectsByName?name={name}");
+            return await response.ReadContentAs<IEnumerable<ProjectModel>>();
         }
 
         public async Task<ProjectModel> GetProject(int id)
@@ -81,9 +83,10 @@ namespace WebApp.Services
             return await response.ReadContentAs<IEnumerable<CompanyModel>>();
         }
 
-        public Task<IEnumerable<CompanyModel>> GetCompaniesByName(string name)
+        public async Task<IEnumerable<CompanyModel>> GetCompaniesByName(string name)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.GetAsync($"/Developers/GetCompaniesByName?name={name}");
+            return await response.ReadContentAs<IEnumerable<CompanyModel>>();
         }
 
         public async Task<CompanyModel> GetCompany(int id)

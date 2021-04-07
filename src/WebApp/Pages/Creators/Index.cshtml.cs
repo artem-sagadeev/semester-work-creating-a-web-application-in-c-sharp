@@ -29,17 +29,17 @@ namespace WebApp.Pages.Creators
             Creators = new List<ICreator>();
             
             if (needUsers == "on")
-                Creators.AddRange(sortOption == null ? 
+                Creators.AddRange(searchString == null ? 
                     await _developerService.GetUsers() : 
                     await _developerService.GetUsersByName(searchString));
             
             if (needProjects == "on")
-                Creators.AddRange(sortOption == null ? 
+                Creators.AddRange(searchString == null ? 
                     await _developerService.GetProjects() : 
                     await _developerService.GetProjectsByName(searchString));
             
             if (needCompanies == "on")
-                Creators.AddRange(sortOption == null ? 
+                Creators.AddRange(searchString == null ? 
                     await _developerService.GetCompanies() : 
                     await _developerService.GetCompaniesByName(searchString));
             
