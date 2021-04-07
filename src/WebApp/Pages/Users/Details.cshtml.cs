@@ -30,5 +30,12 @@ namespace WebApp.Pages.Users
             PostModels = await _postsService.GetUserPosts(id);
             return Page();
         }
+
+        public async Task<IActionResult> OnPostAsync(int id, string text)
+        {
+            var post = new PostModel() {UserId = id, Text = text};
+            await _postsService.CreatePost(post);
+            return RedirectToPage();
+        }
     }
 }

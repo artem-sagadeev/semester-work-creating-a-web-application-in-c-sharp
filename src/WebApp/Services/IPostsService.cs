@@ -13,5 +13,7 @@ namespace WebApp.Services
         public Task<CommentModel> GetComment(int id);
         public Task<IEnumerable<CommentModel>> GetUserComments(int userId);
         public Task<IEnumerable<CommentModel>> GetPostComments(int postId);
+
+        public Task CreatePost(PostModel post);
     }
 }

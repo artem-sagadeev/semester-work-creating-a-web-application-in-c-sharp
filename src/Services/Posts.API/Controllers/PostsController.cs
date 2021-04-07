@@ -19,6 +19,11 @@ namespace Posts.API.Controllers
         }
 
         [HttpGet]
+        [Route("/Posts/Get")]
+        public async Task<ActionResult<IEnumerable<Post>>> Get()
+            => await _context.Post.ToListAsync();
+        
+        [HttpGet]
         [Route("/Posts/Get/{id}")]
         public async Task<ActionResult<Post>> Get(int id)
             => await _context.Post.FirstAsync(p => p.Id == id);
@@ -43,9 +48,9 @@ namespace Posts.API.Controllers
 
         [HttpPost]
         [Route("/Posts/Create")]
-        public async Task Create(int userId, int groupId, string text)
+        public async Task Create(Post post)
         {
-            await _context.AddAsync(new Post(userId, groupId, text));
+            await _context.AddAsync(post);
             await _context.SaveChangesAsync();
         }
         

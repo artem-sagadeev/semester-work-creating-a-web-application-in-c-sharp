@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using WebApp.Extensions;
 using WebApp.Models;
 
@@ -49,6 +52,11 @@ namespace WebApp.Services
         {
             var response = await _client.GetAsync($"/Posts/GetPostComments?postId={postId}");
             return await response.ReadContentAs<IEnumerable<CommentModel>>();
+        }
+
+        public async Task CreatePost(PostModel post)
+        {
+            var response = await _client.PostAsJsonAsync($"/Posts/CreatePost", post);
         }
     }
 }
