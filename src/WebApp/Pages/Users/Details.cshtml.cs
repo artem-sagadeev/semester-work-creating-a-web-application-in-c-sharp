@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Models;
@@ -26,6 +27,7 @@ namespace WebApp.Pages.Users
         {
             UserModel = await _developerService.GetUser(id);
             UserModel.Tags = await _developerService.GetTags(UserModel);
+            UserModel.Companies = await _developerService.GetUserCompanies(id);
             ProjectModels = await _developerService.GetUserProjects(id);
             PostModels = await _postsService.GetUserPosts(id);
             return Page();
@@ -33,9 +35,9 @@ namespace WebApp.Pages.Users
 
         public async Task<IActionResult> OnPostAsync(int id, string text)
         {
-            var post = new PostModel() {UserId = id, Text = text};
+            var post = new PostModel {UserId = id, Text = text};
             await _postsService.CreatePost(post);
-            return RedirectToPage();
+            return Redirect($"/Users/Details?id={id}");
         }
     }
 }

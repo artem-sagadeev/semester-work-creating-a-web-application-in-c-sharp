@@ -8,6 +8,12 @@
         CompanyModel => "Companies",
         _ => throw new NotSupportedException()
     };
+
+    var companies = Model switch {
+        UserModel user => user.Companies,
+        ProjectModel project => new List<CompanyModel> {project.Company},
+        CompanyModel => new List<CompanyModel>()
+    };
 }
 
 <div>
@@ -17,6 +23,12 @@
     {
         <div>
             @tag.Text
+        </div>
+    }
+    @foreach (var company in companies)
+    {
+        <div>
+            @company.Name
         </div>
     }
 </div>

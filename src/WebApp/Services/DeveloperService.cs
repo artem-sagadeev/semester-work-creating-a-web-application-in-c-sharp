@@ -55,7 +55,7 @@ namespace WebApp.Services
 
         public async Task<IEnumerable<ProjectModel>> GetProjectsByName(string name)
         {
-            var response = await _client.GetAsync("/Developers/GetProjectsByName?name={name}");
+            var response = await _client.GetAsync($"/Developers/GetProjectsByName?name={name}");
             return await response.ReadContentAs<IEnumerable<ProjectModel>>();
         }
 

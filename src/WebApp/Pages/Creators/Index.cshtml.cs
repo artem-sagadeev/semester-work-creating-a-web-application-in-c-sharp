@@ -49,6 +49,16 @@ namespace WebApp.Pages.Creators
             foreach (var creator in Creators)
             {
                 creator.Tags = await _developerService.GetTags(creator);
+
+                switch (creator)
+                {
+                    case UserModel user:
+                        user.Companies = await _developerService.GetUserCompanies(user.Id);
+                        break;
+                    case ProjectModel project:
+                        project.Company = await _developerService.GetProjectCompany(project.Id);
+                        break;
+                }
             }
             
             return Page();

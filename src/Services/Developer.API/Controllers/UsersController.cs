@@ -20,12 +20,16 @@ namespace Developer.API.Controllers
         [HttpGet]
         [Route("/Users/Get")]
         public ActionResult<IEnumerable<User>> Get()
-            => _context.User.ToList();
+            => _context
+                .User
+                .ToList();
         
         [HttpGet]
         [Route("/Users/Get/{id}")]
         public ActionResult<User> Get(int id)
-            => _context.User.First(u => u.Id == id);
+            => _context
+                .User
+                .First(u => u.Id == id);
 
         [HttpGet]
         [Route("/Users/GetByCompany/{companyId}")]
