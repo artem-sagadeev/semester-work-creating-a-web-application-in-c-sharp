@@ -1,14 +1,14 @@
 ﻿@page
 @using Microsoft.AspNetCore.Identity
 @using WebApp.Models
-@model WebApp.Pages.Users.Details
+@model WebApp.Pages.UserProfile
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
 @await Html.PartialAsync("Shared/_CreatorPreviewPartial", Model.UserModel)
 
-@foreach (var project in Model.ProjectModels)
+@foreach (var project in Model.UserModel.Projects)
 {
     @await Html.PartialAsync("Shared/_ProjectMiniPreviewPartial", project)
 }

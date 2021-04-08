@@ -1,5 +1,5 @@
 ﻿@page
-@model WebApp.Pages.Creators.Index
+@model WebApp.Pages.Creators
 
 <form method="get">
     <div>
@@ -22,7 +22,7 @@
 
 
 
-@foreach (var creator in Model.Creators)
+@foreach (var creator in Model.CreatorModels)
 {
     @await Html.PartialAsync("Shared/_CreatorPreviewPartial", creator)
 }

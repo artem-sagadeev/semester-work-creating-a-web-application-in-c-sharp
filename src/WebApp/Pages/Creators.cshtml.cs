@@ -6,19 +6,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Models;
 using WebApp.Services;
 
-namespace WebApp.Pages.Creators
+namespace WebApp.Pages
 {
-    public class Index : PageModel
+    public class Creators : PageModel
     {
         private readonly IDeveloperService _developerService;
 
-        public Index(IDeveloperService developerService)
+        public Creators(IDeveloperService developerService)
         {
             _developerService = developerService;
         }
 
         
-        public List<ICreator> Creators { get; set; }
+        public List<ICreator> CreatorModels { get; set; }
 
         public async Task<ActionResult> OnGetAsync(string needUsers, 
             string needProjects, 
@@ -26,27 +26,27 @@ namespace WebApp.Pages.Creators
             string searchString,
             string sortOption)
         {
-            Creators = new List<ICreator>();
+            CreatorModels = new List<ICreator>();
             
             if (needUsers == "on")
-                Creators.AddRange(searchString == null ? 
+                CreatorModels.AddRange(searchString == null ? 
                     await _developerService.GetUsers() : 
                     await _developerService.GetUsersByName(searchString));
             
             if (needProjects == "on")
-                Creators.AddRange(searchString == null ? 
+                CreatorModels.AddRange(searchString == null ? 
                     await _developerService.GetProjects() : 
                     await _developerService.GetProjectsByName(searchString));
             
             if (needCompanies == "on")
-                Creators.AddRange(searchString == null ? 
+                CreatorModels.AddRange(searchString == null ? 
                     await _developerService.GetCompanies() : 
                     await _developerService.GetCompaniesByName(searchString));
             
             if (sortOption != null)
                 Sort(sortOption);
 
-            foreach (var creator in Creators)
+            foreach (var creator in CreatorModels)
             {
                 creator.Tags = await _developerService.GetTags(creator);
 
@@ -66,10 +66,10 @@ namespace WebApp.Pages.Creators
 
         private void Sort(string sortOption)
         {
-            Creators = sortOption switch
+            CreatorModels = sortOption switch
             {
-                "byAlphabet" => Creators.OrderBy(c => c.Name).ToList(),
-                _ => Creators.OrderBy(c => c.Id).ToList()
+                "byAlphabet" => CreatorModels.OrderBy(c => c.Name).ToList(),
+                _ => CreatorModels.OrderBy(c => c.Id).ToList()
             };
         }
     }

@@ -66,6 +66,10 @@
       <_ContentIncludedByDefault Remove="Pages\VirtualPurse\Index.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\Withdrawal\Details.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\Withdrawal\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Creators1\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Users\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Projects\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Companies\Details.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
