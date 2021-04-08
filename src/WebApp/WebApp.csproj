@@ -42,6 +42,34 @@
       <_ContentIncludedByDefault Remove="Pages\User\Details.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\User\Index.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\User\Projects.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\BankAccount\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\BankAccount\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\ChatMember\DetailsByProjectId.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\ChatMember\DetailsByUserId.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\ChatMember\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Message\DetailsById.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Message\DetailsByProjectId.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Message\DetailsByUserIdAndProjectId.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Message\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\PaidSubscription\DetailsBySubscribedToId.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\PaidSubscription\DetailsByUserId.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\PaidSubscription\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Tariff\DetailsBySubscriptionTypeId.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Tariff\DetailsByTariffId.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Tariff\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Transfer\DetailsByUserFrom.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Transfer\DetailsByUserTo.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Transfer\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\TypeOfSubscription\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\TypeOfSubscription\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\VirtualPurse\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\VirtualPurse\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Withdrawal\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Withdrawal\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Creators1\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Users\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Projects\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Companies\Details.cshtml" />
     </ItemGroup>
 
     <ItemGroup>

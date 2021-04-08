@@ -1,5 +1,5 @@
 ﻿@page
-@model WebApp.Pages.Creators.Index
+@model WebApp.Pages.Creators
 
 <form method="get">
     <div>
@@ -7,22 +7,22 @@
     </div>
     <div>
         <label>Users</label>
-        <input type="checkbox" name="needUsers">
+        <input type="checkbox" name="needUsers" checked>
     </div>
     <div>
         <label>Projects</label>
-        <input type="checkbox" name="needProjects">
+        <input type="checkbox" name="needProjects" checked>
     </div>
     <div>
         <label>Companies</label>
-        <input type="checkbox" name="needCompanies">
+        <input type="checkbox" name="needCompanies" checked>
     </div>
     <button>Search</button>
 </form>
 
 
 
-@foreach (var creator in Model.Creators)
+@foreach (var creator in Model.CreatorModels)
 {
     @await Html.PartialAsync("Shared/_CreatorPreviewPartial", creator)
 }

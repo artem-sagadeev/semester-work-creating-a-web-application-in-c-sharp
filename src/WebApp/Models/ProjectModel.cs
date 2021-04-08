@@ -8,6 +8,8 @@ namespace WebApp.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string ImagePath { get; set; }
+        public CompanyModel Company { get; set; }
+        public IEnumerable<UserModel> Users { get; set; }
         public IEnumerable<TagModel> Tags { get; set; }
     }
 }

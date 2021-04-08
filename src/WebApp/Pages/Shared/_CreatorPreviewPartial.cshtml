@@ -3,20 +3,32 @@
 @{
     var creatorType = Model switch
     {
-        UserModel => "Users",
-        ProjectModel => "Projects",
-        CompanyModel => "Companies",
+        UserModel => "UserProfile",
+        ProjectModel => "ProjectProfile",
+        CompanyModel => "CompanyProfile",
         _ => throw new NotSupportedException()
+    };
+
+    var companies = Model switch {
+        UserModel user => user.Companies,
+        ProjectModel project => new List<CompanyModel> {project.Company},
+        CompanyModel => new List<CompanyModel>()
     };
 }
 
 <div>
-    <a asp-page="/@creatorType/Details" asp-route-id="@Model.Id">@Model.Name</a>
+    <a asp-page="/@creatorType" asp-route-id="@Model.Id">@Model.Name</a>
     <img src="@Model.ImagePath">
     @foreach (var tag in Model.Tags)
     {
         <div>
             @tag.Text
+        </div>
+    }
+    @foreach (var company in companies)
+    {
+        <div>
+            @company.Name
         </div>
     }
 </div>

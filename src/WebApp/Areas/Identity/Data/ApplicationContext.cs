@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using WebApp.Areas.Identity.Data;
+using WebApp.Models;
 
 namespace WebApp.Areas.Identity.Data
 {
-    public class ApplicationContext : IdentityDbContext<IdentityUser>
+    public class ApplicationContext : IdentityDbContext<ApplicationUser>
     {
         private const string ConnectionString = "Host=localhost;Database=identity_db;Username=postgres;Password=qweasd123";
 
