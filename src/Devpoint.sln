@@ -17,9 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gateway.API", "Gateway.API\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentAPI", "Services\PaymentAPI\PaymentAPI.csproj", "{E62F0BC5-8E0A-4031-BAB4-A81E7300AFB9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubscriptionAPI", "SubscriptionAPI\SubscriptionAPI.csproj", "{3CCE4723-A3F7-436C-8199-E1561388D607}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubscriptionAPI", "Services\SubscriptionAPI\SubscriptionAPI.csproj", "{3CCE4723-A3F7-436C-8199-E1561388D607}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatsAPI", "ChatsAPI\ChatsAPI.csproj", "{4E3641A8-56C1-4ABE-98F4-DE44F3F7DA0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatsAPI", "Services\ChatsAPI\ChatsAPI.csproj", "{4E3641A8-56C1-4ABE-98F4-DE44F3F7DA0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
