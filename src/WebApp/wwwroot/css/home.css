@@ -1,0 +1,48 @@
+/* home page */
+.home-main
+{
+    background-image: url('../img/main-background.png');
+    background-size: 100%;
+    background-repeat: round;
+    height: 596px;
+    color:white !important;
+}
+.home-main .container{
+    padding-top: 69px;
+}
+.home-main h2{
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 47px;
+    width: 440px;
+}
+.home-main p{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 477px;
+}
+.home-main a{
+    margin: auto;
+}
+.home-main .container .create{
+    margin: 27px auto 14px auto;
+    display: block;
+    background-color: var(--btn-main-color);
+    color: white;
+}
+.home-main .container .find{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000000;
+    color: white;
+}
+.home-main .container .btn{
+    font-weight: bold;
+}

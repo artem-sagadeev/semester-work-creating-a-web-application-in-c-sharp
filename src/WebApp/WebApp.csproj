@@ -72,8 +72,4 @@
       <_ContentIncludedByDefault Remove="Pages\Companies\Details.cshtml" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="wwwroot\img" />
-    </ItemGroup>
-
 </Project>
