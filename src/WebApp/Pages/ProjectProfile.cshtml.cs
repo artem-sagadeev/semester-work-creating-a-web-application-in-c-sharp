@@ -31,7 +31,7 @@ namespace WebApp.Pages
             ProjectModel.Tags = await _developerService.GetTags(ProjectModel);
             ProjectModel.Company = await _developerService.GetProjectCompany(id);
             ProjectModel.Users = await _developerService.GetProjectUsers(id);
-            PostModels = await _postsService.GetGroupPosts(id);
+            PostModels = await _postsService.GetProjectPosts(id);
             return Page();
         }
 
@@ -39,7 +39,7 @@ namespace WebApp.Pages
         {
             //todo check
             
-            var post = new PostModel {GroupId = id, Text = text};
+            var post = new PostModel {ProjectId = id, Text = text};
             await _postsService.CreatePost(post);
             return Redirect($"/ProjectProfile?id={id}");
         }
