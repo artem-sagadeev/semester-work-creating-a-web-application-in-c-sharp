@@ -4,51 +4,28 @@ services:
   developerapi:
     container_name: developerapi
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-#      - "DatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
-#      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
-#    depends_on:
-#      - catalogdb
+      - ASPNETCORE_ENVIRONMENT=Release
     ports:
-      - "8000:80"
+      - "8003:80"
 
   postsapi:
     container_name: postsapi
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-#      - "CacheSettings:ConnectionString=basketdb:6379"
-#      - "GrpcSettings:DiscountUrl=http://discount.grpc"
-#      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
-#      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
-#    depends_on:
-#      - basketdb
-#      - rabbitmq
+      - ASPNETCORE_ENVIRONMENT=Release
     ports:
-      - "8001:80"
+      - "8002:80"
 
   gatewayapi:
     container_name: gatewayapi
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-#      - "DatabaseSettings:ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=admin1234;"
-#      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
-#    depends_on:
-#      - discountdb
+      - ASPNETCORE_ENVIRONMENT=Release
     ports:
-      - "8002:80"
+      - "8001:80"
 
   webapp:
     container_name: webapp
     environment:
-        - ASPNETCORE_ENVIRONMENT=Development
-        - "ApiSettings:GatewayAddress=http://gatewayapi"
-#        - "ElasticConfiguration:Uri=http://elasticsearch:9200"
-#    depends_on:
-#        - ocelotapigw
-#        - catalog.api
-#        - basket.api
-#        - discount.api
-#        - ordering.api
+        - ASPNETCORE_ENVIRONMENT=Release
     ports:
-        - "8006:80"
+        - "8000:80"
         
