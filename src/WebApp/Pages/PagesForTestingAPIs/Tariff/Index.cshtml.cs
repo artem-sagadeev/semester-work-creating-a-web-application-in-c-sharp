@@ -27,7 +27,13 @@ namespace WebApp.Pages.Tariff
 
         public async Task OnPostAsync(int tariffId)
         {
-            await _subscriptionService.DeleteTariff(tariffId);
+            var x = new TariffModel()
+            {
+                PriceType = PriceType.Free,
+                TypeOfSubscription = TypeOfSubscription.Team,
+                PricePerMonth = 10
+            };
+            await _subscriptionService.AddTariff(x);
         }
     }
 }

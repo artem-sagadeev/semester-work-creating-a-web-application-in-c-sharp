@@ -21,10 +21,10 @@ namespace SubscriptionAPI.Controllers
         public ActionResult<IEnumerable<Tariff>> Get()
         {
             var temp = _context.Tariffs.ToList();
-            foreach (var t in temp)
-            {
-                _context.Entry(t).Reference(x => x.TypeOfSubscription).Load();
-            }
+            // foreach (var t in temp)
+            // {
+            //     _context.Entry(t).Reference(x => x.TypeOfSubscription).Load();
+            // }
             return temp;
         }
 
@@ -33,20 +33,20 @@ namespace SubscriptionAPI.Controllers
         public ActionResult<Tariff> GetByTariffId(int tariffId)
         {
             var temp = _context.Tariffs.First(c => c.Id == tariffId);
-            _context.Entry(temp).Reference(x => x.TypeOfSubscription).Load();
+            //_context.Entry(temp).Reference(x => x.TypeOfSubscription).Load();
             return temp;
         }
         // => _context.Tariffs.First(c => c.Id == tariffId);
 
         [HttpGet]
         [Route("/Tariffs/GetBySubscriptionType/{subscriptionTypeId}")]
-        public ActionResult<IEnumerable<Tariff>> GetBySubscriptionType(int subscriptionTypeId)
+        public ActionResult<IEnumerable<Tariff>> GetBySubscriptionType(TypeOfSubscription subscriptionTypeId)
         {
-            var temp = _context.Tariffs.Where(c => c.TypeOfSubscription.Id == subscriptionTypeId).ToList();
-            foreach (var t in temp)
-            {
-                _context.Entry(t).Reference(x => x.TypeOfSubscription).Load();
-            }
+            var temp = _context.Tariffs.Where(c => c.TypeOfSubscription == subscriptionTypeId).ToList();
+            // foreach (var t in temp)
+            // {
+            //     _context.Entry(t).Reference(x => x.TypeOfSubscription).Load();
+            // }
             return temp;
         }
         
@@ -68,7 +68,7 @@ namespace SubscriptionAPI.Controllers
         [Route("/Tariffs/Add")]
         public async Task Add([FromBody]Tariff newTariff)
         {
-            newTariff.TypeOfSubscription = _context.TypeOfSubscriptions.First(x => x.Id == newTariff.TypeOfSubscription.Id);
+            //newTariff.TypeOfSubscription = _context.TypeOfSubscriptions.First(x => x.Id == newTariff.TypeOfSubscription.Id);
             _context.Tariffs.Add(newTariff);
             await _context.SaveChangesAsync();
         }

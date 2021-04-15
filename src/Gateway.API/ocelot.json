@@ -258,57 +258,6 @@
         "UpstreamPathTemplate": "/Subscription/DeleteTariff",
         "UpstreamHttpMethod": [ "POST" ]
       },
-
-
-      //GetTypeOfSubscription
-    {
-        "DownStreamPathTemplate": "/TypeOfSubscriptions/Get",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-            {
-                "Host": "localhost",
-                "Port": 5006
-            }
-        ],
-        "UpstreamPathTemplate": "/Subscription/GetTypesOfSubscription",
-        "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-        "DownStreamPathTemplate": "/TypeOfSubscriptions/Get/{id}",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-            {
-                "Host": "localhost",
-                "Port": 5006
-            }
-        ],
-        "UpstreamPathTemplate": "/Subscription/GetTypeOfSubscription?id={id}",
-        "UpstreamHttpMethod": [ "GET" ]
-    },
-      {
-        "DownStreamPathTemplate": "/TypeOfSubscriptions/Add",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-          {
-            "Host": "localhost",
-            "Port": 5006
-          }
-        ],
-        "UpstreamPathTemplate": "/Subscription/AddTypeOfSubscription",
-        "UpstreamHttpMethod": [ "POST" ]
-      },
-      {
-        "DownStreamPathTemplate": "/TypeOfSubscriptions/Delete",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-          {
-            "Host": "localhost",
-            "Port": 5006
-          }
-        ],
-        "UpstreamPathTemplate": "/Subscription/DeleteTypeOfSubscription",
-        "UpstreamHttpMethod": [ "POST" ]
-      },
     //GetPaidSubscription
     {
         "DownStreamPathTemplate": "/PaidSubscriptions/Get",

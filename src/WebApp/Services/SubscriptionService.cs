@@ -31,7 +31,7 @@ namespace WebApp.Services
             return await response.ReadContentAs<TariffModel>();
         }
 
-        public async Task<IEnumerable<TariffModel>> GetTariffBySubscriptionType(int subscriptionTypeId)
+        public async Task<IEnumerable<TariffModel>> GetTariffBySubscriptionType(TypeOfSubscription subscriptionTypeId)
         {
             var response = await _client.GetAsync($"/Subscription/GetTariffBySubscriptionType?subscriptionTypeId={subscriptionTypeId}");
             return await response.ReadContentAs<IEnumerable<TariffModel>>();
@@ -53,37 +53,7 @@ namespace WebApp.Services
                 tariffId = tariffId
             });
         }
-
-        //TypeOfSubscription
-        public async Task<IEnumerable<TypeOfSubscriptionModel>> GetTypesOfSubscription()
-        {
-            var response = await _client.GetAsync($"/Subscription/GetTypesOfSubscription");
-            return await response.ReadContentAs<IEnumerable<TypeOfSubscriptionModel>>();
-        }
-
-        public async Task<TypeOfSubscriptionModel> GetTypeOfSubscription(int id)
-        {
-            var response = await _client.GetAsync($"/Subscription/GetTypeOfSubscription?id={id}");
-            return await response.ReadContentAs<TypeOfSubscriptionModel>();
-        }
-
-        public async Task AddTypeOfSubscription(TypeOfSubscriptionModel newTypeOfSubscription)
-        {
-            await _client.PostAsJsonAsync($"/Subscription/AddTypeOfSubscription", newTypeOfSubscription);
-        }
-
-        private class IdFormat
-        {
-            public int id { get; set; }
-        }
-        public async Task DeleteTypeOfSubscription(int id)
-        {
-            await _client.PostAsJsonAsync($"/Subscription/DeleteTypeOfSubscription", new IdFormat()
-            {
-                id = id
-            });
-        }
-
+      
         //PaidSubscriptions
         public async Task<IEnumerable<PaidSubscriptionModel>> GetPaidSubscriptions()
         {

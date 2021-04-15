@@ -4,13 +4,12 @@
 {
     <p>
         Id = <a asp-page="/Tariff/DetailsByTariffId" asp-route-tariffId="@tariffodel.Id">@tariffodel.Id</a>;
-        SubscribedTypeId = <a asp-page="/Tariff/DetailsBySubscriptionTypeId" asp-route-subscriptionTypeId="@tariffodel.TypeOfSubscription.Id"> @tariffodel.TypeOfSubscription.Id</a>;
-        @tariffodel.Name @tariffodel.PricePerMonth руб
-          <form method="post" >
-                            <label>Добавить:</label>
-              <input type="number" name="tariffId"/>
-                            <input type="submit" value="Отправить"/>
-                            </form>
+        SubscribedTypeId = <a asp-page="/Tariff/DetailsBySubscriptionTypeId" asp-route-subscriptionTypeId="@tariffodel.TypeOfSubscription"> @tariffodel.TypeOfSubscription</a>;
+        @tariffodel.PricePerMonth руб
+        <form method="post">
+            <label>Добавить:</label>
+            <input type="number" name="tariffId"/>
+            <input type="submit" value="Отправить"/>
+        </form>
     </p>
 }
-

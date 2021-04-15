@@ -26,6 +26,6 @@
     @await Html.PartialAsync("Shared/_PostPartial", post)
 }
 
-<form method="post" asp-controller="Subsribe">
+<form method="post" asp-controller="Subsribe"  asp-action="Subscribe" asp-route-developerId=@Model.Id asp-route-userId=@>
     <button type="submit">Subscribe</button>
 </form>

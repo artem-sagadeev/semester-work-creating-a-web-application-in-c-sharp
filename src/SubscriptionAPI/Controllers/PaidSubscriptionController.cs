@@ -73,7 +73,7 @@ namespace SubscriptionAPI.Controllers
         public async Task Add([FromBody]PaidSubscription newPaidSubscription)
         {
             newPaidSubscription.EndDate = DateTime.Now.AddMonths(1);
-            newPaidSubscription.Tariff = _context.Tariffs.First(x => x.Id == newPaidSubscription.TariffId);
+            newPaidSubscription.Tariff = _context.Tariffs.First(x => x.PriceType == newPaidSubscription.Tariff.PriceType && x.TypeOfSubscription == newPaidSubscription.Tariff.TypeOfSubscription);
             newPaidSubscription.TariffId = newPaidSubscription.Tariff.Id;
             newPaidSubscription.IsAutorenewal = true;
             _context.PaidSubscriptions.Add(newPaidSubscription);
