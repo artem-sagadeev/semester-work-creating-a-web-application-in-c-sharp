@@ -1,302 +1,5 @@
 {
   "Routes": [
-    //GetBankAccount
-    {
-      "DownStreamPathTemplate": "/BankAccounts/Get/{userId}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5005
-        }
-      ],
-      "UpstreamPathTemplate": "/Payment/GetBankAccount?userId={userId}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownStreamPathTemplate": "/BankAccounts/Get",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5005
-        }
-      ],
-      "UpstreamPathTemplate": "/Payment/GetBankAccounts",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    //GetTransfer
-    {
-      "DownStreamPathTemplate": "/Transfers/Get",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5005
-        }
-      ],
-      "UpstreamPathTemplate": "/Payment/GetTransfers",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownStreamPathTemplate": "/Transfers/GetByUsersFrom/{userId}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5005
-        }
-      ],
-      "UpstreamPathTemplate": "/Payment/GetTransfersByUserFrom?userId={userId}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownStreamPathTemplate": "/Transfers/GetByUserTo/{userId}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5005
-        }
-      ],
-      "UpstreamPathTemplate": "/Payment/GetTransfersByUserTo?userId={userId}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    //GetVirtualPurse
-    {
-      "DownStreamPathTemplate": "/VirtualPurses/Get",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5005
-        }
-      ],
-      "UpstreamPathTemplate": "/Payment/GetVirtualPurses",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownStreamPathTemplate": "/VirtualPurses/Get/{userId}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5005
-        }
-      ],
-      "UpstreamPathTemplate": "/Payment/GetVirtualPurse?userId={userId}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    //GetWithdrawals
-    {
-      "DownStreamPathTemplate": "/Withdrawals/Get",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5005
-        }
-      ],
-      "UpstreamPathTemplate": "/Payment/GetWithdrawals",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownStreamPathTemplate": "/Withdrawals/Get/{userId}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5005
-        }
-      ],
-      "UpstreamPathTemplate": "/Payment/GetWithdrawalsByUserId?userId={userId}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    //GetTariffs
-    {
-      "DownStreamPathTemplate": "/Tariffs/Get",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5006
-        }
-      ],
-      "UpstreamPathTemplate": "/Subscription/GetTariffs",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownStreamPathTemplate": "/Tariffs/GetByTariffId/{tariffId}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5006
-        }
-      ],
-      "UpstreamPathTemplate": "/Subscription/GetTariffById?tariffId={tariffId}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownStreamPathTemplate": "/Tariffs/GetBySubscriptionType/{subscriptionTypeId}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5006
-        }
-      ],
-      "UpstreamPathTemplate": "/Subscription/GetTariffBySubscriptionType?subscriptionTypeId={subscriptionTypeId}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    //GetTypeOfSubscription
-    {
-      "DownStreamPathTemplate": "/TypeOfSubscriptions/Get",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5006
-        }
-      ],
-      "UpstreamPathTemplate": "/Subscription/GetTypesOfSubscription",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownStreamPathTemplate": "/TypeOfSubscriptions/Get/{id}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5006
-        }
-      ],
-      "UpstreamPathTemplate": "/Subscription/GetTypeOfSubscription?id={id}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    //GetPaidSubscription
-    {
-      "DownStreamPathTemplate": "/PaidSubscriptions/Get",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5006
-        }
-      ],
-      "UpstreamPathTemplate": "/Subscription/GetPaidSubscriptions",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownStreamPathTemplate": "/PaidSubscriptions/GetByUser/{userId}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5006
-        }
-      ],
-      "UpstreamPathTemplate": "/Subscription/GetPaidSubscriptionsByUserId?userId={userId}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownStreamPathTemplate": "/PaidSubscriptions/GetBySubscribedToId/{subscribedToId}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5006
-        }
-      ],
-      "UpstreamPathTemplate": "/Subscription/GetPaidSubscriptionsBySubscribedToId?subscribedToId={subscribedToId}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    //GetChatMembers
-    {
-      "DownStreamPathTemplate": "/ChatsMembers/Get",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5007
-        }
-      ],
-      "UpstreamPathTemplate": "/Chats/GetChatMembers",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownStreamPathTemplate": "/ChatsMembers/GetByProjectId/{projectId}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5007
-        }
-      ],
-      "UpstreamPathTemplate": "/Chats/GetChatMembersByProjectId?projectId={projectId}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownStreamPathTemplate": "/ChatsMembers/GetByUserId/{userId}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5007
-        }
-      ],
-      "UpstreamPathTemplate": "/Chats/GetChatMembersByUserId?userId={userId}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    //GetMessages
-    {
-      "DownStreamPathTemplate": "/Messages/Get",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5007
-        }
-      ],
-      "UpstreamPathTemplate": "/Chats/GetMessages",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownStreamPathTemplate": "/Messages/GetByProjectId/{projectId}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5007
-        }
-      ],
-      "UpstreamPathTemplate": "/Chats/GetMessagesByProjectId?projectId={projectId}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownStreamPathTemplate": "/Messages/GetById/{messageId}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5007
-        }
-      ],
-      "UpstreamPathTemplate": "/Chats/GetMessagesById?messageId={messageId}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    {
-      "DownStreamPathTemplate": "/Messages/GetByUserIdAndProjectId/{userId}/{projectId}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5007
-        }
-      ],
-      "UpstreamPathTemplate": "/Chats/GetMessagesByUserIdAndProjectId?userId={userId}&projectId={projectId}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
     //Users
     {
       "DownStreamPathTemplate": "/Users/Get",
@@ -523,8 +226,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "postsapi",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Posts/GetGroupPosts?groupId={groupId}",
@@ -535,8 +238,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "postsapi",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Posts/GetPost/{id}",
@@ -547,8 +250,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "postsapi",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Posts/GetUserPosts?userId={userId}",
@@ -559,8 +262,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "postsapi",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Posts/CreatePost",
@@ -572,24 +275,11 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "postsapi",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Posts/GetPostComments?postId={postId}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-    //Files
-    {
-      "DownStreamPathTemplate": "/Files/GetLink/{id}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5004
-        }
-      ],
-      "UpstreamPathTemplate": "/Files/GetLink/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     }
   ],
