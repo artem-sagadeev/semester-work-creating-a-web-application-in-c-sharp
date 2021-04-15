@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WebApp.Extensions;
 using WebApp.Models;
@@ -32,6 +33,22 @@ namespace WebApp.Services
             return await response.ReadContentAs<BankAccountModel>();
         }
 
+        private class UserIdFormat
+        {
+            public int userId { get; set; }
+        }
+        public async Task DeleteBankAccount(int userId)
+        {
+            await _client.PostAsJsonAsync($"/Payment/DeleteBankAccount", new UserIdFormat()
+            {
+                userId = userId
+            });
+        }
+
+        public async Task AddBankAccount(BankAccountModel newBankAccount)
+        {
+            await _client.PostAsJsonAsync($"/Payment/AddBankAccount", newBankAccount);
+        }
 
         //Transfers
         public async Task<IEnumerable<TransferModel>> GetTransfers()
@@ -52,6 +69,11 @@ namespace WebApp.Services
             return await response.ReadContentAs<IEnumerable<TransferModel>>();
         }
 
+        public async Task AddTransfer(TransferModel newTransfer)
+        {
+            await _client.PostAsJsonAsync($"/Payment/AddTransfer", newTransfer);
+        }
+
         //VirtualPurse
         public async Task<IEnumerable<VirtualPurseModel>> GetVirtualPurses()
         {
@@ -65,6 +87,30 @@ namespace WebApp.Services
             return await response.ReadContentAs<VirtualPurseModel>();
         }
 
+        private class UserIdMoneyIdFormat
+        {
+            public int userId { get; set; }
+            public int money { get; set; }
+        }
+        public async Task UpdateVirtualPurse(int userId, int money)
+        {
+            await _client.PostAsJsonAsync($"/Payment/UpdateVirtualPurse", new UserIdMoneyIdFormat(){
+                userId = userId,
+                    money = money
+            });
+        }
+
+        public async Task DeleteVirtualPurse(int userId)
+        {
+            await _client.PostAsJsonAsync($"/Payment/DeleteVirtualPurse", new UserIdFormat(){
+                userId = userId,
+            });
+        }
+
+        public async Task AddVirtualPurse(VirtualPurseModel newVirtualPurse)
+        {
+            await _client.PostAsJsonAsync($"/Payment/AddVirtualPurse", newVirtualPurse);
+        }
 
         //Withdrawals
         public async Task<IEnumerable<WithdrawalModel>> GetWithdrawals()
@@ -73,12 +119,16 @@ namespace WebApp.Services
             return await response.ReadContentAs<IEnumerable<WithdrawalModel>>();
         }
 
-        //TODO: Не работает GetWithdrawals(int userId);
+        
         public async Task<IEnumerable<WithdrawalModel>> GetWithdrawalsByUserId(int userId)
         {
             var response = await _client.GetAsync($"/Payment/GetWithdrawalsByUserId?userId={userId}");
             return await response.ReadContentAs<IEnumerable<WithdrawalModel>>();
         }
 
+        public async Task AddWithdrawal(WithdrawalModel newWithdrawal)
+        {
+            await _client.PostAsJsonAsync($"/Payment/AddWithdrawal", newWithdrawal);
+        }
     }
 }

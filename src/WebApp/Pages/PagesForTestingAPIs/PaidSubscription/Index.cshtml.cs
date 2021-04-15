@@ -24,5 +24,10 @@ namespace WebApp.Pages.PaidSubscription
             PaidSubscriptionModels = await _subscriptionService.GetPaidSubscriptions();
             return Page();
         }
+
+        public async Task OnPostAsync(int userId, int subscribedToId, int tariffId)
+        {
+            await _subscriptionService.DeletePaidSubscription(userId, tariffId, subscribedToId);
+        }
     }
 }

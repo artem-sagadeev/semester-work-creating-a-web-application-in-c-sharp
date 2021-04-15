@@ -26,24 +26,24 @@ namespace SubscriptionAPI.Controllers
         public ActionResult<TypeOfSubscription> Get(int id)
             => _context.TypeOfSubscriptions.First(c => c.Id == id);
 
+        public class IdFormat
+        {
+            public int id { get; set; }
+        }
         [HttpPost]
         [Route("/TypeOfSubscriptions/Delete")]
-        public async Task Delete(int id)
+        public async Task Delete([FromBody]IdFormat id)
         {
-            var type = await _context.TypeOfSubscriptions.FirstAsync(c => c.Id == id);
+            var type = await _context.TypeOfSubscriptions.FirstAsync(c => c.Id == id.id);
             _context.TypeOfSubscriptions.Remove(type);
             await _context.SaveChangesAsync();
         }
 
         [HttpPost]
         [Route("/TypeOfSubscriptions/Add")]
-        public async Task AddBankAccount(string type)
+        public async Task Add([FromBody]TypeOfSubscription newTypeOfSubscription)
         {
-            var newTypeOfSubscription = new TypeOfSubscription()
-            {
-                Type = type
-            };
-            _context.TypeOfSubscriptions.Add(newTypeOfSubscription);
+           _context.TypeOfSubscriptions.Add(newTypeOfSubscription);
             await _context.SaveChangesAsync();
         }
     }

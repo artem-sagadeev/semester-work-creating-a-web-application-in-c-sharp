@@ -24,5 +24,16 @@ namespace WebApp.Pages.Transfer
             TransferModels = await _paymentService.GetTransfers();
             return Page();
         }
+
+        public async Task OnPostAsync(int money, int userFrom, int userTo)
+        {
+            var x = new TransferModel()
+            {
+                MoneySum = money,
+                UserFrom = userFrom,
+                UserTo = userTo,
+            };
+            await _paymentService.AddTransfer(x);
+        }
     }
 }

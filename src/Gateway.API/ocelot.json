@@ -25,6 +25,30 @@
         "UpstreamPathTemplate": "/Payment/GetBankAccounts",
         "UpstreamHttpMethod": [ "GET" ]
     },
+      {
+        "DownStreamPathTemplate": "/BankAccounts/AddBankAccount",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5005
+          }
+        ],
+        "UpstreamPathTemplate": "/Payment/AddBankAccount",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
+      {
+        "DownStreamPathTemplate": "/BankAccounts/Delete",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5005
+          }
+        ],
+        "UpstreamPathTemplate": "/Payment/DeleteBankAccount",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
     //GetTransfer
     {
         "DownStreamPathTemplate": "/Transfers/Get",
@@ -62,6 +86,19 @@
         "UpstreamPathTemplate": "/Payment/GetTransfersByUserTo?userId={userId}",
         "UpstreamHttpMethod": [ "GET" ]
     },
+      {
+        "DownStreamPathTemplate": "/Transfers/Add",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5005
+          }
+        ],
+        "UpstreamPathTemplate": "/Payment/AddTransfer",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
+   
     //GetVirtualPurse
     {
         "DownStreamPathTemplate": "/VirtualPurses/Get",
@@ -87,6 +124,42 @@
         "UpstreamPathTemplate": "/Payment/GetVirtualPurse?userId={userId}",
         "UpstreamHttpMethod": [ "GET" ]
     },
+      {
+        "DownStreamPathTemplate": "/VirtualPurses/Add",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5005
+          }
+        ],
+        "UpstreamPathTemplate": "/Payment/AddVirtualPurse",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
+      {
+        "DownStreamPathTemplate": "/VirtualPurses/Delete",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5005
+          }
+        ],
+        "UpstreamPathTemplate": "/Payment/DeleteVirtualPurse",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
+      {
+        "DownStreamPathTemplate": "/VirtualPurses/UpdateMoney",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5005
+          }
+        ],
+        "UpstreamPathTemplate": "/Payment/UpdateVirtualPurse",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
     //GetWithdrawals
     {
         "DownStreamPathTemplate": "/Withdrawals/Get",
@@ -112,6 +185,18 @@
         "UpstreamPathTemplate": "/Payment/GetWithdrawalsByUserId?userId={userId}",
         "UpstreamHttpMethod": [ "GET" ]
     },
+      {
+        "DownStreamPathTemplate": "/Withdrawals/Add",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5005
+          }
+        ],
+        "UpstreamPathTemplate": "/Payment/AddWithdrawal",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
     //GetTariffs
     {
         "DownStreamPathTemplate": "/Tariffs/Get",
@@ -149,7 +234,33 @@
         "UpstreamPathTemplate": "/Subscription/GetTariffBySubscriptionType?subscriptionTypeId={subscriptionTypeId}",
         "UpstreamHttpMethod": [ "GET" ]
     },
-    //GetTypeOfSubscription
+      {
+        "DownStreamPathTemplate": "/Tariffs/Add",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5006
+          }
+        ],
+        "UpstreamPathTemplate": "/Subscription/AddTariff",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
+      {
+        "DownStreamPathTemplate": "/Tariffs/Delete",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5006
+          }
+        ],
+        "UpstreamPathTemplate": "/Subscription/DeleteTariff",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
+
+
+      //GetTypeOfSubscription
     {
         "DownStreamPathTemplate": "/TypeOfSubscriptions/Get",
         "DownstreamScheme": "http",
@@ -174,6 +285,30 @@
         "UpstreamPathTemplate": "/Subscription/GetTypeOfSubscription?id={id}",
         "UpstreamHttpMethod": [ "GET" ]
     },
+      {
+        "DownStreamPathTemplate": "/TypeOfSubscriptions/Add",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5006
+          }
+        ],
+        "UpstreamPathTemplate": "/Subscription/AddTypeOfSubscription",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
+      {
+        "DownStreamPathTemplate": "/TypeOfSubscriptions/Delete",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5006
+          }
+        ],
+        "UpstreamPathTemplate": "/Subscription/DeleteTypeOfSubscription",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
     //GetPaidSubscription
     {
         "DownStreamPathTemplate": "/PaidSubscriptions/Get",
@@ -211,6 +346,30 @@
         "UpstreamPathTemplate": "/Subscription/GetPaidSubscriptionsBySubscribedToId?subscribedToId={subscribedToId}",
         "UpstreamHttpMethod": [ "GET" ]
     },
+      {
+        "DownStreamPathTemplate": "/PaidSubscriptions/Add",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5006
+          }
+        ],
+        "UpstreamPathTemplate": "/Subscription/AddPaidSubscription",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
+      {
+        "DownStreamPathTemplate": "/PaidSubscriptions/Delete",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5006
+          }
+        ],
+        "UpstreamPathTemplate": "/Subscription/DeletePaidSubscription",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
     //GetChatMembers
     {
         "DownStreamPathTemplate": "/ChatsMembers/Get",
@@ -248,6 +407,30 @@
         "UpstreamPathTemplate": "/Chats/GetChatMembersByUserId?userId={userId}",
         "UpstreamHttpMethod": [ "GET" ]
     },
+      {
+        "DownStreamPathTemplate": "/ChatsMembers/Add",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5007
+          }
+        ],
+        "UpstreamPathTemplate": "/Chats/AddChatMember",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
+      {
+        "DownStreamPathTemplate": "/ChatsMembers/Delete",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5007
+          }
+        ],
+        "UpstreamPathTemplate": "/Chats/DeleteChatMember",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
     //GetMessages
     {
         "DownStreamPathTemplate": "/Messages/Get",
@@ -297,6 +480,30 @@
         "UpstreamPathTemplate": "/Chats/GetMessagesByUserIdAndProjectId?userId={userId}&projectId={projectId}",
         "UpstreamHttpMethod": [ "GET" ]
     },
+      {
+        "DownStreamPathTemplate": "/Messages/Add",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5007
+          }
+        ],
+        "UpstreamPathTemplate": "/Chats/AddMessage",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
+      {
+        "DownStreamPathTemplate": "/Messages/Delete",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5007
+          }
+        ],
+        "UpstreamPathTemplate": "/Chats/DeleteMessage",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
     //Users
     {
       "DownStreamPathTemplate": "/Users/Get",

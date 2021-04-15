@@ -31,25 +31,31 @@ namespace ChatsAPI.Controllers
         public ActionResult<IEnumerable<ChatMember>> GetByUserId(int userId) =>
             _context.ChatsMembers.Where(c => c.UserId == userId).ToList();
 
+        public class ProjectUserIdFormat
+        {
+            public int projectId { get; set; }
+
+            public int userId { get; set; }
+        }
         
         [HttpPost]
         [Route("/ChatsMembers/Delete")]
-        public async Task Delete(int projectId, int userId)
+        public async Task Delete([FromBody]ProjectUserIdFormat projectUserIdFormat)
         {
-            var member = await _context.ChatsMembers.FirstAsync(c => c.UserId == userId && c.ProjectId == c.ProjectId);
+            var member = await _context.ChatsMembers.FirstAsync(c => c.UserId == projectUserIdFormat.userId && c.ProjectId == projectUserIdFormat.projectId);
             _context.ChatsMembers.Remove(member);
             await _context.SaveChangesAsync();
         }
 
         [HttpPost]
         [Route("/ChatsMembers/Add")]
-        public async Task Add(int projectId, int userId, bool isAuthor)
+        public async Task Add([FromBody]ChatMember newChatMember)
         {
             var chatMember = new ChatMember()
             {
-               ProjectId = projectId,
-               UserId = userId,
-               IsAuthor = isAuthor
+               ProjectId = newChatMember.ProjectId,
+               UserId = newChatMember.UserId,
+               IsAuthor = newChatMember.IsAuthor
             };
             _context.ChatsMembers.Add(chatMember);
             await _context.SaveChangesAsync();

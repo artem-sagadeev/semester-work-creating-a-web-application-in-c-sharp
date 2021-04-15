@@ -24,5 +24,15 @@ namespace WebApp.Pages.Withdrawal
             WithdrawalModels = await _paymentService.GetWithdrawals();
             return Page();
         }
+
+        public async Task OnPostAsync(int sum, int userId)
+        {
+            var x = new WithdrawalModel()
+            {
+                Sum = sum,
+                UserID = userId
+            };
+            await _paymentService.AddWithdrawal(x);
+        }
     }
 }

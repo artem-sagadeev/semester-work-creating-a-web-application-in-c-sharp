@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WebApp.Extensions;
 using WebApp.Models;
@@ -36,6 +37,23 @@ namespace WebApp.Services
             return await response.ReadContentAs<IEnumerable<TariffModel>>();
         }
 
+        public async Task AddTariff(TariffModel newTariff)
+        {
+            await _client.PostAsJsonAsync($"/Subscription/AddTariff", newTariff);
+        }
+
+        private class TariffIdFormat
+        {
+            public int tariffId { get; set; }
+        }
+        public async Task DeleteTariff(int tariffId)
+        {
+            await _client.PostAsJsonAsync($"/Subscription/DeleteTariff", new TariffIdFormat()
+            {
+                tariffId = tariffId
+            });
+        }
+
         //TypeOfSubscription
         public async Task<IEnumerable<TypeOfSubscriptionModel>> GetTypesOfSubscription()
         {
@@ -47,6 +65,23 @@ namespace WebApp.Services
         {
             var response = await _client.GetAsync($"/Subscription/GetTypeOfSubscription?id={id}");
             return await response.ReadContentAs<TypeOfSubscriptionModel>();
+        }
+
+        public async Task AddTypeOfSubscription(TypeOfSubscriptionModel newTypeOfSubscription)
+        {
+            await _client.PostAsJsonAsync($"/Subscription/AddTypeOfSubscription", newTypeOfSubscription);
+        }
+
+        private class IdFormat
+        {
+            public int id { get; set; }
+        }
+        public async Task DeleteTypeOfSubscription(int id)
+        {
+            await _client.PostAsJsonAsync($"/Subscription/DeleteTypeOfSubscription", new IdFormat()
+            {
+                id = id
+            });
         }
 
         //PaidSubscriptions
@@ -66,6 +101,29 @@ namespace WebApp.Services
         {
             var response = await _client.GetAsync($"/Subscription/GetPaidSubscriptionsBySubscribedToId?subscribedToId={subscribedToId}");
             return await response.ReadContentAs<IEnumerable<PaidSubscriptionModel>>();
+        }
+
+        public async Task AddPaidSubscription(PaidSubscriptionModel newPaidSubscription)
+        {
+            await _client.PostAsJsonAsync($"/Subscription/AddPaidSubscription", newPaidSubscription);
+        }
+
+        class UserIdTariffIdSubscibedIdFormat
+        {
+            public int userId { get; set; }
+            public int tariffId { get; set; } 
+            public int subscribedToId { get; set; }
+        }
+        
+        public async Task DeletePaidSubscription(int userId, int tariffId, int subscribedToId)
+        {
+            await _client.PostAsJsonAsync($"/Subscription/DeletePaidSubscription", 
+                new UserIdTariffIdSubscibedIdFormat()
+                {
+                    userId = userId,
+                    tariffId = tariffId,
+                    subscribedToId = subscribedToId
+                });
         }
     }
 }

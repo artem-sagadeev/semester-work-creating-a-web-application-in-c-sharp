@@ -24,6 +24,11 @@ namespace WebApp.Pages.Tariff
             TariffModels = await _subscriptionService.GetTariffs();
             return Page();
         }
+
+        public async Task OnPostAsync(int tariffId)
+        {
+            await _subscriptionService.DeleteTariff(tariffId);
+        }
     }
 }
 

@@ -11,6 +11,7 @@ namespace ChatsAPI.Controllers
     public class MessageController : Controller
     {
         private readonly ChatsContext _context;
+
         public MessageController(ChatsContext context)
         {
             _context = context;
@@ -30,36 +31,31 @@ namespace ChatsAPI.Controllers
         public ActionResult<Message> GetById(int messageId) =>
             _context.Messages.First(c => c.Id == messageId);
 
-
         [HttpGet]
         [Route("/Messages/GetByUserIdAndProjectId/{userId}/{projectId}")]
         public ActionResult<IEnumerable<Message>> GetByUserIdAndProjectId(int userId, int projectId) =>
             _context.Messages.Where(c => c.UserId == userId && c.ProjectId == projectId).ToList();
 
-
+        public class MessageIdFormat
+        {
+            public int messageId { get; set; }
+        }
         [HttpPost]
         [Route("/Messages/Delete")]
-        public async Task Delete(int messageId)
+        public async Task Delete([FromBody]MessageIdFormat messageIdFromat)
         {
-            var message = await _context.Messages.FirstAsync(c => c.Id == messageId);
+            var message = await _context.Messages.FirstAsync(c => c.Id == messageIdFromat.messageId);
             _context.Messages.Remove(message);
             await _context.SaveChangesAsync();
         }
 
+       
         [HttpPost]
         [Route("/Messages/Add")]
-        public async Task Add(int projectId, int userId, string text)
+        public async Task Add([FromBody]Message message)
         {
-            var message = new Message()
-            {
-                ProjectId = projectId,
-                UserId = userId,
-                Text = text,
-                DateTime = DateTime.Now
-            };
             _context.Messages.Add(message);
             await _context.SaveChangesAsync();
         }
-
     }
 }

@@ -24,5 +24,10 @@ namespace WebApp.Pages.TypeOfSubscription
             TypesOfSubscrubtionModels = await _subscriptionService.GetTypesOfSubscription();
             return Page();
         }
+
+        public async Task OnPostAsync(int id)
+        {
+            await _subscriptionService.DeleteTypeOfSubscription(id);
+        }
     }
 }

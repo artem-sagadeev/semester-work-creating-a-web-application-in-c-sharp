@@ -5,6 +5,11 @@
     <p>
         Id = <a asp-page="/TypeOfSubscription/Details" asp-route-id="@subscriptionModel.Id">@subscriptionModel.Id</a>;
         Name = @subscriptionModel.Type
+         <form method="post" >
+                                    <label>Удалить:</label>
+             <input type="number" name="id"/>
+             <input type="submit" value="Отправить"/>
+                                    </form>
     </p>
 }
 
