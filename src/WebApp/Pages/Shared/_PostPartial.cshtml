@@ -1,6 +1,35 @@
-﻿@model WebApp.Models.PostModel
+﻿@using WebApp.Models
+@using Microsoft.AspNetCore.Identity
+@using WebApp.Services
+@model WebApp.Models.PostModel
 
-<div>
-    @Model.Id
-    @Model.Text
-</div>
+@inject SignInManager<ApplicationUser> _signInManager
+@inject UserManager<ApplicationUser> _userManager
+@inject ISubscriptionService _subscriptionService
+
+@{
+    //todo
+    var user = _signInManager.IsSignedIn(User) ? await _userManager.GetUserAsync(User) : null;
+    var hasAccess = Model.RequiredSubscriptionType == 0 ? true : false;
+    if (user != null)
+    {
+        hasAccess =
+            await _subscriptionService.HasUserAccess(user.UserId, Model.UserId, Model.RequiredSubscriptionType) ||
+            Model.ProjectId != 0 &&
+            await _subscriptionService.HasUserAccess(user.UserId, Model.ProjectId, Model.RequiredSubscriptionType);
+    }
+}
+
+@if (hasAccess)
+{
+    <div>
+        @Model.Id
+        @Model.Text
+    </div>
+}
+else
+{
+    <div>
+        Нет доступа
+    </div>
+}

@@ -67,5 +67,10 @@ namespace WebApp.Services
             var response = await _client.GetAsync($"/Subscription/GetPaidSubscriptionsBySubscribedToId?subscribedToId={subscribedToId}");
             return await response.ReadContentAs<IEnumerable<PaidSubscriptionModel>>();
         }
+
+        public Task<bool> HasUserAccess(int userId, int subscribedToId, int subscriptionType)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
