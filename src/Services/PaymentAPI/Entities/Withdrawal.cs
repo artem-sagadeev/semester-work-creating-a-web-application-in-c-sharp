@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace PaymentAPI
 {
+    public enum ViewOfBankNumber
+    {
+        Virtual,
+        Real
+    }
     public class Withdrawal
     {
         [Key]
@@ -13,5 +18,6 @@ namespace PaymentAPI
         public DateTime DateTime { get; set; }
         public int UserID { get; set; }
         public int Sum { get; set; }
+        public ViewOfBankNumber ViewOfBankNumber { get; set; }
     }
 }

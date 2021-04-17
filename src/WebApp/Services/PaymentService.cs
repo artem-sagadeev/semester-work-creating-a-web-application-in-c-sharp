@@ -128,6 +128,14 @@ namespace WebApp.Services
 
         public async Task AddWithdrawal(WithdrawalModel newWithdrawal)
         {
+            if (newWithdrawal.ViewOfBankNumber == ViewOfBankNumber.Real)
+            {
+                //imitation of withdrawal
+            }
+            else
+            {
+                
+            }
             await _client.PostAsJsonAsync($"/Payment/AddWithdrawal", newWithdrawal);
         }
     }
