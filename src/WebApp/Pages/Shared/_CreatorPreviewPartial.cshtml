@@ -18,7 +18,7 @@
 
 <div>
     <a asp-page="/@creatorType" asp-route-id="@Model.Id">@Model.Name</a>
-    <img src="@Model.ImagePath">
+    <img src="@Model.ImagePath" alt="">
     @foreach (var tag in Model.Tags)
     {
         <div>
