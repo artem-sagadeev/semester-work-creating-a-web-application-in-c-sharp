@@ -26,6 +26,10 @@ namespace PaymentAPI
         public DbSet<Transfer> Transfers { get; set; }
         public DbSet<VirtualPurse> VirtualPurses { get; set; }
         public DbSet<Withdrawal> Withdrawals { get; set; }
+        
+        public DbSet<AdminPurse> AdminPurses { get; set; }
+        public DbSet<StorageOfMoney> StorageOfMoney { get; set; }
+
 
     }
 }

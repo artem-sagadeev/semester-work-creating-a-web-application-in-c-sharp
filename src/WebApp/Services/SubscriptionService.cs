@@ -30,6 +30,12 @@ namespace WebApp.Services
             var response = await _client.GetAsync($"/Subscription/GetTariffById?tariffId={tariffId}");
             return await response.ReadContentAs<TariffModel>();
         }
+        
+        public async Task<TariffModel> GetTariffByPriceTypeAndSubscriptionType(TypeOfSubscription subscriptionTypeId, PriceType priceType)
+        {
+            var response = await _client.GetAsync($"/Subscription/GetTariffByPriceTypeAndSubscriptionType?subscriptionTypeId={subscriptionTypeId}&priceType={priceType}");
+            return await response.ReadContentAs<TariffModel>();
+        }
 
         public async Task<IEnumerable<TariffModel>> GetTariffBySubscriptionType(TypeOfSubscription subscriptionTypeId)
         {

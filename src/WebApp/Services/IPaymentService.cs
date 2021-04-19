@@ -16,6 +16,17 @@ namespace WebApp.Services
         public Task DeleteBankAccount(int userId);
 
         public Task AddBankAccount(BankAccountModel newBankAccount);
+
+        public Task WriteOffMoneyFromBankAccount(BankAccountModel newBankAccount, int money);
+        
+        //AdminPurse
+        public Task TransferMoneyToAdminPurse(int money);
+        
+        //StorageOfMoney
+        public Task TransferMoneyToBankAccount(BankAccountModel bankAccount);
+
+        public Task AddMoneyToStorageOfMoney(int money);
+
         
         //Transfers
         public Task<IEnumerable<TransferModel>> GetTransfers();

@@ -47,6 +47,12 @@ namespace PaymentAPI.Controllers
             await _context.SaveChangesAsync();
         }
 
+        [HttpPost]
+        [Route("/BankAccounts/WriteOffMoney")]
+        public async Task WriteOffMoney([FromBody] BankAccount bankAccount, int money)
+        {
+        }
+
 
     }
 }

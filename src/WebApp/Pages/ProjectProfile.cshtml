@@ -29,3 +29,11 @@
 {
     @await Html.PartialAsync("Shared/_PostPartial", post)
 }
+
+@{
+    //data for subscription
+    var userId = (await UserManager.GetUserAsync(User)).UserId;
+}
+<form method="post" asp-controller="Subsribe"  asp-action="SubscribeToProject" asp-route-projectId="@Model.ProjectModel.Id" asp-route-userId="@userId">
+    <button type="submit">Follow</button>
+</form>

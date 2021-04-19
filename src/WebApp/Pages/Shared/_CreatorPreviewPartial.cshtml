@@ -1,5 +1,16 @@
 ﻿@using WebApp.Models
+@using Microsoft.AspNetCore.Identity
 @model WebApp.Models.ICreator
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@{
+    //data for subscription
+    var userId = (await UserManager.GetUserAsync(User)).UserId;
+    //var hasBankAccount = _
+}
 @{
     var creatorType = Model switch
     {
@@ -32,4 +43,11 @@
         </div>
     }
 </div>
+
+<form method="post" asp-controller="Subsribe"  asp-action="Follow" asp-route-developerId="@Model.Id" asp-route-userId="@userId">
+    <button type="submit">Follow</button>
+</form>
+<form method="post" asp-controller="Subsribe"  asp-action="SubscribeToUser" asp-route-developerId="@Model.Id" asp-route-userId="@userId">
+    <button type="submit">Subscribe</button>
+</form>
 
