@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Models;
+using WebApp.Models.Chats;
 using WebApp.Services;
+using WebApp.Services.Chats;
 
 namespace WebApp.Pages.ChatMember
 {

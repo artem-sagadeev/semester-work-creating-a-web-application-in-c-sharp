@@ -42,35 +42,15 @@ namespace Posts.API.Migrations
                     b.ToTable("Comment");
                 });
 
-            modelBuilder.Entity("Posts.API.Entities.File", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("ContentType")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FileId")
-                        .HasColumnType("text");
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("File");
-                });
-
             modelBuilder.Entity("Posts.API.Entities.Post", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("text");
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("integer");
@@ -100,22 +80,9 @@ namespace Posts.API.Migrations
                     b.Navigation("Post");
                 });
 
-            modelBuilder.Entity("Posts.API.Entities.File", b =>
-                {
-                    b.HasOne("Posts.API.Entities.Post", "Post")
-                        .WithMany("Files")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-                });
-
             modelBuilder.Entity("Posts.API.Entities.Post", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("Files");
                 });
 #pragma warning restore 612, 618
         }

@@ -12,7 +12,6 @@ namespace Posts.API
 
         public DbSet<Post> Post { get; set; }
         public DbSet<Comment> Comment { get; set; }
-        public DbSet<File> File { get; set; }
         
         public PostsDbContext()
         {

@@ -29,7 +29,6 @@
     <ItemGroup>
       <Folder Include="Areas\Main\Pages" />
       <Folder Include="Pages\PagesForTestingAPIs" />
-      <Folder Include="wwwroot\img\posts" />
     </ItemGroup>
 
     <ItemGroup>
@@ -77,6 +76,20 @@
       <_ContentIncludedByDefault Remove="Pages\Companies\Details.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\TypeOfSubscription\Details.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\TypeOfSubscription\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\User\Companies.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\User\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\User\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\User\Projects.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\Project\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\Project\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\Project\Posts.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\Project\Users.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\Post\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\Company\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\Company\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\Company\Projects.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\Company\Users.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\Comment\Details.cshtml" />
     </ItemGroup>
 
 </Project>

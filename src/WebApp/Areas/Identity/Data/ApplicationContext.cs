@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Areas.Identity.Data;
 using WebApp.Models;
+using WebApp.Models.Identity;
 
 namespace WebApp.Areas.Identity.Data
 {

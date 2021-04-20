@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Models;
+using WebApp.Models.Developer;
 using WebApp.Services;
+using WebApp.Services.Developer;
 
 namespace WebApp.Pages
 {
@@ -17,7 +18,7 @@ namespace WebApp.Pages
             _developerService = developerService;
         }
 
-        public CompanyModel CompanyModel { get; set; }
+        public CompanyModel CompanyModel { get; private set; }
         
         public async Task<ActionResult> OnGetAsync(int id)
         {

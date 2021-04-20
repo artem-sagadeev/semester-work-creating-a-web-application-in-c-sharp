@@ -1,23 +1,23 @@
-﻿@using WebApp.Models
-@using Microsoft.AspNetCore.Identity
-@using WebApp.Services
-@model WebApp.Models.PostModel
+﻿@using Microsoft.AspNetCore.Identity
+@using WebApp.Models.Identity
+@using WebApp.Models.Subscription
+@using WebApp.Services.Subscription
+@model WebApp.Models.Posts.PostModel
 
 @inject SignInManager<ApplicationUser> _signInManager
 @inject UserManager<ApplicationUser> _userManager
 @inject ISubscriptionService _subscriptionService
 
 @{
-    //todo
     var user = _signInManager.IsSignedIn(User) ? await _userManager.GetUserAsync(User) : null;
-    var hasAccess = Model.RequiredSubscriptionType == 0;
-    if (user != null)
+    var hasAccess = Model.RequiredSubscriptionType == PriceType.Free;
+    /*if (user != null)
     {
-        /*hasAccess =
+        hasAccess =
             await _subscriptionService.HasUserAccess(user.UserId, Model.UserId, Model.RequiredSubscriptionType) ||
             Model.ProjectId != 0 &&
-            await _subscriptionService.HasUserAccess(user.UserId, Model.ProjectId, Model.RequiredSubscriptionType);*/
-    }
+            await _subscriptionService.HasUserAccess(user.UserId, Model.ProjectId, Model.RequiredSubscriptionType);
+    }*/
 }
 
 @if (hasAccess)
@@ -25,7 +25,7 @@
     <div>
         @Model.Id
         @Model.Text
-        <img src="img/posts/@Model.ImageName">
+        @*todo image*@
     </div>
 }
 else

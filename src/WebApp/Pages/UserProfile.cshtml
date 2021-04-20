@@ -1,12 +1,11 @@
 ﻿@page
 @using Microsoft.AspNetCore.Identity
 @using WebApp.Models
+@using WebApp.Models.Identity
 @model WebApp.Pages.UserProfile
 
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
-
-
+@inject SignInManager<ApplicationUser> _signInManager
+@inject UserManager<ApplicationUser> _userManager
 
 @await Html.PartialAsync("Shared/_CreatorPreviewPartial", Model.UserModel)
 
@@ -15,10 +14,12 @@
     @await Html.PartialAsync("Shared/_ProjectMiniPreviewPartial", project)
 }
 
-@if (SignInManager.IsSignedIn(User) && (await UserManager.GetUserAsync(User)).UserId == Model.UserModel.Id)
+@if (_signInManager.IsSignedIn(User) && (await _userManager.GetUserAsync(User)).UserId == Model.UserModel.Id)
 {
     <form method="post">
+        <input type="hidden" name="id" value="@Model.UserModel.Id">
         <input type="text" name="text" placeholder="Whats new?">
+        @*todo add image*@
         <button type="submit">Send</button>
     </form>
 }

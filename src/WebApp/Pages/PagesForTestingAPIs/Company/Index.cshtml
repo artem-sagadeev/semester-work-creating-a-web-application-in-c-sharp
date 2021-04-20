@@ -1,7 +1,0 @@
-﻿@page
-@model WebApp.Pages.Company.Index
-
-@foreach (var company in Model.CompanyModels)
-{
-    <p><a asp-page="/Company/Details" asp-route-id="@company.Id">@company.Id - @company.Name</a></p>
-}

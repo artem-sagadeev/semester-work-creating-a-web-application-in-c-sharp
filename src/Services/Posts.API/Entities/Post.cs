@@ -12,7 +12,6 @@ namespace Posts.API.Entities
         public string ImageName { get; set; }
         
         public List<Comment> Comments { get; set; }
-        public List<File> Files { get; set; }
 
         public Post(int userId, int projectId, string text, int requiredSubscriptionType, string imageName)
         {

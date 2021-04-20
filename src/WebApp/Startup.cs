@@ -10,6 +10,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using WebApp.Services;
+using WebApp.Services.Chats;
+using WebApp.Services.Developer;
+using WebApp.Services.Files;
+using WebApp.Services.Payment;
+using WebApp.Services.Posts;
+using WebApp.Services.Subscription;
 
 namespace WebApp
 {

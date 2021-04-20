@@ -4,7 +4,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Models;
+using WebApp.Models.Developer;
+using WebApp.Models.Identity;
+using WebApp.Models.Posts;
 using WebApp.Services;
+using WebApp.Services.Developer;
+using WebApp.Services.Posts;
 
 namespace WebApp.Pages
 {
@@ -22,8 +27,8 @@ namespace WebApp.Pages
             _userManager = userManager;
         }
 
-        public UserModel UserModel { get; set; }
-        public IEnumerable<PostModel> PostModels { get; set; }
+        public UserModel UserModel { get; private set; }
+        public IEnumerable<PostModel> PostModels { get; private set; }
         
         public async Task<ActionResult> OnGetAsync(int id)
         {
@@ -37,6 +42,8 @@ namespace WebApp.Pages
 
         public async Task<IActionResult> OnPostAsync(int id, string text)
         {
+            //todo add image
+            //todo add files
             if ((await _userManager.GetUserAsync(User)).UserId != id)
                 return Forbid();
             
