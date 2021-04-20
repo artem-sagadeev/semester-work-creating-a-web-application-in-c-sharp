@@ -8,7 +8,7 @@ namespace WebApp.Services
     {
         public Task<PostModel> GetPost(int id);
         public Task<IEnumerable<PostModel>> GetUserPosts(int userId);
-        public Task<IEnumerable<PostModel>> GetGroupPosts(int groupId);
+        public Task<IEnumerable<PostModel>> GetProjectPosts(int projectId);
 
         public Task<CommentModel> GetComment(int id);
         public Task<IEnumerable<CommentModel>> GetUserComments(int userId);

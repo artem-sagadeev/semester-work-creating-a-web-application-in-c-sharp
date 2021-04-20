@@ -30,9 +30,9 @@ namespace WebApp.Services
             return await response.ReadContentAs<IEnumerable<PostModel>>();
         }
 
-        public async Task<IEnumerable<PostModel>> GetGroupPosts(int groupId)
+        public async Task<IEnumerable<PostModel>> GetProjectPosts(int projectId)
         {
-            var response = await _client.GetAsync($"/Posts/GetGroupPosts?groupId={groupId}");
+            var response = await _client.GetAsync($"/Posts/GetProjectPosts?projectId={projectId}");
             return await response.ReadContentAs<IEnumerable<PostModel>>();
         }
 

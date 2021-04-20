@@ -20,7 +20,7 @@ namespace WebApp.Pages.Project
 
         public async Task<ActionResult> OnGetAsync(int id)
         {
-            PostModels = await _postsService.GetGroupPosts(id);
+            PostModels = await _postsService.GetProjectPosts(id);
             return Page();
         }
     }

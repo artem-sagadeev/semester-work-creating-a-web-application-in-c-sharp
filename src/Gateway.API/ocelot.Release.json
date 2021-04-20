@@ -222,7 +222,7 @@
     },
     //Posts
     {
-      "DownStreamPathTemplate": "/Posts/GetByGroup/{groupId}",
+      "DownStreamPathTemplate": "/Posts/GetByProject/{projectId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -230,7 +230,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/Posts/GetGroupPosts?groupId={groupId}",
+      "UpstreamPathTemplate": "/Posts/GetProjectPosts?projectId={projectId}",
       "UpstreamHttpMethod": [ "GET" ]
     },
     {

@@ -34,16 +34,16 @@ namespace Posts.API.Controllers
             => await _context.Post.Where(p => p.UserId == userId).ToListAsync();
 
         [HttpGet]
-        [Route("/Posts/GetByGroup/{groupId}")]
-        public async Task<ActionResult<IEnumerable<Post>>> GetByGroup(int groupId)
-            => await _context.Post.Where(p => p.GroupId == groupId).ToListAsync();
+        [Route("/Posts/GetByProject/{projectId}")]
+        public async Task<ActionResult<IEnumerable<Post>>> GetByProject(int projectId)
+            => await _context.Post.Where(p => p.ProjectId == projectId).ToListAsync();
         
         [HttpGet]
-        [Route("/Posts/GetByUserAndGroup")]
-        public async Task<ActionResult<IEnumerable<Post>>> GetByUserAndGroup(int userId, int groupId)
+        [Route("/Posts/GetByUserAndProject")]
+        public async Task<ActionResult<IEnumerable<Post>>> GetByUserAndProject(int userId, int projectId)
             => await _context
                 .Post
-                .Where(p => p.UserId == userId && p.GroupId == groupId)
+                .Where(p => p.UserId == userId && p.ProjectId == projectId)
                 .ToListAsync();
 
         [HttpPost]

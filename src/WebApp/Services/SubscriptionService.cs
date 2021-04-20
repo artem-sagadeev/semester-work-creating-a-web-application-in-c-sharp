@@ -78,7 +78,7 @@ namespace WebApp.Services
             var response = await _client.GetAsync($"/Subscription/GetPaidSubscriptionsBySubscribedToId?subscribedToId={subscribedToId}");
             return await response.ReadContentAs<IEnumerable<PaidSubscriptionModel>>();
         }
-
+        
         public async Task AddPaidSubscription(PaidSubscriptionModel newPaidSubscription)
         {
             await _client.PostAsJsonAsync($"/Subscription/AddPaidSubscription", newPaidSubscription);

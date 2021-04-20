@@ -28,6 +28,5 @@ namespace WebApp.Services
         public Task AddPaidSubscription(PaidSubscriptionModel newPaidSubscription);
 
         public Task DeletePaidSubscription(int userId, int tariffId, int subscribedToId);
-
     }
 }
