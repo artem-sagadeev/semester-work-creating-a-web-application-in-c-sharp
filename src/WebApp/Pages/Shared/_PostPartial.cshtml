@@ -13,10 +13,10 @@
     var hasAccess = Model.RequiredSubscriptionType == 0 ? true : false;
     if (user != null)
     {
-        hasAccess =
+        /*hasAccess =
             await _subscriptionService.HasUserAccess(user.UserId, Model.UserId, Model.RequiredSubscriptionType) ||
             Model.ProjectId != 0 &&
-            await _subscriptionService.HasUserAccess(user.UserId, Model.ProjectId, Model.RequiredSubscriptionType);
+            await _subscriptionService.HasUserAccess(user.UserId, Model.ProjectId, Model.RequiredSubscriptionType);*/
     }
 }
 
