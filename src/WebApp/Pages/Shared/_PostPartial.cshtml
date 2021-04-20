@@ -10,7 +10,7 @@
 @{
     //todo
     var user = _signInManager.IsSignedIn(User) ? await _userManager.GetUserAsync(User) : null;
-    var hasAccess = Model.RequiredSubscriptionType == 0 ? true : false;
+    var hasAccess = Model.RequiredSubscriptionType == 0;
     if (user != null)
     {
         /*hasAccess =
@@ -25,6 +25,7 @@
     <div>
         @Model.Id
         @Model.Text
+        <img src="img/posts/@Model.ImageName">
     </div>
 }
 else
