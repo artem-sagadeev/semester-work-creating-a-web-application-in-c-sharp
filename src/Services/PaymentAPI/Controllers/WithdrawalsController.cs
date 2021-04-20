@@ -38,14 +38,9 @@ namespace PaymentAPI.Controllers
 
         [HttpPost]
         [Route("/Withdrawals/Add")]
-        public async Task Add(int userId, int sum)
+        public async Task Add([FromBody]Withdrawal newWithdrawal)
         {
-            var newWithdrawal = new Withdrawal()
-            {
-                UserID = userId,
-                Sum = sum,
-                DateTime = DateTime.Now
-            };
+            newWithdrawal.DateTime = DateTime.Now;
             _context.Withdrawals.Add(newWithdrawal);
             await _context.SaveChangesAsync();
         }

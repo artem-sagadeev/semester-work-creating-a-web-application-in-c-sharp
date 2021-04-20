@@ -43,15 +43,9 @@ namespace PaymentAPI.Controllers
 
         [HttpPost]
         [Route("/Transfers/Add")]
-        public async Task Add(int userFrom, int userTo, int money)
+        public async Task Add([FromBody]Transfer newTransfer)
         {
-            var newTransfer = new Transfer()
-            {
-                UserFrom = userFrom,
-                UserTo = userTo,
-                MoneySum = money,
-                DateTime = DateTime.Now
-            };
+            newTransfer.DateTime = DateTime.Now;
             _context.Transfers.Add(newTransfer);
             await _context.SaveChangesAsync();
         }

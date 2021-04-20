@@ -26,27 +26,27 @@ namespace PaymentAPI.Controllers
         public ActionResult<BankAccount> Get(int userId)
             => _context.BankAccounts.First(c => c.UserId == userId);
 
+        public class UserIdFormat
+        {
+            public int userId { get; set; }
+        }
         [HttpPost]
         [Route("/BankAccounts/Delete")]
-        public async Task Delete(int userId)
+        public async Task Delete([FromBody]UserIdFormat userIdFormat)
         {
-            var bankAccount = await _context.BankAccounts.FirstAsync(c => c.UserId == userId);
+            var bankAccount = await _context.BankAccounts.FirstAsync(c => c.UserId == userIdFormat.userId);
             _context.BankAccounts.Remove(bankAccount);
             await _context.SaveChangesAsync();
         }
 
         [HttpPost]
         [Route("/BankAccounts/AddBankAccount")]
-        public async Task AddBankAccount(int userId, int number)
+        public async Task AddBankAccount([FromBody]BankAccount bankAccount)
         {
-            var newBankAccount = new BankAccount()
-            {
-                Number = number,
-                UserId = userId
-            };
-            _context.BankAccounts.Add(newBankAccount);
+            _context.BankAccounts.Add(bankAccount);
             await _context.SaveChangesAsync();
         }
+
 
     }
 }

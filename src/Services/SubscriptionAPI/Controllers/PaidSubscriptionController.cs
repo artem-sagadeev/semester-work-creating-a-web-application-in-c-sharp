@@ -27,7 +27,6 @@ namespace SubscriptionAPI.Controllers
             }
             return temp;
         }
-        //=> _context.PaidSubscriptions.ToList();
 
         [HttpGet]
         [Route("/PaidSubscriptions/GetByUser/{userId}")]
@@ -40,7 +39,6 @@ namespace SubscriptionAPI.Controllers
             }
             return temp;
         }
-        // => _context.PaidSubscriptions.Where(c => c.UserId == userId).ToList();
 
         [HttpGet]
         [Route("/PaidSubscriptions/GetBySubscribedToId/{subscribedToId}")]
@@ -54,30 +52,31 @@ namespace SubscriptionAPI.Controllers
             return temp;
 
         }
-       //     => _context.PaidSubscriptions.Where(c => c.SubscribedToId == subscribedToId).ToList();
 
+        public class UserIdTariffIdSubscibedIdFormat
+        {
+            public int userId { get; set; }
+            public int tariffId { get; set; } 
+            public int subscribedToId { get; set; }
+        }
         [HttpPost]
         [Route("/PaidSubscriptions/Delete")]
-        public async Task Delete(int userId, int tariffId, int subscribedToId)
+        public async Task Delete([FromBody]UserIdTariffIdSubscibedIdFormat userIdTariffIdSubscibedIdFormat)
         {
-            var type = await _context.PaidSubscriptions.FirstAsync(c => c.UserId == userId && c.Tariff.Id == tariffId && c.SubscribedToId == subscribedToId);
+            var type = await _context.PaidSubscriptions.FirstAsync(c => c.UserId == userIdTariffIdSubscibedIdFormat.userId && c.Tariff.Id == userIdTariffIdSubscibedIdFormat.tariffId && c.SubscribedToId == userIdTariffIdSubscibedIdFormat.subscribedToId);
             _context.PaidSubscriptions.Remove(type);
             await _context.SaveChangesAsync();
         }
 
         [HttpPost]
         [Route("/PaidSubscriptions/Add")]
-        public async Task Add(int userId, int subscribedToId, int tariffId)
+        public async Task Add([FromBody]PaidSubscription newPaidSubscription)
         {
-            var newTypeOfSubscription = new PaidSubscription()
-            {
-                UserId = userId,
-                EndDate = DateTime.Now.AddMonths(1),
-                SubscribedToId = subscribedToId,
-                IsAutorenewal = true,
-                Tariff = _context.Tariffs.First(x => x.Id == tariffId)
-            };
-            _context.PaidSubscriptions.Add(newTypeOfSubscription);
+            newPaidSubscription.EndDate = DateTime.Now.AddMonths(1);
+            newPaidSubscription.Tariff = _context.Tariffs.First(x => x.PriceType == newPaidSubscription.Tariff.PriceType && x.TypeOfSubscription == newPaidSubscription.Tariff.TypeOfSubscription);
+            newPaidSubscription.TariffId = newPaidSubscription.Tariff.Id;
+            newPaidSubscription.IsAutorenewal = true;
+            _context.PaidSubscriptions.Add(newPaidSubscription);
             await _context.SaveChangesAsync();
         }
     }

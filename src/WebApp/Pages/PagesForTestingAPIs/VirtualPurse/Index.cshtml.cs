@@ -24,5 +24,10 @@ namespace WebApp.Pages.VirtualPurse
             VirtualPursesModels = await _paymentService.GetVirtualPurses();
             return Page();
         }
+
+        public async Task OnPostAsync(int userId, int money)
+        {
+            await _paymentService.UpdateVirtualPurse(userId, money);
+        }
     }
 }

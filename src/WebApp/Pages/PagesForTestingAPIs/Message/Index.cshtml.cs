@@ -24,5 +24,15 @@ namespace WebApp.Pages.Message
             MessageModels = await _chatService.GetMessages();
             return Page();
         }
+        
+        public async Task Add(MessageModel message)
+        {
+            await _chatService.AddMessage(message);
+        }
+        
+        public async Task OnPostAsync(int id)
+        {
+            await _chatService.DeleteMessage(id);
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace WebApp.Pages.Tariff
             _subscriptionService = service;
         }
 
-        public async Task<ActionResult> OnGetAsync(int subscriptionTypeId)
+        public async Task<ActionResult> OnGetAsync(TypeOfSubscription subscriptionTypeId)
         {
             TariffModels = await _subscriptionService.GetTariffBySubscriptionType(subscriptionTypeId);
             return Page();

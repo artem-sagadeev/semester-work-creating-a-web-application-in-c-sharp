@@ -24,6 +24,17 @@ namespace WebApp.Pages.Tariff
             TariffModels = await _subscriptionService.GetTariffs();
             return Page();
         }
+
+        public async Task OnPostAsync(int tariffId)
+        {
+            var x = new TariffModel()
+            {
+                PriceType = PriceType.Free,
+                TypeOfSubscription = TypeOfSubscription.Team,
+                PricePerMonth = 10
+            };
+            await _subscriptionService.AddTariff(x);
+        }
     }
 }
 

@@ -21,10 +21,10 @@ namespace SubscriptionAPI.Controllers
         public ActionResult<IEnumerable<Tariff>> Get()
         {
             var temp = _context.Tariffs.ToList();
-            foreach (var t in temp)
-            {
-                _context.Entry(t).Reference(x => x.TypeOfSubscription).Load();
-            }
+            // foreach (var t in temp)
+            // {
+            //     _context.Entry(t).Reference(x => x.TypeOfSubscription).Load();
+            // }
             return temp;
         }
 
@@ -33,44 +33,43 @@ namespace SubscriptionAPI.Controllers
         public ActionResult<Tariff> GetByTariffId(int tariffId)
         {
             var temp = _context.Tariffs.First(c => c.Id == tariffId);
-            _context.Entry(temp).Reference(x => x.TypeOfSubscription).Load();
+            //_context.Entry(temp).Reference(x => x.TypeOfSubscription).Load();
             return temp;
         }
         // => _context.Tariffs.First(c => c.Id == tariffId);
 
         [HttpGet]
         [Route("/Tariffs/GetBySubscriptionType/{subscriptionTypeId}")]
-        public ActionResult<IEnumerable<Tariff>> GetBySubscriptionType(int subscriptionTypeId)
+        public ActionResult<IEnumerable<Tariff>> GetBySubscriptionType(TypeOfSubscription subscriptionTypeId)
         {
-            var temp = _context.Tariffs.Where(c => c.TypeOfSubscription.Id == subscriptionTypeId).ToList();
-            foreach (var t in temp)
-            {
-                _context.Entry(t).Reference(x => x.TypeOfSubscription).Load();
-            }
+            var temp = _context.Tariffs.Where(c => c.TypeOfSubscription == subscriptionTypeId).ToList();
+            // foreach (var t in temp)
+            // {
+            //     _context.Entry(t).Reference(x => x.TypeOfSubscription).Load();
+            // }
             return temp;
         }
-           // => _context.Tariffs.First(c => c.TypeOfSubscription.Id == subscriptionTypeId);
+        
+        public class TariffIdFormat
+        {
+            public int tariffId { get; set; }
+        }
 
         [HttpPost]
         [Route("/Tariffs/Delete")]
-        public async Task Delete(int tariffId)
+        public async Task Delete([FromBody]TariffIdFormat tariffIdFormat)
         {
-            var bankAccount = await _context.Tariffs.FirstAsync(c => c.Id == tariffId);
+            var bankAccount = await _context.Tariffs.FirstAsync(c => c.Id == tariffIdFormat.tariffId);
             _context.Tariffs.Remove(bankAccount);
             await _context.SaveChangesAsync();
         }
 
         [HttpPost]
         [Route("/Tariffs/Add")]
-        public async Task AddBankAccount(string name, int pricePerMonth, int typeOfSubscriptionId)
+        public async Task Add([FromBody]Tariff newTariff)
         {
-            var newBankAccount = new Tariff()
-            {
-                TypeOfSubscription = _context.TypeOfSubscriptions.First(x => x.Id == typeOfSubscriptionId),
-                Name = name,
-                PricePerMonth = pricePerMonth
-            };
-            _context.Tariffs.Add(newBankAccount);
+            //newTariff.TypeOfSubscription = _context.TypeOfSubscriptions.First(x => x.Id == newTariff.TypeOfSubscription.Id);
+            _context.Tariffs.Add(newTariff);
             await _context.SaveChangesAsync();
         }
     }

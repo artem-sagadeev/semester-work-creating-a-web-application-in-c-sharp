@@ -4,8 +4,8 @@
 {
     <p>
         Id = <a asp-page="/Tariff/DetailsByTariffId" asp-route-tariffId="@tariffModel.Id">@tariffModel.Id</a>;
-        SubscribedTypeId = <a asp-page="/Tariff/DetailsBySubscriptionTypeId" asp-route-subscriptionTypeId="@tariffModel.TypeOfSubscription.Id"> @tariffModel.TypeOfSubscription.Id</a>;
-        @tariffModel.Name @tariffModel.PricePerMonth руб
+        SubscribedTypeId = <a asp-page="/Tariff/DetailsBySubscriptionTypeId" asp-route-subscriptionTypeId="@tariffModel.TypeOfSubscription"> @tariffModel.TypeOfSubscription</a>;
+        @tariffModel.PricePerMonth руб
     </p>
 }
 <p><a asp-page="/Tariff/Index">Все</a></p>

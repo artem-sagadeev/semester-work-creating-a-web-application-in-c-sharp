@@ -30,7 +30,7 @@ namespace SubscriptionAPI
         }
 
         public DbSet<Tariff> Tariffs { get; set; }
-        public DbSet<TypeOfSubscription> TypeOfSubscriptions { get; set; }
+        //public DbSet<TypeOfSubscription> TypeOfSubscriptions { get; set; }
         public DbSet<PaidSubscription> PaidSubscriptions { get; set; }
     }
 }

@@ -7,5 +7,13 @@
     SubscribedToId = <a asp-page="/PaidSubscription/DetailsBySubscribedToId" asp-route-subscribedToId="@paidSubscriptionModel.SubscribedToId"> @paidSubscriptionModel.SubscribedToId</a>;
     IsAutorenewal = @paidSubscriptionModel.IsAutorenewal
     TariffId = @paidSubscriptionModel.Tariff.Id
+       <form method="post" >
+           <label>Удалить:</label>
+           int userId, int subscribedToId, int tariffId
+           <input type="number" name="userId"/>
+           <input type="number" name="subscribedToId"/>
+           <input type="number" name="tariffId"/>
+           <input type="submit" value="Отправить"/>
+            </form>
 </p>
 }

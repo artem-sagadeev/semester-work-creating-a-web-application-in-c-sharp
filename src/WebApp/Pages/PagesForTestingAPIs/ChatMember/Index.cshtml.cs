@@ -24,5 +24,9 @@ namespace WebApp.Pages.ChatMember
             ChatMembers = await _chatService.GetChatMembers();
             return Page();
         }
+        public async Task OnPostAsync(int userId, int projectId)
+        {
+            await _chatService.DeleteChatMember(projectId, userId);
+        }
     }
 }

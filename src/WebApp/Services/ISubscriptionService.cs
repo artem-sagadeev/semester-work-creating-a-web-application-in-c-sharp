@@ -11,17 +11,21 @@ namespace WebApp.Services
         //Tariffs
         public Task<IEnumerable<TariffModel>> GetTariffs();
         public Task<TariffModel> GetTariffById(int tariffId);
-        public Task<IEnumerable<TariffModel>> GetTariffBySubscriptionType(int subscriptionTypeId);
+        public Task<IEnumerable<TariffModel>> GetTariffBySubscriptionType(TypeOfSubscription subscriptionTypeId);
 
+        public Task AddTariff(TariffModel newTariff);
+
+        public Task DeleteTariff(int tariffId);
        
-        //TypeOfSubscriptions
-        public Task<IEnumerable<TypeOfSubscriptionModel>> GetTypesOfSubscription();
-        public Task<TypeOfSubscriptionModel> GetTypeOfSubscription(int id);
-
+        
         //PaidSubscription
         public Task<IEnumerable<PaidSubscriptionModel>> GetPaidSubscriptions();
         public Task<IEnumerable<PaidSubscriptionModel>> GetPaidSubscriptionsByUserId(int userId);
         public Task<IEnumerable<PaidSubscriptionModel>> GetPaidSubscriptionsBySubscribedToId(int subscribedToId);
+
+        public Task AddPaidSubscription(PaidSubscriptionModel newPaidSubscription);
+
+        public Task DeletePaidSubscription(int userId, int tariffId, int subscribedToId);
 
     }
 }

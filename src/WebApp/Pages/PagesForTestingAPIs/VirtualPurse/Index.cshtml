@@ -3,4 +3,11 @@
 @foreach (var virtualPurse in Model.VirtualPursesModels)
 {
     <p><a asp-page="/VirtualPurse/Details" asp-route-userId="@virtualPurse.UserId">@virtualPurse.UserId - @virtualPurse.Money</a></p>
+    <form method="post">
+        <label>Добавить:</label>
+        
+        <input type="number" name="userId"/>
+        <input type="number" name="money"/>
+        <input type="submit" value="Отправить"/>
+    </form>   
 }

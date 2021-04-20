@@ -12,6 +12,7 @@ namespace WebApp.Pages.BankAccount
     public class IndexModel : PageModel
     {
         private readonly IPaymentService _paymentService;
+
         public IEnumerable<BankAccountModel> BankAccountModels { get; set; }
 
         public IndexModel(IPaymentService paymentService)
@@ -23,6 +24,11 @@ namespace WebApp.Pages.BankAccount
         {
             BankAccountModels = await _paymentService.GetBankAccounts();
             return Page();
+        }
+
+        public async Task OnPostAsync(int userId)
+        {
+            await _paymentService.DeleteBankAccount(userId);
         }
     }
 }
