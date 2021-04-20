@@ -6,7 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.Language;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using WebApp.Models;
+using WebApp.Models.Developer;
+using WebApp.Models.Payment;
+using WebApp.Models.Subscription;
 using WebApp.Services;
+using WebApp.Services.Developer;
+using WebApp.Services.Payment;
+using WebApp.Services.Subscription;
 
 namespace WebApp.Controller
 {

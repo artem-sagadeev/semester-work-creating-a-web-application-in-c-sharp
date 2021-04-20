@@ -70,10 +70,8 @@ namespace Posts.API.Controllers
             var post = await _context
                 .Post
                 .Include(p => p.Comments)
-                .Include(p => p.Files)
                 .FirstAsync(p => p.Id == id);
             post.Comments.ForEach(c => _context.Comment.Remove(c));
-            post.Files.ForEach(f => _context.File.Remove(f));
             _context.Post.Remove(post);
             await _context.SaveChangesAsync();
         }

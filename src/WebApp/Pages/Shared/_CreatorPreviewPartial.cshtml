@@ -1,14 +1,15 @@
-﻿@using WebApp.Models
-@using Microsoft.AspNetCore.Identity
-@model WebApp.Models.ICreator
+﻿@using Microsoft.AspNetCore.Identity
+@using WebApp.Models.Developer
+@using WebApp.Models.Identity
+@model ICreator
 
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> _signInManager
+@inject UserManager<ApplicationUser> _userManager
 
 
 @{
     //data for subscription
-    var userId = (await UserManager.GetUserAsync(User))?.UserId;
+    var userId = (await _userManager.GetUserAsync(User))?.UserId;
     //var hasBankAccount = _
 }
 @{
@@ -23,13 +24,14 @@
     var companies = Model switch {
         UserModel user => user.Companies,
         ProjectModel project => new List<CompanyModel> {project.Company},
-        CompanyModel => new List<CompanyModel>()
-    };
+        CompanyModel => new List<CompanyModel>(),
+        _ => throw new ArgumentOutOfRangeException()
+        };
 }
 
 <div>
     <a asp-page="/@creatorType" asp-route-id="@Model.Id">@Model.Name</a>
-    <img src="@Model.ImagePath" alt="">
+    @*todo image*@
     @foreach (var tag in Model.Tags)
     {
         <div>

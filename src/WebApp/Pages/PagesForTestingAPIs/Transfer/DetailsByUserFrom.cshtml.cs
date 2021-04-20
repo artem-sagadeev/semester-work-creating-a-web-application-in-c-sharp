@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Models;
+using WebApp.Models.Payment;
 using WebApp.Services;
+using WebApp.Services.Payment;
 
 namespace WebApp.Pages.Transfer
 {

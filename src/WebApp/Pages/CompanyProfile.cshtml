@@ -1,10 +1,10 @@
 ﻿@page
-@using WebApp.Models
 @using Microsoft.AspNetCore.Identity
+@using WebApp.Models.Identity
 @model WebApp.Pages.CompanyProfile
 
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> _signInManager
+@inject UserManager<ApplicationUser> _userManager
 
 
 @await Html.PartialAsync("Shared/_CreatorPreviewPartial", Model.CompanyModel)
@@ -18,10 +18,3 @@
 {
     @await Html.PartialAsync("Shared/_ProjectMiniPreviewPartial", project)
 }
-@{
-    //data for subscription
-    var userId = (await UserManager.GetUserAsync(User)).UserId;
-}
-<form method="post" asp-controller="Subsribe"  asp-action="SubscribeToCompany" asp-route-companyId="@Model.CompanyModel.Id" asp-route-userId="@userId">
-    <button type="submit">Follow</button>
-</form>

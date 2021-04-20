@@ -1,10 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Models;
+using WebApp.Models.Developer;
+using WebApp.Models.Identity;
+using WebApp.Models.Posts;
 using WebApp.Services;
+using WebApp.Services.Developer;
+using WebApp.Services.Posts;
 
 namespace WebApp.Pages
 {
@@ -22,8 +28,8 @@ namespace WebApp.Pages
             _userManager = userManager;
         }
 
-        public ProjectModel ProjectModel { get; set; }
-        public IEnumerable<PostModel> PostModels { get; set; }
+        public ProjectModel ProjectModel { get; private set; }
+        public IEnumerable<PostModel> PostModels { get; private set; }
         
         public async Task<ActionResult> OnGetAsync(int id)
         {
@@ -37,7 +43,10 @@ namespace WebApp.Pages
 
         public async Task<IActionResult> OnPostAsync(int id, string text)
         {
-            //todo check
+            //todo add image
+            //todo add files
+            if (!ProjectModel.Users.Select(u => u.Id).Contains((await _userManager.GetUserAsync(User)).UserId))
+                return Forbid();
             
             var post = new PostModel {ProjectId = id, Text = text};
             await _postsService.CreatePost(post);

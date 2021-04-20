@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Models;
+using WebApp.Models.Developer;
 using WebApp.Services;
+using WebApp.Services.Developer;
 
 namespace WebApp.Pages
 {
@@ -17,8 +19,7 @@ namespace WebApp.Pages
             _developerService = developerService;
         }
 
-        
-        public List<ICreator> CreatorModels { get; set; }
+        public List<ICreator> CreatorModels { get; private set; }
 
         public async Task<ActionResult> OnGetAsync(string needUsers, 
             string needProjects, 

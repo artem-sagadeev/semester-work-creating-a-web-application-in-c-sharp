@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using WebApp.Areas.Identity.Data;
 using WebApp.Models;
+using WebApp.Models.Identity;
 
 namespace WebApp.Areas.Identity.Pages.Account
 {

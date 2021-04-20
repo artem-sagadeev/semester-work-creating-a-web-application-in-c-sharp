@@ -13,6 +13,7 @@ namespace Files.API.Entities
         
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
+        //todo post
         public string Name { get; set; }
         public string Type { get; set; }
         public string Path => "Files/" + Name;

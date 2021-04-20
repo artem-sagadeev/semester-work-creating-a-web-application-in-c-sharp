@@ -1,9 +1,0 @@
-﻿@page
-@model WebApp.Pages.Project.Posts
-
-@foreach (var post in Model.PostModels)
-{
-    <p>
-        <a asp-page="/Post/Details" asp-route-id="@post.Id">@post.Id - @post.Text</a>
-    </p>
-}
