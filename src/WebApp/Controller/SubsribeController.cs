@@ -18,11 +18,17 @@ namespace WebApp.Controller
         private IPaymentService _paymentService;
         private IDeveloperService _developerService;
 
+        SubsribeController(ISubscriptionService _subscriptionService,IPaymentService _paymentService, IDeveloperService _developerService )
+        {
+            this._subscriptionService = _subscriptionService;
+            this._developerService = _developerService;
+            this._paymentService = _paymentService;
+        }
         public IActionResult Index()
         {
             return View();
         }
-
+        
         public bool HasBankAccount(int userId)
         {
             return _paymentService.GetBankAccount(userId) != null;
