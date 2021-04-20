@@ -45,9 +45,42 @@ namespace WebApp.Services
             });
         }
 
+        
         public async Task AddBankAccount(BankAccountModel newBankAccount)
         {
             await _client.PostAsJsonAsync($"/Payment/AddBankAccount", newBankAccount);
+        }
+
+        public async Task WriteOffMoneyFromBankAccount(BankAccountModel newBankAccount, int money)
+        {
+            await _client.PostAsJsonAsync($"/Payment/WriteOffMoney", newBankAccount);
+        }
+        
+        public class MoneyFromat
+        {
+            public int money { get; set; }
+        }
+
+
+        public async Task TransferMoneyToAdminPurse(int money)
+        {
+            await _client.PostAsJsonAsync($"/Payment/TransferMoneyToAdminPurse", new MoneyFromat()
+            {
+                money = money
+            });
+        }
+
+        public async Task TransferMoneyToBankAccount(BankAccountModel bankAccount)
+        {
+            await _client.PostAsJsonAsync($"/Payment/TransferMoneyToBankAccount", bankAccount);
+        }
+
+        public async Task AddMoneyToStorageOfMoney(int money)
+        {
+            await _client.PostAsJsonAsync($"/Payment/AddMoneyToStorageOfMoney", new MoneyFromat()
+            {
+                money =  money
+            });
         }
 
         //Transfers

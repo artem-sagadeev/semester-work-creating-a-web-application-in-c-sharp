@@ -37,7 +37,17 @@ namespace SubscriptionAPI.Controllers
             return temp;
         }
         // => _context.Tariffs.First(c => c.Id == tariffId);
+        
+        
 
+        [HttpGet]
+        [Route("/Tariffs/GetBySubscriptionTypeAndPiceType/{subscriptionTypeId}/{priceType}")]
+        public ActionResult<Tariff> GetBySubscriptionTypeAndPiceType(TypeOfSubscription subscriptionTypeId, PriceType priceType)
+        {
+            var temp = _context.Tariffs.First(c => c.TypeOfSubscription == subscriptionTypeId && c.PriceType == priceType);
+            return temp;
+        }
+        
         [HttpGet]
         [Route("/Tariffs/GetBySubscriptionType/{subscriptionTypeId}")]
         public ActionResult<IEnumerable<Tariff>> GetBySubscriptionType(TypeOfSubscription subscriptionTypeId)

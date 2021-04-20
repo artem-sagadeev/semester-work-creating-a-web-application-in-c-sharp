@@ -49,6 +49,56 @@
         "UpstreamPathTemplate": "/Payment/DeleteBankAccount",
         "UpstreamHttpMethod": [ "POST" ]
       },
+      {
+        "DownStreamPathTemplate": "/BankAccounts/WriteOffMoney",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5005
+          }
+        ],
+        "UpstreamPathTemplate": "/Payment/WriteOffMoney",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
+      //AdminPurse
+      {
+        "DownStreamPathTemplate": "/AdminPurse/TransferMoney",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5006
+          }
+        ],
+        "UpstreamPathTemplate": "/Payment/TransferMoneyToAdminPurse",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
+      //StorageOfMoney
+      {
+        "DownStreamPathTemplate": "/StorageOfMoney/TransferMoney",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5006
+          }
+        ],
+        "UpstreamPathTemplate": "/Payment/TransferMoneyToBankAccount" ,
+        "UpstreamHttpMethod": [ "POST" ]
+      },
+      {
+        "DownStreamPathTemplate": "/StorageOfMoney/AddMoney",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5006
+          }
+        ],
+        "UpstreamPathTemplate": "/Payment/AddMoneyToStorageOfMoney",
+        "UpstreamHttpMethod": [ "POST" ]
+      },
     //GetTransfer
     {
         "DownStreamPathTemplate": "/Transfers/Get",
@@ -235,6 +285,18 @@
         "UpstreamHttpMethod": [ "GET" ]
     },
       {
+        "DownStreamPathTemplate": "/Tariffs/GetBySubscriptionTypeAndPiceType/{subscriptionTypeId}/{priceType}",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "localhost",
+            "Port": 5006
+          }
+        ],
+        "UpstreamPathTemplate":"/Subscription/GetTariffByPriceTypeAndSubscriptionType?subscriptionTypeId={subscriptionTypeId}&priceType={priceType}",
+        "UpstreamHttpMethod": [ "GET" ]
+      },
+      {
         "DownStreamPathTemplate": "/Tariffs/Add",
         "DownstreamScheme": "http",
         "DownstreamHostAndPorts": [
@@ -258,6 +320,7 @@
         "UpstreamPathTemplate": "/Subscription/DeleteTariff",
         "UpstreamHttpMethod": [ "POST" ]
       },
+      
     //GetPaidSubscription
     {
         "DownStreamPathTemplate": "/PaidSubscriptions/Get",

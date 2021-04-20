@@ -16,7 +16,9 @@ namespace WebApp.Services
         public Task AddTariff(TariffModel newTariff);
 
         public Task DeleteTariff(int tariffId);
-       
+
+        public Task<TariffModel> GetTariffByPriceTypeAndSubscriptionType(TypeOfSubscription subscriptionTypeId,
+            PriceType priceType);
         
         //PaidSubscription
         public Task<IEnumerable<PaidSubscriptionModel>> GetPaidSubscriptions();
