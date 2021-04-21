@@ -92,4 +92,13 @@
       <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\Comment\Details.cshtml" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Include="wwwroot\files\Example.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="wwwroot\files\Example.html" />
+      <None Include="wwwroot\files\Example.js" />
+    </ItemGroup>
+
 </Project>

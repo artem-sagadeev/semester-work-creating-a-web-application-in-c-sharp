@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Files.API.Entities;
 using MongoDB.Driver;
 
@@ -9,8 +10,9 @@ namespace Files.API.Repositories
         public Task<File> GetFileAsync(string id);
         public Task CreateFileAsync(File file);
         public Task DeleteFileAsync(string id);
-        public Task<Link> GetLinkAsync(string fileId, string token);
-        public Task CreateLinkAsync(Link link);
-        public Task DeleteLinkAsync(string id);
+        public Task<IEnumerable<File>> GetPostFiles(int postId);
+        public Task<Avatar> GetAvatarAsync(int creatorId, CreatorType creatorType);
+        public Task CreateAvatarAsync(Avatar avatar);
+        public Task DeleteAvatarAsync(int creatorId);
     }
 }

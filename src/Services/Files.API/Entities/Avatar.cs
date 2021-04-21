@@ -3,19 +3,26 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Files.API.Entities
 {
+    public enum CreatorType
+    {
+        User,
+        Project,
+        Company
+    }
+    
     public class Avatar
     {
-        //todo avatar repository and controller
-        
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         public int CreatorId { get; set; }
-        public string Path { get; set; }
+        public string Name { get; set; }
+        public CreatorType CreatorType { get; set; }
+        public string Path => "avatars/" + Name;
 
         public Avatar(int creatorId, string name)
         {
             CreatorId = creatorId;
-            Path = "Avatars/" + name;
+            Name = name;
         }
 
         public Avatar()
