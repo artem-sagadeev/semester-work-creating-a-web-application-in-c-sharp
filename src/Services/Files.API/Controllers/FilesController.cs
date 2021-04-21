@@ -19,8 +19,8 @@ namespace Files.API.Controllers
         }
         
         [HttpGet]
-        [Route("/Files/GetFile/{id}")]
-        public async Task<File> GetFile(string id)
+        [Route("/Files/Get/{id}")]
+        public async Task<File> Get(string id)
         {
             return await _fileRepository.GetFileAsync(id);
         }
@@ -33,15 +33,9 @@ namespace Files.API.Controllers
         }
 
         [HttpPost]
-        [Route("/Files/Create/{postId:int}")]
-        public async Task Create(int postId, IFormFile uploadedFile)
+        [Route("/Files/Create")]
+        public async Task Create(File file)
         {
-            if (uploadedFile == null) return;
-            var file = new File(postId, uploadedFile.FileName, uploadedFile.ContentType);
-            await using (var fileStream = new FileStream(file.Path, FileMode.Create))
-            {
-                await uploadedFile.CopyToAsync(fileStream);
-            }
             await _fileRepository.CreateFileAsync(file);
         }
         

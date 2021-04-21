@@ -29,7 +29,6 @@
     <ItemGroup>
       <Folder Include="Areas\Main\Pages" />
       <Folder Include="Pages\PagesForTestingAPIs" />
-      <Folder Include="wwwroot\avatars" />
     </ItemGroup>
 
     <ItemGroup>
