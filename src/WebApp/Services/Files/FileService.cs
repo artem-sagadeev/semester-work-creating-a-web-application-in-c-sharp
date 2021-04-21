@@ -26,5 +26,11 @@ namespace WebApp.Services.Files
             var response = await _client.GetAsync($"/Files/GetLink/{id}");
             return await response.ReadContentAs<FileModel>();
         }
+
+        public async Task<AvatarModel> GetAvatar(int creatorId, CreatorType creatorType)
+        {
+            var response = await _client.GetAsync($"/Avatars/Get/?creatorId={creatorId}&creatorType={creatorType}");
+            return await response.ReadContentAs<AvatarModel>();
+        }
     }
 }

@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Models;
 using WebApp.Models.Developer;
+using WebApp.Models.Files;
 using WebApp.Models.Identity;
 using WebApp.Models.Posts;
 using WebApp.Services;
 using WebApp.Services.Developer;
+using WebApp.Services.Files;
 using WebApp.Services.Posts;
 
 namespace WebApp.Pages
@@ -17,18 +19,24 @@ namespace WebApp.Pages
     {
         private readonly IDeveloperService _developerService;
         private readonly IPostsService _postsService;
+        private readonly IFileService _fileService;
 
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserProfile(IDeveloperService developerService, IPostsService postsService, UserManager<ApplicationUser> userManager)
+        public UserProfile(IDeveloperService developerService, 
+            IPostsService postsService, 
+            UserManager<ApplicationUser> userManager, 
+            IFileService fileService)
         {
             _developerService = developerService;
             _postsService = postsService;
             _userManager = userManager;
+            _fileService = fileService;
         }
 
         public UserModel UserModel { get; private set; }
         public IEnumerable<PostModel> PostModels { get; private set; }
+        public AvatarModel Avatar { get; private set; }
         
         public async Task<ActionResult> OnGetAsync(int id)
         {
@@ -37,6 +45,7 @@ namespace WebApp.Pages
             UserModel.Companies = await _developerService.GetUserCompanies(id);
             UserModel.Projects = await _developerService.GetUserProjects(id);
             PostModels = await _postsService.GetUserPosts(id);
+            Avatar = await _fileService.GetAvatar(UserModel.Id, CreatorType.User);
             return Page();
         }
 

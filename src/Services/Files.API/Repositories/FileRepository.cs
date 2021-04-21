@@ -47,9 +47,10 @@ namespace Files.API.Repositories
             await _files.FindOneAndDeleteAsync(filter);
         }
 
-        public async Task<Avatar> GetAvatarAsync(int creatorId)
+        public async Task<Avatar> GetAvatarAsync(int creatorId, CreatorType creatorType)
         {
-            var filter = Builders<Avatar>.Filter.Eq("CreatorId", creatorId);
+            var builder = Builders<Avatar>.Filter;
+            var filter = builder.Eq("CreatorId", creatorId) & builder.Eq("CreatorType", creatorType);
             var avatar = await _avatars.FindAsync(filter);
             return await avatar.FirstAsync();
         }

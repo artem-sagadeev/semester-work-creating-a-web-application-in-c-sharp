@@ -16,10 +16,10 @@ namespace Files.API.Controllers
         }
 
         [HttpGet]
-        [Route("/Avatars/Get/{creatorId:int}")]
-        public async Task<Avatar> Get(int creatorId)
+        [Route("/Avatars/Get")]
+        public async Task<Avatar> Get(int creatorId, CreatorType creatorType)
         {
-            return await _fileRepository.GetAvatarAsync(creatorId);
+            return await _fileRepository.GetAvatarAsync(creatorId, creatorType);
         }
     }
 }
