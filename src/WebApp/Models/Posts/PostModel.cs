@@ -9,6 +9,5 @@ namespace WebApp.Models.Posts
         public int ProjectId { get; set; }
         public string Text { get; set; }
         public PriceType RequiredSubscriptionType { get; set; }
-        public string ImageName { get; set; }
     }
 }

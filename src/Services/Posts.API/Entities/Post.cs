@@ -9,17 +9,15 @@ namespace Posts.API.Entities
         public string Text { get; set; }
         //todo make enum
         public int RequiredSubscriptionType { get; set; }
-        public string ImageName { get; set; }
         
         public List<Comment> Comments { get; set; }
 
-        public Post(int userId, int projectId, string text, int requiredSubscriptionType, string imageName)
+        public Post(int userId, int projectId, string text, int requiredSubscriptionType)
         {
             UserId = userId;
             ProjectId = projectId;
             Text = text;
             RequiredSubscriptionType = requiredSubscriptionType;
-            ImageName = imageName;
         }
         
         public Post()
