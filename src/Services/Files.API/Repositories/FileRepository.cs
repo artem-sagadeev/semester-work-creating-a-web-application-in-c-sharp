@@ -11,6 +11,10 @@ namespace Files.API.Repositories
     {
         private readonly IMongoCollection<File> _files;
         private readonly IMongoCollection<Avatar> _avatars;
+        private readonly IMongoCollection<Cover> _covers;
+
+        private readonly Avatar _defaultAvatar = new Avatar(0, "defaultAvatar.jpg");
+        private readonly Cover _defaultCover = new Cover(0, "defaultCover.jpg");
 
         public FileRepository()
         {
@@ -20,6 +24,7 @@ namespace Files.API.Repositories
             var database = client.GetDatabase(connection.DatabaseName);
             _files = database.GetCollection<File>("Files");
             _avatars = database.GetCollection<Avatar>("Avatars");
+            _covers = database.GetCollection<Cover>("Covers");
         }
 
         public async Task<File> GetFileAsync(string id)
@@ -52,7 +57,7 @@ namespace Files.API.Repositories
             var builder = Builders<Avatar>.Filter;
             var filter = builder.Eq("CreatorId", creatorId) & builder.Eq("CreatorType", creatorType);
             var avatar = await _avatars.FindAsync(filter);
-            return await avatar.FirstAsync();
+            return await avatar.FirstOrDefaultAsync() ?? _defaultAvatar;
         }
 
         public async Task CreateAvatarAsync(Avatar avatar)
@@ -65,6 +70,13 @@ namespace Files.API.Repositories
         {
             var filter = Builders<Avatar>.Filter.Eq("CreatorId", creatorId);
             await _avatars.FindOneAndDeleteAsync(filter);
+        }
+
+        public async Task<Cover> GetCoverAsync(int postId)
+        {
+            var filter = Builders<Cover>.Filter.Eq("PostId", postId);
+            var covers = await _covers.FindAsync(filter);
+            return await covers.FirstOrDefaultAsync() ?? _defaultCover;
         }
     }
 }

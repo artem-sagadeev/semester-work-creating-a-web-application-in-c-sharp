@@ -2,6 +2,7 @@
 @using WebApp.Models.Identity
 @using WebApp.Models.Subscription
 @using WebApp.Services.Developer
+@using WebApp.Services.Files
 @using WebApp.Services.Subscription
 @model WebApp.Models.Posts.PostModel
 
@@ -9,6 +10,7 @@
 @inject UserManager<ApplicationUser> _userManager
 @inject ISubscriptionService _subscriptionService
 @inject IDeveloperService _developerService;
+@inject IFileService _fileService;
 
 @{
     var user = _signInManager.IsSignedIn(User) ? await _userManager.GetUserAsync(User) : null;
@@ -30,6 +32,8 @@
             TypeOfSubscription.Team);
         hasAccess = hasSubscribeToUser || hasSubscribeToProject || hasSubscribeToCompany;
     }*/
+
+    var cover = await _fileService.GetCover(Model.Id);
 }
 
 @if (hasAccess)
@@ -37,7 +41,7 @@
     <div>
         @Model.Id
         @Model.Text
-        @*todo image*@
+        <img src="@cover?.Path" alt="cover">
     </div>
 }
 else

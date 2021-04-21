@@ -14,5 +14,6 @@ namespace Files.API.Repositories
         public Task<Avatar> GetAvatarAsync(int creatorId, CreatorType creatorType);
         public Task CreateAvatarAsync(Avatar avatar);
         public Task DeleteAvatarAsync(int creatorId);
+        public Task<Cover> GetCoverAsync(int postId);
     }
 }

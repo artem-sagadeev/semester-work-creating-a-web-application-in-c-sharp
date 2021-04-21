@@ -834,6 +834,18 @@
       ],
       "UpstreamPathTemplate": "/Avatars/Get?creatorId={creatorId}&creatorType={creatorType}",
       "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownStreamPathTemplate": "/Covers/Get/{postId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5004
+        }
+      ],
+      "UpstreamPathTemplate": "/Covers/Get?postId={postId}",
+      "UpstreamHttpMethod": [ "GET" ]
     }
   ],
   "GlobalConfiguration" : {

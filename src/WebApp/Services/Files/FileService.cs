@@ -32,5 +32,11 @@ namespace WebApp.Services.Files
             var response = await _client.GetAsync($"/Avatars/Get?creatorId={creatorId}&creatorType={creatorType}");
             return await response.ReadContentAs<AvatarModel>();
         }
+
+        public async Task<CoverModel> GetCover(int postId)
+        {
+            var response = await _client.GetAsync($"/Covers/Get?postId={postId}");
+            return await response.ReadContentAs<CoverModel>();
+        }
     }
 }
