@@ -7,6 +7,6 @@ namespace WebApp.Services.Files
     public interface IFileService
     {
         Task<IEnumerable<FileModel>> GetPostFiles(int postId);
-        Task<string> GetLink(string id);
+        Task<FileModel> GetFile(string id);
     }
 }

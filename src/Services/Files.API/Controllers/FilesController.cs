@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Files.API.Entities;
 using Files.API.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,28 +19,10 @@ namespace Files.API.Controllers
         }
         
         [HttpGet]
-        [Route("/Files/GetLink/{id}")]
-        public async Task<ActionResult<string>> GetLink(string id)
+        [Route("/Files/GetFile/{id}")]
+        public async Task<File> GetFile(string id)
         {
-            var link = new Link(id);
-            await _fileRepository.CreateLinkAsync(link);
-            return link.Uri;
-        }
-        
-        [HttpGet]
-        [Route("/Files/GetFile/{id}/{token}")]
-        public async Task<ActionResult> GetFile(string id, string token)
-        {
-            var link = await _fileRepository.GetLinkAsync(id, token);
-
-            if (link.Token != token)
-                return Forbid();
-            var file = await _fileRepository.GetFileAsync(id);
-            Response.Headers.Add("Access-Control-Allow-Origin", "*");
-            var bytes = await System.IO.File.ReadAllBytesAsync(file.Path);
-
-            await _fileRepository.DeleteLinkAsync(link.Id);
-            return File(bytes, file.Type, file.Name);
+            return await _fileRepository.GetFileAsync(id);
         }
         
         [HttpGet]
@@ -52,7 +33,7 @@ namespace Files.API.Controllers
         }
 
         [HttpPost]
-        [Route("/Files/Create/{postId}")]
+        [Route("/Files/Create/{postId:int}")]
         public async Task Create(int postId, IFormFile uploadedFile)
         {
             if (uploadedFile == null) return;

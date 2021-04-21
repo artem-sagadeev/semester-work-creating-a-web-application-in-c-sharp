@@ -21,10 +21,10 @@ namespace WebApp.Services.Files
             return await response.ReadContentAs<IEnumerable<FileModel>>();
         }
 
-        public async Task<string> GetLink(string id)
+        public async Task<FileModel> GetFile(string id)
         {
             var response = await _client.GetAsync($"/Files/GetLink/{id}");
-            return await response.Content.ReadAsStringAsync();
+            return await response.ReadContentAs<FileModel>();
         }
     }
 }

@@ -812,7 +812,7 @@
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
-      "DownStreamPathTemplate": "/Files/GetLink/{id}",
+      "DownStreamPathTemplate": "/Files/GetFile/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -820,7 +820,7 @@
           "Port": 5004
         }
       ],
-      "UpstreamPathTemplate": "/Files/GetLink/{id}",
+      "UpstreamPathTemplate": "/Files/GetFile/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     }
   ],
