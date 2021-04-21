@@ -10,7 +10,7 @@ namespace Files.API.Entities
         public int PostId { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
-        public string Path => "Files/" + Name;
+        public string Path => "files/" + Name;
 
         public File(int postId, string name, string type)
         {

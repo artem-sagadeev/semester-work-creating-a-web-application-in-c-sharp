@@ -14,5 +14,8 @@ namespace Files.API.Repositories
         public Task<Link> GetLinkAsync(string fileId, string token);
         public Task CreateLinkAsync(Link link);
         public Task DeleteLinkAsync(string id);
+        public Task<Avatar> GetAvatarAsync(int creatorId);
+        public Task CreateAvatarAsync(Avatar avatar);
+        public Task DeleteAvatarAsync(int creatorId);
     }
 }

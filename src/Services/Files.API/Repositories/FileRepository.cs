@@ -11,6 +11,7 @@ namespace Files.API.Repositories
     {
         private readonly IMongoCollection<File> _files;
         private readonly IMongoCollection<Link> _links;
+        private readonly IMongoCollection<Avatar> _avatars;
 
         public FileRepository()
         {
@@ -20,6 +21,7 @@ namespace Files.API.Repositories
             var database = client.GetDatabase(connection.DatabaseName);
             _files = database.GetCollection<File>("Files");
             _links = database.GetCollection<Link>("Links");
+            _avatars = database.GetCollection<Avatar>("Avatars");
         }
 
         public async Task<File> GetFileAsync(string id)
@@ -64,6 +66,25 @@ namespace Files.API.Repositories
         {
             var filter = Builders<Link>.Filter.Eq("Id", id);
             await _links.FindOneAndDeleteAsync(filter);
+        }
+
+        public async Task<Avatar> GetAvatarAsync(int creatorId)
+        {
+            var filter = Builders<Avatar>.Filter.Eq("CreatorId", creatorId);
+            var avatar = await _avatars.FindAsync(filter);
+            return await avatar.FirstAsync();
+        }
+
+        public async Task CreateAvatarAsync(Avatar avatar)
+        {
+            await DeleteAvatarAsync(avatar.CreatorId);
+            await _avatars.InsertOneAsync(avatar);
+        }
+
+        public async Task DeleteAvatarAsync(int creatorId)
+        {
+            var filter = Builders<Avatar>.Filter.Eq("CreatorId", creatorId);
+            await _avatars.FindOneAndDeleteAsync(filter);
         }
     }
 }

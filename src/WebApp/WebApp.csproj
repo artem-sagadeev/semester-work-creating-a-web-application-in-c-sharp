@@ -29,6 +29,7 @@
     <ItemGroup>
       <Folder Include="Areas\Main\Pages" />
       <Folder Include="Pages\PagesForTestingAPIs" />
+      <Folder Include="wwwroot\avatars" />
     </ItemGroup>
 
     <ItemGroup>
@@ -90,6 +91,15 @@
       <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\Company\Projects.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\Company\Users.cshtml" />
       <_ContentIncludedByDefault Remove="Pages\PagesForTestingAPIs\Comment\Details.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Include="wwwroot\files\Example.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="wwwroot\files\Example.html" />
+      <None Include="wwwroot\files\Example.js" />
     </ItemGroup>
 
 </Project>
