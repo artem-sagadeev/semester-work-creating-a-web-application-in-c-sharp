@@ -29,7 +29,7 @@ namespace WebApp.Services.Files
 
         public async Task<AvatarModel> GetAvatar(int creatorId, CreatorType creatorType)
         {
-            var response = await _client.GetAsync($"/Avatars/Get/?creatorId={creatorId}&creatorType={creatorType}");
+            var response = await _client.GetAsync($"/Avatars/Get?creatorId={creatorId}&creatorType={creatorType}");
             return await response.ReadContentAs<AvatarModel>();
         }
     }

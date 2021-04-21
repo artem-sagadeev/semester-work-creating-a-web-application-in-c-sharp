@@ -1,7 +1,14 @@
-﻿@model WebApp.Models.Developer.UserModel
+﻿@using WebApp.Services.Files
+@using WebApp.Models.Files
+@model WebApp.Models.Developer.UserModel
+
+@inject IFileService _fileService
+@{
+    var avatar = await _fileService.GetAvatar(Model.Id, CreatorType.User);
+}
 
 <div>
     @Model.Id
     @Model.Name
-    @*todo image*@
+    <img src="@avatar?.Path" alt="avatar">
 </div>

@@ -824,7 +824,7 @@
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
-      "DownStreamPathTemplate": "/Avatars/Get/{id}",
+      "DownStreamPathTemplate": "/Avatars/Get?creatorId={creatorId}&creatorType={creatorType}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -832,7 +832,7 @@
           "Port": 5004
         }
       ],
-      "UpstreamPathTemplate": "/Avatars/Get/{id}",
+      "UpstreamPathTemplate": "/Avatars/Get?creatorId={creatorId}&creatorType={creatorType}",
       "UpstreamHttpMethod": [ "GET" ]
     }
   ],
