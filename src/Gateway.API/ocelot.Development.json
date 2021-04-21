@@ -800,6 +800,18 @@
     },
     //Files
     {
+      "DownStreamPathTemplate": "/Files/GetPostFiles/{postId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5004
+        }
+      ],
+      "UpstreamPathTemplate": "/Files/GetPostFiles/{postId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
       "DownStreamPathTemplate": "/Files/GetLink/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [

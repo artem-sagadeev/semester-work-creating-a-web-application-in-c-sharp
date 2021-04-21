@@ -1,5 +1,8 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
+using WebApp.Extensions;
+using WebApp.Models.Files;
 
 namespace WebApp.Services.Files
 {
@@ -10,6 +13,12 @@ namespace WebApp.Services.Files
         public FileService(HttpClient client)
         {
             _client = client;
+        }
+
+        public async Task<IEnumerable<FileModel>> GetPostFiles(int postId)
+        {
+            var response = await _client.GetAsync($"/Files/GetPostFiles/{postId}");
+            return await response.ReadContentAs<IEnumerable<FileModel>>();
         }
 
         public async Task<string> GetLink(string id)

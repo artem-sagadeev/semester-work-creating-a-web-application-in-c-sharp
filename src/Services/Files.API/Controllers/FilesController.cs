@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Files.API.Entities;
 using Files.API.Repositories;
@@ -42,13 +43,20 @@ namespace Files.API.Controllers
             await _fileRepository.DeleteLinkAsync(link.Id);
             return File(bytes, file.Type, file.Name);
         }
+        
+        [HttpGet]
+        [Route("/Files/GetPostFiles/{postId:int}")]
+        public async Task<IEnumerable<File>> GetPostFiles(int postId)
+        {
+            return await _fileRepository.GetPostFiles(postId);
+        }
 
         [HttpPost]
-        [Route("/Files/Create")]
-        public async Task Create(IFormFile uploadedFile)
+        [Route("/Files/Create/{postId}")]
+        public async Task Create(int postId, IFormFile uploadedFile)
         {
             if (uploadedFile == null) return;
-            var file = new File(uploadedFile.FileName, uploadedFile.ContentType);
+            var file = new File(postId, uploadedFile.FileName, uploadedFile.ContentType);
             await using (var fileStream = new FileStream(file.Path, FileMode.Create))
             {
                 await uploadedFile.CopyToAsync(fileStream);
@@ -57,7 +65,7 @@ namespace Files.API.Controllers
         }
         
         [HttpPost]
-        [Route("/Files/Delete")]
+        [Route("/Files/Delete/{id}")]
         public async Task Delete(string id)
         {
             await _fileRepository.DeleteFileAsync(id);

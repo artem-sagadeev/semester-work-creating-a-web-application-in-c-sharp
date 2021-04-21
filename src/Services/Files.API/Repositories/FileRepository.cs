@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Files.API.Entities;
 using MongoDB.Bson;
@@ -26,6 +27,13 @@ namespace Files.API.Repositories
             var filter = Builders<File>.Filter.Eq("Id", id);
             var files = await _files.FindAsync(filter);
             return await files.FirstAsync();
+        }
+        
+        public async Task<IEnumerable<File>> GetPostFiles(int postId)
+        {
+            var filter = Builders<File>.Filter.Eq("PostId", postId);
+            var files = await _files.FindAsync(filter);
+            return await files.ToListAsync();
         }
 
         public async Task CreateFileAsync(File file)
