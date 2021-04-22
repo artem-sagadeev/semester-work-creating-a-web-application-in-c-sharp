@@ -28,7 +28,7 @@ namespace WebApp.Services.Subscription
             var response = await _client.GetAsync($"/Subscription/GetTariffById?tariffId={tariffId}");
             return await response.ReadContentAs<TariffModel>();
         }
-        
+
         public async Task<TariffModel> GetTariffByPriceTypeAndSubscriptionType(TypeOfSubscription subscriptionTypeId, PriceType priceType)
         {
             var response = await _client.GetAsync($"/Subscription/GetTariffByPriceTypeAndSubscriptionType?subscriptionTypeId={subscriptionTypeId}&priceType={priceType}");
@@ -57,7 +57,7 @@ namespace WebApp.Services.Subscription
                 tariffId = tariffId
             });
         }
-      
+
         //PaidSubscriptions
         public async Task<IEnumerable<PaidSubscriptionModel>> GetPaidSubscriptions()
         {
@@ -76,7 +76,7 @@ namespace WebApp.Services.Subscription
             var response = await _client.GetAsync($"/Subscription/GetPaidSubscriptionsBySubscribedToId?subscribedToId={subscribedToId}");
             return await response.ReadContentAs<IEnumerable<PaidSubscriptionModel>>();
         }
-        
+
         public async Task AddPaidSubscription(PaidSubscriptionModel newPaidSubscription)
         {
             await _client.PostAsJsonAsync($"/Subscription/AddPaidSubscription", newPaidSubscription);
@@ -85,13 +85,13 @@ namespace WebApp.Services.Subscription
         class UserIdTariffIdSubscibedIdFormat
         {
             public int userId { get; set; }
-            public int tariffId { get; set; } 
+            public int tariffId { get; set; }
             public int subscribedToId { get; set; }
         }
-        
+
         public async Task DeletePaidSubscription(int userId, int tariffId, int subscribedToId)
         {
-            await _client.PostAsJsonAsync($"/Subscription/DeletePaidSubscription", 
+            await _client.PostAsJsonAsync($"/Subscription/DeletePaidSubscription",
                 new UserIdTariffIdSubscibedIdFormat()
                 {
                     userId = userId,
@@ -100,9 +100,12 @@ namespace WebApp.Services.Subscription
                 });
         }
 
-        public Task<bool> HasUserAccess(int subscriberId, int subscribedToId, PriceType type)
+
+        public async Task<bool> HasUserAccess(int subscriberId, int subscribedToId, PriceType priceType, TypeOfSubscription typeOfSubscription)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.GetAsync($"/Subscription/HasUserAccess?subscriberId={subscriberId}&subscribedToId={subscribedToId}&priceType={priceType}&typeOfSubscription={typeOfSubscription}");
+            var obj = await response.ReadContentAs<PaidSubscriptionModel>();
+            return obj != null;
         }
     }
 }

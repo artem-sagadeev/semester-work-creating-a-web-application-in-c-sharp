@@ -23,8 +23,8 @@ namespace WebApp.Pages.PaidSubscription
 
         public async Task<ActionResult> OnGetAsync()
         {
-            PaidSubscriptionModels = await _subscriptionService.GetPaidSubscriptions();
-            return Page();
+            var x = await _subscriptionService.HasUserAccess(1, 3, PriceType.Free, TypeOfSubscription.User);
+            return null;
         }
 
         public async Task OnPostAsync(int userId, int subscribedToId, int tariffId)

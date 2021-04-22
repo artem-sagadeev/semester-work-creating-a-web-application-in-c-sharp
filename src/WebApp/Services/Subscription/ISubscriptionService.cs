@@ -28,6 +28,6 @@ namespace WebApp.Services.Subscription
         public Task DeletePaidSubscription(int userId, int tariffId, int subscribedToId);
         
         //Other
-        public Task<bool> HasUserAccess(int subscriberId, int subscribedToId, PriceType type);
+        public Task<bool> HasUserAccess(int subscriberId, int subscribedToId, PriceType priceType, TypeOfSubscription typeOfSubscription);
     }
 }
