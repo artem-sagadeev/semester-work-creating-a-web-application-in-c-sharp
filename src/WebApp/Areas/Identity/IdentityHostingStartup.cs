@@ -19,7 +19,14 @@ namespace WebApp.Areas.Identity
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<ApplicationContext>();
 
-                services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<ApplicationUser>(options =>
+                    {
+                        options.Password.RequiredLength = 8;
+                        options.Password.RequireDigit = true;
+                        options.Password.RequireLowercase = false;
+                        options.Password.RequireUppercase = false;
+                        options.Password.RequireNonAlphanumeric = false;
+                    })
                     .AddEntityFrameworkStores<ApplicationContext>();
             });
         }

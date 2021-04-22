@@ -577,6 +577,18 @@
       "UpstreamPathTemplate": "/Developers/GetUsersByName?name={name}",
       "UpstreamHttpMethod": [ "GET" ]
     },
+    {
+      "DownStreamPathTemplate": "/Users/Create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/CreateUser",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
     //Projects
     {
       "DownStreamPathTemplate": "/Projects/Get",

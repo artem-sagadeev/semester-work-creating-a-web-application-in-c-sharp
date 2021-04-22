@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WebApp.Extensions;
 using WebApp.Models.Developer;
@@ -44,6 +45,11 @@ namespace WebApp.Services.Developer
         {
             var response = await _client.GetAsync($"/Developers/GetUserCompanies?userId={userId}");
             return await response.ReadContentAs<IEnumerable<CompanyModel>>();
+        }
+
+        public async Task CreateUser(UserModel user)
+        {
+            await _client.PostAsJsonAsync($"/Developers/CreateUser", user);
         }
 
         public async Task<IEnumerable<ProjectModel>> GetProjects()

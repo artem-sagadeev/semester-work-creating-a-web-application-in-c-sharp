@@ -59,9 +59,9 @@ namespace Developer.API.Controllers
 
         [HttpPost]
         [Route("/Users/Create")]
-        public async Task Create(string login)
+        public async Task Create(User user)
         {
-            await _context.User.AddAsync(new User(login));
+            await _context.User.AddAsync(user);
             await _context.SaveChangesAsync();
         }
 

@@ -12,6 +12,7 @@ namespace WebApp.Services.Developer
         Task<UserModel> GetUser(int id);
         Task<IEnumerable<ProjectModel>> GetUserProjects(int userId);
         Task<IEnumerable<CompanyModel>> GetUserCompanies(int userId);
+        Task CreateUser(UserModel user);
 
         //Projects
         Task<IEnumerable<ProjectModel>> GetProjects();
