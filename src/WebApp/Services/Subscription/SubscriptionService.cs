@@ -100,9 +100,11 @@ namespace WebApp.Services.Subscription
                 });
         }
 
-        public Task<bool> HasUserAccess(int subscriberId, int subscribedToId, PriceType type)
+        public async Task<bool> HasUserAccess(int subscriberId, int subscribedToId, PriceType priceType, TypeOfSubscription typeOfSubscription)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.GetAsync($"/Subscription/HasUserAccess?subscriberId={subscriberId}&subscribedToId={subscribedToId}&priceType={priceType}&typeOfSubscription={typeOfSubscription}");
+            var obj = await response.ReadContentAs<PaidSubscriptionModel>();
+            return obj != null;
         }
     }
 }

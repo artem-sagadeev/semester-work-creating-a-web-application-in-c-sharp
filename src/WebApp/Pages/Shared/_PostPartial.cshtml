@@ -14,29 +14,10 @@
 
 @{
     var user = _signInManager.IsSignedIn(User) ? await _userManager.GetUserAsync(User) : null;
-    var hasAccess = Model.RequiredSubscriptionType == PriceType.Free;
-    /*if (user != null)
-    {
-        var hasSubscribeToUser = await _subscriptionService.HasUserAccess(user.UserId, 
-            Model.UserId, 
-            Model.RequiredSubscriptionType, 
-            TypeOfSubscription.User);
-        var hasSubscribeToProject = Model.ProjectId != 0 && await _subscriptionService.HasUserAccess(user.UserId, 
-            Model.ProjectId, 
-            Model.RequiredSubscriptionType, 
-            TypeOfSubscription.Project);
-        var companyId = Model.ProjectId != 0 ? (await _developerService.GetProjectCompany(Model.ProjectId)).Id : 0;
-        var hasSubscribeToCompany = companyId != 0 && await _subscriptionService.HasUserAccess(user.UserId,
-            companyId,
-            Model.RequiredSubscriptionType,
-            TypeOfSubscription.Team);
-        hasAccess = hasSubscribeToUser || hasSubscribeToProject || hasSubscribeToCompany;
-    }*/
-
     var cover = await _fileService.GetCover(Model.Id);
 }
 
-@if (hasAccess)
+@if (await Model.HasUserAccessAsync(user, _subscriptionService, _developerService))
 {
     <div>
         @Model.Id
