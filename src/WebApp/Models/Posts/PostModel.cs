@@ -19,6 +19,9 @@ namespace WebApp.Models.Posts
             ISubscriptionService subscriptionService, 
             IDeveloperService developerService)
         {
+            if (RequiredSubscriptionType == PriceType.Free)
+                return true;
+            
             var hasSubscribeToUser = user != null &&
                                      await subscriptionService.HasUserAccess(user.UserId, 
                                          UserId, 
@@ -38,8 +41,7 @@ namespace WebApp.Models.Posts
                                             RequiredSubscriptionType, 
                                             TypeOfSubscription.Team);
             
-            return RequiredSubscriptionType == PriceType.Free || 
-                   hasSubscribeToUser || 
+            return hasSubscribeToUser || 
                    hasSubscribeToProject || 
                    hasSubscribeToCompany;
         }
