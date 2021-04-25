@@ -34,7 +34,7 @@
 
     var companies = Model switch {
         UserModel user => user.Companies,
-        ProjectModel project => new List<CompanyModel> {project.Company},
+        ProjectModel project => project.Company != null ? new List<CompanyModel> {project.Company} : new List<CompanyModel>(),
         CompanyModel => new List<CompanyModel>(),
         _ => throw new ArgumentOutOfRangeException()
     };
