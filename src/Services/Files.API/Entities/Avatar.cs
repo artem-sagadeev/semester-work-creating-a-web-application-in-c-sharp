@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using System;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Files.API.Entities
@@ -19,10 +20,17 @@ namespace Files.API.Entities
         public CreatorType CreatorType { get; set; }
         public string Path => "avatars/" + Name;
 
-        public Avatar(int creatorId, string name)
+        public Avatar(int creatorId, string name, int creatorType)
         {
             CreatorId = creatorId;
             Name = name;
+            CreatorType = creatorType switch
+            {
+                0 => CreatorType.User,
+                1 => CreatorType.Project,
+                2 => CreatorType.Company,
+                _ => throw new ArgumentException()
+            };
         }
 
         public Avatar()

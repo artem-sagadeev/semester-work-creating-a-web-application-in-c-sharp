@@ -21,5 +21,12 @@ namespace Files.API.Controllers
         {
             return await _fileRepository.GetAvatarAsync(creatorId, creatorType);
         }
+
+        [HttpPost]
+        [Route("/Avatars/Create")]
+        public async Task Create(Avatar avatar)
+        {
+            await _fileRepository.CreateAvatarAsync(avatar);
+        }
     }
 }

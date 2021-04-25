@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Developer.API.Entities;
+using Developer.API.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,9 +24,14 @@ namespace Developer.API.Controllers
             => _context.Project.ToList();
         
         [HttpGet]
-        [Route("/Projects/Get/{id}")]
+        [Route("/Projects/Get/{id:int}")]
         public ActionResult<Project> Get(int id)
             => _context.Project.First(p => p.Id == id);
+
+        [HttpGet]
+        [Route("/Projects/Get/{name}")]
+        public ActionResult<Project> Get(string name)
+            => _context.Project.First(p => p.Name == name);
 
         [HttpGet]
         [Route("/Projects/GetByCompany/{companyId}")]
@@ -38,7 +43,7 @@ namespace Developer.API.Controllers
                 .First();
 
         [HttpGet]
-        [Route("/Projects/GetByUser/{userId}")]
+        [Route("/Projects/GetByUser/{userId:int}")]
         public ActionResult<IEnumerable<Project>> GetByUser(int userId)
             => _context
                 .User
@@ -54,6 +59,13 @@ namespace Developer.API.Controllers
                 .Where(p => p.Name.Contains(name))
                 .ToList();
 
+        [HttpPost]
+        [Route("/Projects/Create")]
+        public ActionResult<string> Create(ProjectForm projectForm)
+        {
+            return Project.CreateProject(projectForm);
+        }
+        
         [HttpPost]
         [Route("/Projects/Delete")]
         public async Task Delete(int id)

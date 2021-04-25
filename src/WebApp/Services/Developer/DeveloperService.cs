@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WebApp.Extensions;
 using WebApp.Models.Developer;
+using WebApp.Pages;
 
 namespace WebApp.Services.Developer
 {
@@ -70,6 +71,12 @@ namespace WebApp.Services.Developer
             return await response.ReadContentAs<ProjectModel>();
         }
 
+        public async Task<ProjectModel> GetProject(string name)
+        {
+            var response = await _client.GetAsync($"/Developers/GetProject/{name}");
+            return await response.ReadContentAs<ProjectModel>();
+        }
+
         public async Task<IEnumerable<UserModel>> GetProjectUsers(int projectId)
         {
             var response = await _client.GetAsync($"/Developers/GetProjectUsers?projectId={projectId}");
@@ -80,6 +87,12 @@ namespace WebApp.Services.Developer
         {
             var response = await _client.GetAsync($"/Developers/GetProjectCompany?projectId={projectId}");
             return await response.ReadContentAs<CompanyModel>();
+        }
+
+        public async Task<string> CreateProject(ProjectForm projectForm)
+        {
+            var response = await _client.PostAsJsonAsync("/Developers/CreateProject", projectForm);
+            return await response.Content.ReadAsStringAsync();
         }
 
         public async Task<IEnumerable<CompanyModel>> GetCompanies()

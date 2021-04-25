@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebApp.Models.Developer;
+using WebApp.Pages;
 
 namespace WebApp.Services.Developer
 {
@@ -18,9 +19,11 @@ namespace WebApp.Services.Developer
         Task<IEnumerable<ProjectModel>> GetProjects();
         Task<IEnumerable<ProjectModel>> GetProjectsByName(string name);
         Task<ProjectModel> GetProject(int id);
+        Task<ProjectModel> GetProject(string name);
         Task<IEnumerable<UserModel>> GetProjectUsers(int projectId);
         Task<CompanyModel> GetProjectCompany(int projectId);
-        
+        Task<string> CreateProject(ProjectForm projectForm);
+
         //Companies
         Task<IEnumerable<CompanyModel>> GetCompanies();
         Task<IEnumerable<CompanyModel>> GetCompaniesByName(string name);

@@ -1,0 +1,22 @@
+﻿@page
+@model WebApp.Pages.CreateProject
+
+<div>
+    <form method="POST">
+        <div>
+            <label>Name</label>
+            <input type="text" name="name">
+        </div>
+        <div>
+            <label>Company</label>
+            @foreach (var company in Model.UserCompanies)
+            {
+                <label>@company.Name</label>
+                <input type="radio" name="company" value="@company.Id">
+            }
+        </div>
+        @*todo add tags*@
+        @*todo add avatar*@
+        <button type="submit">Create</button>
+    </form>
+</div>

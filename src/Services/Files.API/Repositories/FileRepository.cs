@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Files.API.Entities;
@@ -13,7 +14,9 @@ namespace Files.API.Repositories
         private readonly IMongoCollection<Avatar> _avatars;
         private readonly IMongoCollection<Cover> _covers;
 
-        private readonly Avatar _defaultAvatar = new Avatar(0, "defaultAvatar.jpg");
+        private readonly Avatar _defaultUserAvatar = new Avatar(0, "defaultUserAvatar.jpg", 0);
+        private readonly Avatar _defaultProjectAvatar = new Avatar(0, "defaultProjectAvatar.jpg", 1);
+        private readonly Avatar _defaultCompanyAvatar = new Avatar(0, "defaultCompanyAvatar.jpg", 2);
         private readonly Cover _defaultCover = new Cover(0, "defaultCover.jpg");
 
         public FileRepository()
@@ -57,7 +60,13 @@ namespace Files.API.Repositories
             var builder = Builders<Avatar>.Filter;
             var filter = builder.Eq("CreatorId", creatorId) & builder.Eq("CreatorType", creatorType);
             var avatar = await _avatars.FindAsync(filter);
-            return await avatar.FirstOrDefaultAsync() ?? _defaultAvatar;
+            return await avatar.FirstOrDefaultAsync() ?? creatorType switch
+            {
+                CreatorType.User => _defaultUserAvatar,
+                CreatorType.Project => _defaultProjectAvatar,
+                CreatorType.Company => _defaultCompanyAvatar,
+                _ => throw new ArgumentException()
+            };
         }
 
         public async Task CreateAvatarAsync(Avatar avatar)
