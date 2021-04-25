@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WebApp.Extensions;
 using WebApp.Models.Files;
@@ -31,6 +32,11 @@ namespace WebApp.Services.Files
         {
             var response = await _client.GetAsync($"/Avatars/Get?creatorId={creatorId}&creatorType={creatorType}");
             return await response.ReadContentAs<AvatarModel>();
+        }
+
+        public async Task CreateAvatar(AvatarModel avatar)
+        {
+            await _client.PostAsJsonAsync("/Avatars/Create", avatar);
         }
 
         public async Task<CoverModel> GetCover(int postId)
