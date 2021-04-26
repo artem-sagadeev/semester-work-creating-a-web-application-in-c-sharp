@@ -21,12 +21,12 @@ namespace Developer.API.Entities
             Name = name;
         }
         
-        public static string CreateProject(ProjectForm projectForm)
+        public static string Create(ProjectForm projectForm)
         {
             using var context = new DeveloperDbContext();
 
             if (context.Project.Select(p => p.Name).Contains(projectForm.Name))
-                return "Project with same name already exist";
+                return "Project with same name already exists";
             
             if (projectForm.CompanyId == 0)
             {

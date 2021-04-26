@@ -63,7 +63,7 @@ namespace Developer.API.Controllers
         [Route("/Projects/Create")]
         public ActionResult<string> Create(ProjectForm projectForm)
         {
-            return Project.CreateProject(projectForm);
+            return Project.Create(projectForm);
         }
         
         [HttpPost]

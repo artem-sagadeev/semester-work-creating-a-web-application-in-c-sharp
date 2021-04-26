@@ -747,6 +747,18 @@
       "UpstreamPathTemplate": "/Developers/GetCompaniesByName?name={name}",
       "UpstreamHttpMethod": [ "GET" ]
     },
+    {
+      "DownStreamPathTemplate": "/Companies/Create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/Developers/CreateCompany",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
     //Tags
     {
       "DownStreamPathTemplate": "/Tags/GetByUser/{userId}",

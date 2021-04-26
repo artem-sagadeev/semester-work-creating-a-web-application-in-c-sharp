@@ -1,0 +1,15 @@
+﻿@page
+@model WebApp.Pages.CreateCompany
+
+<div>
+    <form method="POST" enctype="multipart/form-data">
+        <div>
+            <label>Name</label>
+            <input type="text" name="name">
+        </div>
+        <div>
+            <input type="file" name="avatar">
+        </div>
+        <button type="submit">Create</button>
+    </form>
+</div>

@@ -125,6 +125,12 @@ namespace WebApp.Services.Developer
             return await response.ReadContentAs<IEnumerable<ProjectModel>>();
         }
 
+        public async Task<string> CreateCompany(CompanyForm companyForm)
+        {
+            var response = await _client.PostAsJsonAsync($"/Developers/CreateCompany", companyForm);
+            return await response.Content.ReadAsStringAsync();
+        }
+
         public async Task<IEnumerable<TagModel>> GetTags(ICreator creator)
         {
             return creator switch

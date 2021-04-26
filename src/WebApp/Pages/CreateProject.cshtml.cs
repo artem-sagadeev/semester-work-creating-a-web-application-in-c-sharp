@@ -56,6 +56,9 @@ namespace WebApp.Pages
 
         public async Task<ActionResult> OnPostAsync(ProjectForm projectForm, IFormFile avatar)
         {
+            if (!_signInManager.IsSignedIn(User))
+                return Forbid();
+            
             projectForm.UserId = (await _userManager.GetUserAsync(User)).UserId;
             var message = await _developerService.CreateProject(projectForm);
 

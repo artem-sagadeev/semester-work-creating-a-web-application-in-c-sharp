@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Developer.API.Entities;
+using Developer.API.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -53,6 +54,13 @@ namespace Developer.API.Controllers
                 .ToList();
         
         [HttpPost]
+        [Route("/Companies/Create")]
+        public ActionResult<string> Create(CompanyForm companyForm)
+        {
+            return Company.Create(companyForm);
+        }
+        
+        [HttpPost]
         [Route("/Companies/Delete")]
         public async Task Delete(int id)
         {
@@ -70,6 +78,8 @@ namespace Developer.API.Controllers
             company.Users.Add(user);
         }
 
+        [HttpPost]
+        [Route("/Companies/AddProject")]
         public async Task AddProject(int companyId, int projectId)
         {
             var company = await _context.Company.FirstAsync(c => c.Id == companyId);
