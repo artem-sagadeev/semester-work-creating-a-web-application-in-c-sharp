@@ -11,7 +11,6 @@ namespace WebApp.Hubs
 {
     public class ChatHub : Hub
     {
-        //Клиентский код JavaScript вызывает этот метод, для отправки сообщения всем клиентам.
         private readonly IChatService _chatService;
         private readonly IDeveloperService _developerService;
 
@@ -21,7 +20,7 @@ namespace WebApp.Hubs
             _developerService = developerService;
         }
 
-        public async Task Send(string message, int userId, string userName, int projectId)
+        public async Task Send(string message, int userId, int projectId)
         {
             var messageModel = new MessageModel()
             {
@@ -30,9 +29,12 @@ namespace WebApp.Hubs
                 DateTime = DateTime.Now,
                 ProjectId = projectId
             };
-            // await _chatService.AddMessage(messageModel);
-            userName = (await _developerService.GetUser(userId)).Name;
-            await Clients.All.SendAsync("Send", message, userId, userName, projectId);
+            
+            //TODO: Раскомментирвоать
+            await _chatService.AddMessage(messageModel);
+            //var  userName = (await _developerService.GetUser(userId)).Name;
+            var userName = userId.ToString();
+            await Clients.All.SendAsync("Send", message, userName);
         }
     }
 }

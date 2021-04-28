@@ -9,7 +9,6 @@ namespace Posts.API.Entities
         public string Text { get; set; }
         //todo make enum
         public int RequiredSubscriptionType { get; set; }
-        public string ImageName { get; set; }
         
         public List<Comment> Comments { get; set; }
 
@@ -19,7 +18,6 @@ namespace Posts.API.Entities
             ProjectId = projectId;
             Text = text;
             RequiredSubscriptionType = requiredSubscriptionType;
-            ImageName = imageName;
         }
         
         public Post()
