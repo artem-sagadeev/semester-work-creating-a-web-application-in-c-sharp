@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+using WebApp.Hubs;
 using WebApp.Services;
 using WebApp.Services.Chats;
 using WebApp.Services.Developer;
@@ -32,6 +33,7 @@ namespace WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddSignalR();
 
             services.AddHttpClient<IDeveloperService, DeveloperService>(c =>
                 c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
@@ -73,7 +75,11 @@ namespace WebApp
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages(); 
+                endpoints.MapHub<ChatHub>("/chat");
+            });
         }
     }
 }
