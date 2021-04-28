@@ -103,9 +103,13 @@ namespace WebApp.Services.Subscription
 
         public async Task<bool> HasUserAccess(int subscriberId, int subscribedToId, PriceType priceType, TypeOfSubscription typeOfSubscription)
         {
-            var response = await _client.GetAsync($"/Subscription/HasUserAccess?subscriberId={subscriberId}&subscribedToId={subscribedToId}&priceType={priceType}&typeOfSubscription={typeOfSubscription}");
+            var response = await _client.GetAsync($"/Subscription/HasUserAccess?subscriberId={subscriberId}&subscribedToId={subscribedToId}&typeOfSubscription={typeOfSubscription}");
             var obj = await response.ReadContentAs<PaidSubscriptionModel>();
-            return obj != null;
+            bool answ;
+            if (obj == null)
+                answ = false;
+            answ = (int)obj.Tariff.PriceType >= (int)priceType;
+            return answ;
         }
     }
 }

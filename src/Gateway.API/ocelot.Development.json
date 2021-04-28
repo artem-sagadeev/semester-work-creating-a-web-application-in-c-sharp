@@ -359,7 +359,7 @@
             "UpstreamHttpMethod": [ "GET" ]
         },
         {
-            "DownStreamPathTemplate": "/PaidSubscriptions/GetByUserIdSubscribedToIdTariff/{subscriberId}/{subscribedToId}/{priceType}/{typeOfSubscription}",
+            "DownStreamPathTemplate": "/PaidSubscriptions/GetByUserIdSubscribedToIdTariff/{subscriberId}/{subscribedToId}/{typeOfSubscription}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -367,7 +367,7 @@
                     "Port": 5006
                 }
             ],
-            "UpstreamPathTemplate": "/Subscription/HasUserAccess?subscriberId={subscriberId}&subscribedToId={subscribedToId}&priceType={priceType}&typeOfSubscription={typeOfSubscription}",
+            "UpstreamPathTemplate": "/Subscription/HasUserAccess?subscriberId={subscriberId}&subscribedToId={subscribedToId}&typeOfSubscription={typeOfSubscription}",
             "UpstreamHttpMethod": [ "GET" ]
         },
         {

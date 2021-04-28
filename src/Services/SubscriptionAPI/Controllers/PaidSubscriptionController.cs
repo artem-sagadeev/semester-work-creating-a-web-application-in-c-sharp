@@ -55,10 +55,12 @@ namespace SubscriptionAPI.Controllers
 
        
         [HttpGet]
-        [Route("/PaidSubscriptions/GetByUserIdSubscribedToIdTariff/{subscriberId}/{subscribedToId}/{priceType}/{typeOfSubscription}")]
-        public ActionResult<PaidSubscription> GetByUserIdSubscribedToIdTariff(int subscriberId, int subscribedToId, PriceType priceType, TypeOfSubscription typeOfSubscription)
+        [Route("/PaidSubscriptions/GetByUserIdSubscribedToIdTariff/{subscriberId}/{subscribedToId}/{typeOfSubscription}")]
+        public ActionResult<PaidSubscription> GetByUserIdSubscribedToIdTariff(int subscriberId, int subscribedToId, TypeOfSubscription typeOfSubscription)
         {
-            var temp = _context.PaidSubscriptions.First(c => c.SubscribedToId == subscribedToId && c.UserId == subscriberId && c.Tariff.PriceType == priceType && c.Tariff.TypeOfSubscription == typeOfSubscription);
+            var temp = _context.PaidSubscriptions.FirstOrDefault(c => c.SubscribedToId == subscribedToId && c.UserId == subscriberId && c.Tariff.TypeOfSubscription == typeOfSubscription);
+            if (temp!= null)
+                _context.Entry(temp).Reference(x => x.Tariff).Load();
             return temp;
         }
 
