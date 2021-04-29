@@ -10,23 +10,16 @@ namespace WebApp.Extensions
         public static async Task<T> ReadContentAs<T>(this HttpResponseMessage response)
             where T : class
         {
-            T result;
+            if (!response.IsSuccessStatusCode)
+                throw new ApplicationException($"Something went wrong calling the API: {response.ReasonPhrase}");
 
-            try
-            {
-                if (!response.IsSuccessStatusCode)
-                    throw new ApplicationException($"Something went wrong calling the API: {response.ReasonPhrase}");
+            var dataAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                var dataAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-                result = JsonSerializer.Deserialize<T>(dataAsString,
-                    new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
-            }
-            catch (JsonException)
-            {
-                result = null;
-            }
-            return result;
+            if (string.IsNullOrEmpty(dataAsString))
+                return null;
+            
+            return JsonSerializer.Deserialize<T>(dataAsString,
+                new JsonSerializerOptions {PropertyNameCaseInsensitive = true});
         }
     }
 }
