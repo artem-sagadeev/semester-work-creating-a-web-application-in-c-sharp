@@ -113,6 +113,12 @@ namespace WebApp.Services.Developer
             return await response.ReadContentAs<CompanyModel>();
         }
 
+        public async Task<CompanyModel> GetCompany(string name)
+        {
+            var response = await _client.GetAsync($"/Developers/GetCompany/{name}");
+            return await response.ReadContentAs<CompanyModel>();
+        }
+
         public async Task<IEnumerable<UserModel>> GetCompanyUsers(int companyId)
         {
             var response = await _client.GetAsync($"/Developers/GetCompanyUsers?companyId={companyId}");

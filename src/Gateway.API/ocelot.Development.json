@@ -712,6 +712,18 @@
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
+        "DownStreamPathTemplate": "/Companies/Get/{name}",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+            {
+                "Host": "localhost",
+                "Port": 5003
+            }
+        ],
+        "UpstreamPathTemplate": "/Developers/GetCompany/{name}",
+        "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
       "DownStreamPathTemplate": "/Companies/GetByProject/{projectId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [

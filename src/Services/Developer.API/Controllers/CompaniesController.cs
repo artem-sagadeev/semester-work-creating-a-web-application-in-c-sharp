@@ -32,6 +32,11 @@ namespace Developer.API.Controllers
             => _context.Company.FirstOrDefault(c => c.Id == id);
 
         [HttpGet]
+        [Route("/Companies/Get/{name}")]
+        public ActionResult<Company> Get(string name)
+            => _context.Company.FirstOrDefault(c => c.Name == name);
+
+        [HttpGet]
         [Route("/Companies/GetByUser/{userId:int}")]
         public ActionResult<IEnumerable<Company>> GetByUser(int userId)
             => _context

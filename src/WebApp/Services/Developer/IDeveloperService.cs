@@ -28,6 +28,7 @@ namespace WebApp.Services.Developer
         Task<IEnumerable<CompanyModel>> GetCompanies();
         Task<IEnumerable<CompanyModel>> GetCompaniesByName(string name);
         Task<CompanyModel> GetCompany(int id);
+        Task<CompanyModel> GetCompany(string name);
         Task<IEnumerable<UserModel>> GetCompanyUsers(int companyId);
         Task<IEnumerable<ProjectModel>> GetCompanyProjects(int companyId);
         Task<string> CreateCompany(CompanyForm companyForm);
