@@ -21,35 +21,56 @@ namespace Posts.API.Controllers
         [HttpGet]
         [Route("/Posts/Get")]
         public async Task<ActionResult<IEnumerable<Post>>> Get()
-            => await _context.Post.ToListAsync();
+        {
+            var posts = await _context
+                .Post
+                .ToListAsync();
+            return posts.Count == 0 ? null : posts;
+        }
         
         [HttpGet]
-        [Route("/Posts/Get/{id}")]
+        [Route("/Posts/Get/{id:int}")]
         public async Task<ActionResult<Post>> Get(int id)
-            => await _context.Post.FirstAsync(p => p.Id == id);
+            =>  await _context.Post.FirstOrDefaultAsync(p => p.Id == id);
         
         [HttpGet]
-        [Route("/Posts/GetByUser/{userId}")]
-        public async Task<ActionResult<IEnumerable<Post>>> GetByUser(int userId) 
-            => await _context.Post.Where(p => p.UserId == userId).ToListAsync();
+        [Route("/Posts/GetByUser/{userId:int}")]
+        public async Task<ActionResult<IEnumerable<Post>>> GetByUser(int userId)
+        {
+            var posts = await _context
+                .Post
+                .Where(p => p.UserId == userId)
+                .ToListAsync();
+            return posts.Count == 0 ? null : posts;
+        }
 
         [HttpGet]
-        [Route("/Posts/GetByProject/{projectId}")]
+        [Route("/Posts/GetByProject/{projectId:int}")]
         public async Task<ActionResult<IEnumerable<Post>>> GetByProject(int projectId)
-            => await _context.Post.Where(p => p.ProjectId == projectId).ToListAsync();
-        
+        {
+            var posts = await _context
+                .Post
+                .Where(p => p.ProjectId == projectId)
+                .ToListAsync();
+            return posts.Count == 0 ? null : posts;
+        }
+
         [HttpGet]
         [Route("/Posts/GetByUserAndProject")]
         public async Task<ActionResult<IEnumerable<Post>>> GetByUserAndProject(int userId, int projectId)
-            => await _context
+        {
+            var posts = await _context
                 .Post
                 .Where(p => p.UserId == userId && p.ProjectId == projectId)
                 .ToListAsync();
+            return posts.Count == 0 ? null : posts;
+        }
 
         [HttpPost]
         [Route("/Posts/Create")]
         public async Task Create(Post post)
         {
+            //todo not checked
             await _context.AddAsync(post);
             await _context.SaveChangesAsync();
         }
@@ -58,6 +79,7 @@ namespace Posts.API.Controllers
         [Route("/Posts/Update")]
         public async Task Update(int id, string text)
         {
+            //todo not checked
             var post = await _context.Post.FirstAsync(p => p.Id == id);
             post.Text = text;
             await _context.SaveChangesAsync();
@@ -67,6 +89,7 @@ namespace Posts.API.Controllers
         [Route("/Posts/Delete")]
         public async Task Delete(int id)
         {
+            //todo not checked
             var post = await _context
                 .Post
                 .Include(p => p.Comments)

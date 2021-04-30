@@ -5,6 +5,7 @@ using Developer.API.Entities;
 using Developer.API.Forms;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Developer.API.Controllers
 {
@@ -20,38 +21,44 @@ namespace Developer.API.Controllers
         [HttpGet]
         [Route("/Companies/Get")]
         public ActionResult<IEnumerable<Company>> Get()
-            => _context.Company.ToList();
-        
-        [HttpGet]
-        [Route("/Companies/Get/{id}")]
-        public ActionResult<Company> Get(int id)
-            => _context.Company.First(c => c.Id == id);
+        {
+            var companies = _context.Company.ToList();
+            return companies.Count == 0 ? null : companies;
+        }
 
         [HttpGet]
-        [Route("/Companies/GetByUser/{userId}")]
+        [Route("/Companies/Get/{id:int}")]
+        public ActionResult<Company> Get(int id)
+            => _context.Company.FirstOrDefault(c => c.Id == id);
+
+        [HttpGet]
+        [Route("/Companies/GetByUser/{userId:int}")]
         public ActionResult<IEnumerable<Company>> GetByUser(int userId)
             => _context
                 .User
                 .Where(u => u.Id == userId)
                 .Select(u => u.Companies)
-                .First();
+                .FirstOrDefault();
 
         [HttpGet]
-        [Route("/Companies/GetByProject/{projectId}")]
+        [Route("/Companies/GetByProject/{projectId:int}")]
         public ActionResult<Company> GetByProject(int projectId)
             => _context
                 .Project
                 .Where(p => p.Id == projectId)
                 .Select(p => p.Company)
-                .First();
+                .FirstOrDefault();
 
         [HttpGet]
         [Route("/Companies/GetByName/{name}")]
         public ActionResult<IEnumerable<Company>> GetByName(string name)
-            => _context
+        {
+            var companies = _context
                 .Company
                 .Where(c => c.Name.Contains(name))
                 .ToList();
+            return companies.Count == 0 ? null : companies;
+        }
         
         [HttpPost]
         [Route("/Companies/Create")]
@@ -64,6 +71,7 @@ namespace Developer.API.Controllers
         [Route("/Companies/Delete")]
         public async Task Delete(int id)
         {
+            //todo not checked
             var company = await _context.Company.FirstAsync(c => c.Id == id);
             _context.Company.Remove(company);
             await _context.SaveChangesAsync();
@@ -73,6 +81,7 @@ namespace Developer.API.Controllers
         [Route("/Companies/AddUser")]
         public async Task AddUser(int companyId, int userId)
         {
+            //todo not checked
             var company = await _context.Company.FirstAsync(c => c.Id == companyId);
             var user = await _context.User.FirstAsync(u => u.Id == userId);
             company.Users.Add(user);
@@ -82,6 +91,7 @@ namespace Developer.API.Controllers
         [Route("/Companies/AddProject")]
         public async Task AddProject(int companyId, int projectId)
         {
+            //todo not checkded
             var company = await _context.Company.FirstAsync(c => c.Id == companyId);
             var project = await _context.Project.FirstAsync(p => p.Id == projectId);
             company.Projects.Add(project);

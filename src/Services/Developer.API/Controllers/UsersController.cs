@@ -20,47 +20,54 @@ namespace Developer.API.Controllers
         [HttpGet]
         [Route("/Users/Get")]
         public ActionResult<IEnumerable<User>> Get()
-            => _context
+        {
+            var users = _context
                 .User
                 .ToList();
-        
+            return users.Count == 0 ? null : users;
+        }
+
         [HttpGet]
-        [Route("/Users/Get/{id}")]
+        [Route("/Users/Get/{id:int}")]
         public ActionResult<User> Get(int id)
             => _context
                 .User
-                .First(u => u.Id == id);
+                .FirstOrDefault(u => u.Id == id);
 
         [HttpGet]
-        [Route("/Users/GetByCompany/{companyId}")]
+        [Route("/Users/GetByCompany/{companyId:int}")]
         public ActionResult<IEnumerable<User>> GetByCompany(int companyId)
             => _context
                 .Company
                 .Where(c => c.Id == companyId)
                 .Select(c => c.Users)
-                .First();
+                .FirstOrDefault();
 
         [HttpGet]
-        [Route("/Users/GetByProject/{projectId}")]
+        [Route("/Users/GetByProject/{projectId:int}")]
         public ActionResult<IEnumerable<User>> GetByProject(int projectId)
             => _context
                 .Project
                 .Where(p => p.Id == projectId)
                 .Select(p => p.Users)
-                .First();
+                .FirstOrDefault();
 
         [HttpGet]
         [Route("/Users/GetByName/{name}")]
         public ActionResult<IEnumerable<User>> GetByName(string name)
-            => _context
+        {
+            var users = _context
                 .User
                 .Where(u => u.Name.Contains(name))
                 .ToList();
+            return users.Count == 0 ? null : users;
+        }
 
         [HttpPost]
         [Route("/Users/Create")]
         public async Task Create(User user)
         {
+            //todo not checked
             await _context.User.AddAsync(user);
             await _context.SaveChangesAsync();
         }
@@ -69,6 +76,7 @@ namespace Developer.API.Controllers
         [Route("/Users/Delete")]
         public async Task Delete(int id)
         {
+            //todo not checked
             var user = await _context.User.FirstAsync(u => u.Id == id);
             _context.User.Remove(user);
             await _context.SaveChangesAsync();

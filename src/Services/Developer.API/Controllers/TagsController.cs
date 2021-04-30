@@ -16,18 +16,30 @@ namespace Developer.API.Controllers
         }
 
         [HttpGet]
-        [Route("/Tags/GetByUser/{userId}")]
+        [Route("/Tags/GetByUser/{userId:int}")]
         public ActionResult<IEnumerable<Tag>> GetByUser(int userId)
-            => _context.User.Where(u => u.Id == userId).Select(u => u.Tags).First();
+            => _context
+                .User
+                .Where(u => u.Id == userId)
+                .Select(u => u.Tags)
+                .FirstOrDefault();
         
         [HttpGet]
-        [Route("/Tags/GetByProject/{projectId}")]
+        [Route("/Tags/GetByProject/{projectId:int}")]
         public ActionResult<IEnumerable<Tag>> GetByProject(int projectId)
-            => _context.Project.Where(p => p.Id == projectId).Select(p => p.Tags).First();
+            => _context
+                .Project
+                .Where(p => p.Id == projectId)
+                .Select(p => p.Tags)
+                .FirstOrDefault();
         
         [HttpGet]
-        [Route("/Tags/GetByCompany/{companyId}")]
+        [Route("/Tags/GetByCompany/{companyId:int}")]
         public ActionResult<IEnumerable<Tag>> GetByCompany(int companyId)
-            => _context.Company.Where(c => c.Id == companyId).Select(c => c.Tags).First();
+            => _context
+                .Company
+                .Where(c => c.Id == companyId)
+                .Select(c => c.Tags)
+                .FirstOrDefault();
     }
 }

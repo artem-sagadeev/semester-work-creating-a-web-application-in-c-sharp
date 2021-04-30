@@ -21,26 +21,29 @@ namespace Developer.API.Controllers
         [HttpGet]
         [Route("/Projects/Get")]
         public ActionResult<IEnumerable<Project>> Get()
-            => _context.Project.ToList();
+        {
+            var projects = _context.Project.ToList();
+            return projects.Count == 0 ? null : projects;
+        }
         
         [HttpGet]
         [Route("/Projects/Get/{id:int}")]
         public ActionResult<Project> Get(int id)
-            => _context.Project.First(p => p.Id == id);
+            => _context.Project.FirstOrDefault(p => p.Id == id);
 
         [HttpGet]
         [Route("/Projects/Get/{name}")]
         public ActionResult<Project> Get(string name)
-            => _context.Project.First(p => p.Name == name);
+            => _context.Project.FirstOrDefault(p => p.Name == name);
 
         [HttpGet]
-        [Route("/Projects/GetByCompany/{companyId}")]
+        [Route("/Projects/GetByCompany/{companyId:int}")]
         public ActionResult<IEnumerable<Project>> GetByCompany(int companyId)
             => _context
                 .Company
                 .Where(c => c.Id == companyId)
                 .Select(c => c.Projects)
-                .First();
+                .FirstOrDefault();
 
         [HttpGet]
         [Route("/Projects/GetByUser/{userId:int}")]
@@ -49,15 +52,18 @@ namespace Developer.API.Controllers
                 .User
                 .Where(u => u.Id == userId)
                 .Select(u => u.Projects)
-                .First();
+                .FirstOrDefault();
 
         [HttpGet]
         [Route("/Projects/GetByName/{name}")]
         public ActionResult<IEnumerable<Project>> GetByName(string name)
-            => _context
+        {
+            var projects = _context
                 .Project
                 .Where(p => p.Name.Contains(name))
                 .ToList();
+            return projects.Count == 0 ? null : projects;
+        }
 
         [HttpPost]
         [Route("/Projects/Create")]
@@ -70,6 +76,7 @@ namespace Developer.API.Controllers
         [Route("/Projects/Delete")]
         public async Task Delete(int id)
         {
+            //todo not checked
             var project = await _context.Project.FirstAsync(p => p.Id == id);
             _context.Project.Remove(project);
             await _context.SaveChangesAsync();

@@ -7,6 +7,7 @@ using WebApp.Models.Developer;
 using WebApp.Models.Identity;
 using WebApp.Services.Developer;
 using WebApp.Services.Files;
+using WebApp.Services.Posts;
 
 namespace WebApp.Pages
 {
