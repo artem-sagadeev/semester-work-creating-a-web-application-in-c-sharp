@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WebApp.Extensions;
 using WebApp.Models.Developer;
+using WebApp.Pages;
 
 namespace WebApp.Services.Developer
 {
@@ -46,6 +48,11 @@ namespace WebApp.Services.Developer
             return await response.ReadContentAs<IEnumerable<CompanyModel>>();
         }
 
+        public async Task CreateUser(UserModel user)
+        {
+            await _client.PostAsJsonAsync($"/Developers/CreateUser", user);
+        }
+
         public async Task<IEnumerable<ProjectModel>> GetProjects()
         {
             var response = await _client.GetAsync($"/Developers/GetProjects");
@@ -64,6 +71,12 @@ namespace WebApp.Services.Developer
             return await response.ReadContentAs<ProjectModel>();
         }
 
+        public async Task<ProjectModel> GetProject(string name)
+        {
+            var response = await _client.GetAsync($"/Developers/GetProject/{name}");
+            return await response.ReadContentAs<ProjectModel>();
+        }
+
         public async Task<IEnumerable<UserModel>> GetProjectUsers(int projectId)
         {
             var response = await _client.GetAsync($"/Developers/GetProjectUsers?projectId={projectId}");
@@ -74,6 +87,12 @@ namespace WebApp.Services.Developer
         {
             var response = await _client.GetAsync($"/Developers/GetProjectCompany?projectId={projectId}");
             return await response.ReadContentAs<CompanyModel>();
+        }
+
+        public async Task<string> CreateProject(ProjectForm projectForm)
+        {
+            var response = await _client.PostAsJsonAsync("/Developers/CreateProject", projectForm);
+            return await response.Content.ReadAsStringAsync();
         }
 
         public async Task<IEnumerable<CompanyModel>> GetCompanies()
@@ -104,6 +123,12 @@ namespace WebApp.Services.Developer
         {
             var response = await _client.GetAsync($"/Developers/GetCompanyProjects?companyId={companyId}");
             return await response.ReadContentAs<IEnumerable<ProjectModel>>();
+        }
+
+        public async Task<string> CreateCompany(CompanyForm companyForm)
+        {
+            var response = await _client.PostAsJsonAsync($"/Developers/CreateCompany", companyForm);
+            return await response.Content.ReadAsStringAsync();
         }
 
         public async Task<IEnumerable<TagModel>> GetTags(ICreator creator)

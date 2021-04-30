@@ -100,7 +100,6 @@ namespace WebApp.Services.Subscription
                 });
         }
 
-
         public async Task<bool> HasUserAccess(int subscriberId, int subscribedToId, PriceType priceType, TypeOfSubscription typeOfSubscription)
         {
             var response = await _client.GetAsync($"/Subscription/HasUserAccess?subscriberId={subscriberId}&subscribedToId={subscribedToId}&typeOfSubscription={typeOfSubscription}");

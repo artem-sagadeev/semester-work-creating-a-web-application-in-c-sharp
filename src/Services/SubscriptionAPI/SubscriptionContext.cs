@@ -9,9 +9,11 @@ namespace SubscriptionAPI
 {
     public class SubscriptionContext : DbContext
     {
-        private string connectionString = "Host=localhost;Database=Subscription;Username=postgres;Password=postgres";
-        private const string herokuConnectionString =
+        private const string ConnectionString = "Host=localhost;Database=Subscription;Username=postgres;Password=postgres";
+        
+        private const string HerokuConnectionString =
             "Host=ec2-54-73-58-75.eu-west-1.compute.amazonaws.com;Database=d3b3hl5k84ut1u;Username=lsjfnqjzqgbnxn;Password=925ae08ba83ddaa525d4bab9df92b5de49a38de6713e88eacd907b4de767dd51;sslmode=Require;TrustServerCertificate=true";
+        
         public SubscriptionContext()
         {
         }
@@ -21,7 +23,7 @@ namespace SubscriptionAPI
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(herokuConnectionString);
+            optionsBuilder.UseNpgsql(HerokuConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Files.API.Entities;
 using MongoDB.Bson;
@@ -9,7 +11,13 @@ namespace Files.API.Repositories
     public class FileRepository : IFileRepository
     {
         private readonly IMongoCollection<File> _files;
-        private readonly IMongoCollection<Link> _links;
+        private readonly IMongoCollection<Avatar> _avatars;
+        private readonly IMongoCollection<Cover> _covers;
+
+        private readonly Avatar _defaultUserAvatar = new Avatar(0, "defaultUserAvatar.jpg", 0);
+        private readonly Avatar _defaultProjectAvatar = new Avatar(0, "defaultProjectAvatar.jpg", 1);
+        private readonly Avatar _defaultCompanyAvatar = new Avatar(0, "defaultCompanyAvatar.jpg", 2);
+        private readonly Cover _defaultCover = new Cover(0, "defaultCover.jpg");
 
         public FileRepository()
         {
@@ -18,7 +26,8 @@ namespace Files.API.Repositories
             var client = new MongoClient(connectionString);
             var database = client.GetDatabase(connection.DatabaseName);
             _files = database.GetCollection<File>("Files");
-            _links = database.GetCollection<Link>("Links");
+            _avatars = database.GetCollection<Avatar>("Avatars");
+            _covers = database.GetCollection<Cover>("Covers");
         }
 
         public async Task<File> GetFileAsync(string id)
@@ -26,6 +35,13 @@ namespace Files.API.Repositories
             var filter = Builders<File>.Filter.Eq("Id", id);
             var files = await _files.FindAsync(filter);
             return await files.FirstAsync();
+        }
+        
+        public async Task<IEnumerable<File>> GetPostFiles(int postId)
+        {
+            var filter = Builders<File>.Filter.Eq("PostId", postId);
+            var files = await _files.FindAsync(filter);
+            return await files.ToListAsync();
         }
 
         public async Task CreateFileAsync(File file)
@@ -39,23 +55,37 @@ namespace Files.API.Repositories
             await _files.FindOneAndDeleteAsync(filter);
         }
 
-        public async Task<Link> GetLinkAsync(string fileId, string token)
+        public async Task<Avatar> GetAvatarAsync(int creatorId, CreatorType creatorType)
         {
-            var builder = Builders<Link>.Filter;
-            var filter = builder.Eq("FileId", fileId) & builder.Eq("Token", token);
-            var links = await _links.FindAsync(filter);
-            return await links.FirstAsync();
+            var builder = Builders<Avatar>.Filter;
+            var filter = builder.Eq("CreatorId", creatorId) & builder.Eq("CreatorType", creatorType);
+            var avatar = await _avatars.FindAsync(filter);
+            return await avatar.FirstOrDefaultAsync() ?? creatorType switch
+            {
+                CreatorType.User => _defaultUserAvatar,
+                CreatorType.Project => _defaultProjectAvatar,
+                CreatorType.Company => _defaultCompanyAvatar,
+                _ => throw new ArgumentException()
+            };
         }
 
-        public async Task CreateLinkAsync(Link link)
+        public async Task CreateAvatarAsync(Avatar avatar)
         {
-            await _links.InsertOneAsync(link);
+            await DeleteAvatarAsync(avatar.CreatorId);
+            await _avatars.InsertOneAsync(avatar);
         }
 
-        public async Task DeleteLinkAsync(string id)
+        public async Task DeleteAvatarAsync(int creatorId)
         {
-            var filter = Builders<Link>.Filter.Eq("Id", id);
-            await _links.FindOneAndDeleteAsync(filter);
+            var filter = Builders<Avatar>.Filter.Eq("CreatorId", creatorId);
+            await _avatars.FindOneAndDeleteAsync(filter);
+        }
+
+        public async Task<Cover> GetCoverAsync(int postId)
+        {
+            var filter = Builders<Cover>.Filter.Eq("PostId", postId);
+            var covers = await _covers.FindAsync(filter);
+            return await covers.FirstOrDefaultAsync() ?? _defaultCover;
         }
     }
 }

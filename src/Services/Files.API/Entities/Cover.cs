@@ -3,23 +3,21 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Files.API.Entities
 {
-    public class File
+    public class Cover
     {
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         public int PostId { get; set; }
         public string Name { get; set; }
-        public string Type { get; set; }
-        public string Path => "files/" + Name;
+        public string Path => "covers/" + Name;
 
-        public File(int postId, string name, string type)
+        public Cover(int postId, string name)
         {
             PostId = postId;
             Name = name;
-            Type = type;
         }
-        
-        public File()
+
+        public Cover()
         {
         }
     }

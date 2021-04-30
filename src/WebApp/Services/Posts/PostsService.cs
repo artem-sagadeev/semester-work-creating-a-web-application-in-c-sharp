@@ -54,7 +54,7 @@ namespace WebApp.Services.Posts
 
         public async Task CreatePost(PostModel post)
         {
-            var response = await _client.PostAsJsonAsync($"/Posts/CreatePost", post);
+            await _client.PostAsJsonAsync($"/Posts/CreatePost", post);
         }
     }
 }

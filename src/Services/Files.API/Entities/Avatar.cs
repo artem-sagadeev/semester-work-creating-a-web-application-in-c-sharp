@@ -1,21 +1,36 @@
-﻿using MongoDB.Bson;
+﻿using System;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Files.API.Entities
 {
+    public enum CreatorType
+    {
+        User,
+        Project,
+        Company
+    }
+    
     public class Avatar
     {
-        //todo avatar repository and controller
-        
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         public int CreatorId { get; set; }
-        public string Path { get; set; }
+        public string Name { get; set; }
+        public CreatorType CreatorType { get; set; }
+        public string Path => "avatars/" + Name;
 
-        public Avatar(int creatorId, string name)
+        public Avatar(int creatorId, string name, int creatorType)
         {
             CreatorId = creatorId;
-            Path = "Avatars/" + name;
+            Name = name;
+            CreatorType = creatorType switch
+            {
+                0 => CreatorType.User,
+                1 => CreatorType.Project,
+                2 => CreatorType.Company,
+                _ => throw new ArgumentException()
+            };
         }
 
         public Avatar()

@@ -1,31 +1,28 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using WebApp.Models.Identity
 @using WebApp.Models.Subscription
+@using WebApp.Services.Developer
+@using WebApp.Services.Files
 @using WebApp.Services.Subscription
 @model WebApp.Models.Posts.PostModel
 
 @inject SignInManager<ApplicationUser> _signInManager
 @inject UserManager<ApplicationUser> _userManager
 @inject ISubscriptionService _subscriptionService
+@inject IDeveloperService _developerService;
+@inject IFileService _fileService;
 
 @{
     var user = _signInManager.IsSignedIn(User) ? await _userManager.GetUserAsync(User) : null;
-    var hasAccess = Model.RequiredSubscriptionType == PriceType.Free;
-    /*if (user != null)
-    {
-        hasAccess =
-            await _subscriptionService.HasUserAccess(user.UserId, Model.UserId, Model.RequiredSubscriptionType) ||
-            Model.ProjectId != 0 &&
-            await _subscriptionService.HasUserAccess(user.UserId, Model.ProjectId, Model.RequiredSubscriptionType);
-    }*/
+    var cover = await _fileService.GetCover(Model.Id);
 }
 
-@if (hasAccess)
+@if (await Model.HasUserAccessAsync(user, _subscriptionService, _developerService))
 {
     <div>
         @Model.Id
         @Model.Text
-        @*todo image*@
+        <img src="@cover?.Path" alt="cover">
     </div>
 }
 else

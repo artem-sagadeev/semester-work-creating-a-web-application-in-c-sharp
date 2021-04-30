@@ -1,19 +1,30 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using WebApp.Models.Developer
+@using WebApp.Models.Files
 @using WebApp.Models.Identity
+@using WebApp.Services.Files
 @model ICreator
 
 @inject SignInManager<ApplicationUser> _signInManager
 @inject UserManager<ApplicationUser> _userManager
-
+@inject IFileService _fileService 
 
 @{
     //data for subscription
     var userId = (await _userManager.GetUserAsync(User))?.UserId;
     //var hasBankAccount = _
 }
+
 @{
-    var creatorType = Model switch
+    var creatorType = Model switch 
+    {
+        UserModel => CreatorType.User,
+        ProjectModel => CreatorType.Project,
+        CompanyModel => CreatorType.Company,
+        _ => throw new NotSupportedException()
+    };
+    
+    var creatorTypeLink = Model switch
     {
         UserModel => "UserProfile",
         ProjectModel => "ProjectProfile",
@@ -23,15 +34,17 @@
 
     var companies = Model switch {
         UserModel user => user.Companies,
-        ProjectModel project => new List<CompanyModel> {project.Company},
+        ProjectModel project => project.Company != null ? new List<CompanyModel> {project.Company} : new List<CompanyModel>(),
         CompanyModel => new List<CompanyModel>(),
         _ => throw new ArgumentOutOfRangeException()
-        };
+    };
+
+    var avatar = await _fileService.GetAvatar(Model.Id, creatorType);
 }
 
 <div>
-    <a asp-page="/@creatorType" asp-route-id="@Model.Id">@Model.Name</a>
-    @*todo image*@
+    <a asp-page="/@creatorTypeLink" asp-route-id="@Model.Id">@Model.Name</a>
+    <img src="@avatar?.Path" alt="avatar">
     @foreach (var tag in Model.Tags)
     {
         <div>

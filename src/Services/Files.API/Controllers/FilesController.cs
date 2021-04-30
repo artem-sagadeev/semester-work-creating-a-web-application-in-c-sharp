@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
-using Files.API.Entities;
 using Files.API.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,45 +19,28 @@ namespace Files.API.Controllers
         }
         
         [HttpGet]
-        [Route("/Files/GetLink/{id}")]
-        public async Task<ActionResult<string>> GetLink(string id)
+        [Route("/Files/Get/{id}")]
+        public async Task<File> Get(string id)
         {
-            var link = new Link(id);
-            await _fileRepository.CreateLinkAsync(link);
-            return link.Uri;
+            return await _fileRepository.GetFileAsync(id);
         }
         
         [HttpGet]
-        [Route("/Files/GetFile/{id}/{token}")]
-        public async Task<ActionResult> GetFile(string id, string token)
+        [Route("/Files/GetPostFiles/{postId:int}")]
+        public async Task<IEnumerable<File>> GetPostFiles(int postId)
         {
-            var link = await _fileRepository.GetLinkAsync(id, token);
-
-            if (link.Token != token)
-                return Forbid();
-            var file = await _fileRepository.GetFileAsync(id);
-            Response.Headers.Add("Access-Control-Allow-Origin", "*");
-            var bytes = await System.IO.File.ReadAllBytesAsync(file.Path);
-
-            await _fileRepository.DeleteLinkAsync(link.Id);
-            return File(bytes, file.Type, file.Name);
+            return await _fileRepository.GetPostFiles(postId);
         }
 
         [HttpPost]
         [Route("/Files/Create")]
-        public async Task Create(IFormFile uploadedFile)
+        public async Task Create(File file)
         {
-            if (uploadedFile == null) return;
-            var file = new File(uploadedFile.FileName, uploadedFile.ContentType);
-            await using (var fileStream = new FileStream(file.Path, FileMode.Create))
-            {
-                await uploadedFile.CopyToAsync(fileStream);
-            }
             await _fileRepository.CreateFileAsync(file);
         }
         
         [HttpPost]
-        [Route("/Files/Delete")]
+        [Route("/Files/Delete/{id}")]
         public async Task Delete(string id)
         {
             await _fileRepository.DeleteFileAsync(id);
