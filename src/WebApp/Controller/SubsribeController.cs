@@ -30,10 +30,10 @@ namespace WebApp.Controller
             this._developerService = _developerService;
             this._paymentService = _paymentService;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
         
         public bool HasBankAccount(int userId)
         {

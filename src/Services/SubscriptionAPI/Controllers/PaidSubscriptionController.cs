@@ -61,12 +61,28 @@ namespace SubscriptionAPI.Controllers
             return temp;
         }
 
+       
+        [HttpGet]
+        [Route("/PaidSubscriptions/GetByUserIdSubscribedToIdTariff/{subscriberId}/{subscribedToId}/{typeOfSubscription}")]
+        public ActionResult<PaidSubscription> GetByUserIdSubscribedToIdTariff(int subscriberId, int subscribedToId, TypeOfSubscription typeOfSubscription)
+        {
+            var temp = _context.PaidSubscriptions.FirstOrDefault(c => c.SubscribedToId == subscribedToId && c.UserId == subscriberId && c.Tariff.TypeOfSubscription == typeOfSubscription);
+            if (temp!= null)
+                _context.Entry(temp).Reference(x => x.Tariff).Load();
+            return temp;
+        }
+
+
+
+
         public class UserIdTariffIdSubscibedIdFormat
         {
             public int userId { get; set; }
             public int tariffId { get; set; } 
             public int subscribedToId { get; set; }
         }
+
+
         [HttpPost]
         [Route("/PaidSubscriptions/Delete")]
         public async Task Delete([FromBody]UserIdTariffIdSubscibedIdFormat userIdTariffIdSubscibedIdFormat)
