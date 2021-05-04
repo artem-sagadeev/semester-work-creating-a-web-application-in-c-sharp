@@ -27,3 +27,50 @@
 {
     @await Html.PartialAsync("Shared/_PostPartial", post)
 }
+
+@{
+    var userId = (await _userManager.GetUserAsync(User))?.UserId;
+    var projectId = @Model.ProjectModel.Id;
+}
+
+<div id="inputForm">
+    <input type="text" id="message"/>
+    <input type="button" id="sendBtn" value="Отправить"/>
+</div>
+<div id="chatroom"></div>
+@foreach (var pair in @Model.Messages)
+{
+    <p>@pair.Item1 : @pair.Item2.Text (@pair.Item2.DateTime)</p>
+}
+<script src="js/signalr/dist/browser/signalr.min.js"></script>
+
+<script>
+        const hubConnection = new signalR.HubConnectionBuilder()
+            .withUrl("/chat")
+            .build(); 
+              
+        // получение сообщения от сервера
+        hubConnection.on('Send', function (message, userName) {
+            // создаем элемент <b> для имени пользователя
+            let userNameElem = document.createElement("b");
+            userNameElem.appendChild(document.createTextNode(userName + ': '));
+  
+            // создает элемент <p> для сообщения пользователя
+            let elem = document.createElement("p");
+            elem.appendChild(userNameElem);
+            elem.appendChild(document.createTextNode(message));
+  
+            //добавление в начало <div id="chatroom"></div>
+            var firstElem = document.getElementById("chatroom").firstChild;
+            document.getElementById("chatroom").insertBefore(elem, firstElem);  
+        });
+                
+        // отправка сообщения на сервер
+        document.getElementById("sendBtn").addEventListener("click", function (e) {
+            let message = document.getElementById("message").value;
+            //let userName = '';
+            hubConnection.invoke("Send", message, @userId, @projectId);
+        });
+ 
+        hubConnection.start();
+</script>
