@@ -67,8 +67,8 @@ namespace WebApp.Pages
             foreach (var message in allMesages)
             {
                 var userId = message.UserId;
-                //var name = (await _developerService.GetUser(userId)).Name;
-                var name = userId.ToString();
+                var name = (await _developerService.GetUser(userId)).Name;
+                //var name = userId.ToString();
                 messages.Add((name, message));
             }
 

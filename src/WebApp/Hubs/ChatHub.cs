@@ -32,8 +32,8 @@ namespace WebApp.Hubs
             
             //TODO: Раскомментирвоать
             await _chatService.AddMessage(messageModel);
-            //var  userName = (await _developerService.GetUser(userId)).Name;
-            var userName = userId.ToString();
+            var  userName = (await _developerService.GetUser(userId)).Name;
+            //var userName = userId.ToString();
             await Clients.All.SendAsync("Send", message, userName);
         }
     }
