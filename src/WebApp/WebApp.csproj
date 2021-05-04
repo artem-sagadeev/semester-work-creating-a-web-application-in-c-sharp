@@ -28,7 +28,6 @@
 
     <ItemGroup>
       <Folder Include="Areas\Main\Pages" />
-      <Folder Include="Middlwares" />
       <Folder Include="Pages\PagesForTestingAPIs" />
     </ItemGroup>
 
