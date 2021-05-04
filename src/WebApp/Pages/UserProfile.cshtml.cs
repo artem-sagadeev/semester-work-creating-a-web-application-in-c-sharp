@@ -41,10 +41,14 @@ namespace WebApp.Pages
         public async Task<ActionResult> OnGetAsync(int id)
         {
             UserModel = await _developerService.GetUser(id);
-            UserModel.Tags = await _developerService.GetTags(UserModel);
-            UserModel.Companies = await _developerService.GetUserCompanies(id);
-            UserModel.Projects = await _developerService.GetUserProjects(id);
-            PostModels = await _postsService.GetUserPosts(id);
+            
+            if (UserModel is null)
+                return NotFound();
+            
+            UserModel.Tags = await _developerService.GetTags(UserModel) ?? new List<TagModel>();
+            UserModel.Companies = await _developerService.GetUserCompanies(id) ??  new List<CompanyModel>();
+            UserModel.Projects = await _developerService.GetUserProjects(id) ?? new List<ProjectModel>();
+            PostModels = await _postsService.GetUserPosts(id) ?? new List<PostModel>();
             Avatar = await _fileService.GetAvatar(UserModel.Id, CreatorType.User);
             return Page();
         }

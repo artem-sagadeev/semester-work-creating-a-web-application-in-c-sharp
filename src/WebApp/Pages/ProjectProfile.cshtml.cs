@@ -40,10 +40,14 @@ namespace WebApp.Pages
         public async Task<ActionResult> OnGetAsync(int id)
         {
             ProjectModel = await _developerService.GetProject(id);
-            ProjectModel.Tags = await _developerService.GetTags(ProjectModel);
+
+            if (ProjectModel is null)
+                return NotFound();
+            
+            ProjectModel.Tags = await _developerService.GetTags(ProjectModel) ?? new List<TagModel>();
             ProjectModel.Company = await _developerService.GetProjectCompany(id);
-            ProjectModel.Users = await _developerService.GetProjectUsers(id);
-            PostModels = await _postsService.GetProjectPosts(id);
+            ProjectModel.Users = await _developerService.GetProjectUsers(id) ?? new List<UserModel>();
+            PostModels = await _postsService.GetProjectPosts(id) ?? new List<PostModel>();
             Messages = await GetAllMessages(id);
             return Page();
         }
