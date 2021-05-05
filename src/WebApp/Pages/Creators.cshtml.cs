@@ -34,19 +34,13 @@ namespace WebApp.Pages
                           needCompanies is null;
             
             if (needUsers == "on" || needAll)
-                CreatorModels.AddRange(searchString == null ? 
-                    await _developerService.GetUsers() : 
-                    await _developerService.GetUsersByName(searchString));
+                CreatorModels.AddRange(await SearchUsers(searchString));
             
             if (needProjects == "on" || needAll)
-                CreatorModels.AddRange(searchString == null ? 
-                    await _developerService.GetProjects() : 
-                    await _developerService.GetProjectsByName(searchString));
+                CreatorModels.AddRange(await SearchProjects(searchString));
             
             if (needCompanies == "on" || needAll)
-                CreatorModels.AddRange(searchString == null ? 
-                    await _developerService.GetCompanies() : 
-                    await _developerService.GetCompaniesByName(searchString));
+                CreatorModels.AddRange(await SearchCompanies(searchString));
             
             if (sortOption != null)
                 Sort(sortOption);
@@ -76,6 +70,30 @@ namespace WebApp.Pages
                 "byAlphabet" => CreatorModels.OrderBy(c => c.Name).ToList(),
                 _ => CreatorModels.OrderBy(c => c.Id).ToList()
             };
+        }
+
+        private async Task<IEnumerable<UserModel>> SearchUsers(string searchString)
+        {
+            if (string.IsNullOrEmpty(searchString))
+                return await _developerService.GetUsers() ?? new List<UserModel>();
+            
+            return await _developerService.GetUsersByName(searchString) ?? new List<UserModel>();
+        }
+        
+        private async Task<IEnumerable<ProjectModel>> SearchProjects(string searchString)
+        {
+            if (string.IsNullOrEmpty(searchString))
+                return await _developerService.GetProjects() ?? new List<ProjectModel>();
+            
+            return await _developerService.GetProjectsByName(searchString) ?? new List<ProjectModel>();
+        }
+        
+        private async Task<IEnumerable<CompanyModel>> SearchCompanies(string searchString)
+        {
+            if (string.IsNullOrEmpty(searchString))
+                return await _developerService.GetCompanies() ?? new List<CompanyModel>();
+            
+            return await _developerService.GetCompaniesByName(searchString) ?? new List<CompanyModel>();
         }
     }
 }

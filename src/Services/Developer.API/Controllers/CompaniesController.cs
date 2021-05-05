@@ -60,7 +60,7 @@ namespace Developer.API.Controllers
         {
             var companies = _context
                 .Company
-                .Where(c => c.Name.Contains(name))
+                .Where(c => c.Name.ToLower().Contains(name.ToLower()))
                 .ToList();
             return companies.Count == 0 ? null : companies;
         }
