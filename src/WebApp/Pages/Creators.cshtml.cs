@@ -28,18 +28,22 @@ namespace WebApp.Pages
             string sortOption)
         {
             CreatorModels = new List<ICreator>();
+
+            var needAll = needUsers is null &&
+                          needProjects is null &&
+                          needCompanies is null;
             
-            if (needUsers == "on")
+            if (needUsers == "on" || needAll)
                 CreatorModels.AddRange(searchString == null ? 
                     await _developerService.GetUsers() : 
                     await _developerService.GetUsersByName(searchString));
             
-            if (needProjects == "on")
+            if (needProjects == "on" || needAll)
                 CreatorModels.AddRange(searchString == null ? 
                     await _developerService.GetProjects() : 
                     await _developerService.GetProjectsByName(searchString));
             
-            if (needCompanies == "on")
+            if (needCompanies == "on" || needAll)
                 CreatorModels.AddRange(searchString == null ? 
                     await _developerService.GetCompanies() : 
                     await _developerService.GetCompaniesByName(searchString));

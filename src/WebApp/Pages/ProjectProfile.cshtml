@@ -14,10 +14,20 @@
 }
 
 @if (_signInManager.IsSignedIn(User) &&
-     !Model.ProjectModel.Users.Select(u => u.Id).Contains((await _userManager.GetUserAsync(User)).UserId))
+     Model.ProjectModel.Users.Select(u => u.Id).Contains((await _userManager.GetUserAsync(User)).UserId))
 {
     <form method="post">
         <input type="hidden" name="id" value="@Model.ProjectModel.Id">
+        <div>
+            <label>Free</label>
+            <input type="radio" name="type" value="free">
+            <label>Basic</label>
+            <input type="radio" name="type" value="basic">
+            <label>Improved</label>
+            <input type="radio" name="type" value="improved">
+            <label>Max</label>
+            <input type="radio" name="type" value="max">
+        </div>
         <input type="text" name="text" placeholder="Whats new?">
         <button type="submit">Send</button>
     </form>
