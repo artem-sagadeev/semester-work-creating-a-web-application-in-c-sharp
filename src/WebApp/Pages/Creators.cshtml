@@ -7,15 +7,15 @@
     </div>
     <div>
         <label>Users</label>
-        <input type="checkbox" name="needUsers" checked>
+        <input type="checkbox" name="needUsers">
     </div>
     <div>
         <label>Projects</label>
-        <input type="checkbox" name="needProjects" checked>
+        <input type="checkbox" name="needProjects">
     </div>
     <div>
         <label>Companies</label>
-        <input type="checkbox" name="needCompanies" checked>
+        <input type="checkbox" name="needCompanies">
     </div>
     <button>Search</button>
 </form>
@@ -25,4 +25,36 @@
 @foreach (var creator in Model.CreatorModels)
 {
     @await Html.PartialAsync("Shared/_CreatorPreviewPartial", creator)
+}
+
+@section Scripts
+{
+    <script>
+    let params = window
+        .location
+        .search
+        .replace('?','')
+        .split('&')
+        .reduce(
+            function(p, e){
+                let a = e.split('=');
+                p[decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
+                return p;
+            },
+            {}
+        );
+    
+    window.onload = function () {
+        document.getElementsByName("searchString")[0].setAttribute("value", params["searchString"]);
+        
+        if (params["needUsers"] === "on")
+            document.getElementsByName("needUsers")[0].setAttribute("checked", "true");
+        
+        if (params["needProjects"] === "on")
+                    document.getElementsByName("needProjects")[0].setAttribute("checked", "true");
+        
+        if (params["needCompanies"] === "on")
+                    document.getElementsByName("needCompanies")[0].setAttribute("checked", "true");
+    }
+    </script>
 }

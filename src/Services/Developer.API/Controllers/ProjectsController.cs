@@ -60,7 +60,7 @@ namespace Developer.API.Controllers
         {
             var projects = _context
                 .Project
-                .Where(p => p.Name.Contains(name))
+                .Where(p => p.Name.ToLower().Contains(name.ToLower()))
                 .ToList();
             return projects.Count == 0 ? null : projects;
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using WebApp.Models.Chats;
 using WebApp.Models.Developer;
 using WebApp.Models.Identity;
 using WebApp.Models.Posts;
+using WebApp.Models.Subscription;
 using WebApp.Services;
 using WebApp.Services.Chats;
 using WebApp.Services.Developer;
@@ -40,22 +42,42 @@ namespace WebApp.Pages
         public async Task<ActionResult> OnGetAsync(int id)
         {
             ProjectModel = await _developerService.GetProject(id);
-            ProjectModel.Tags = await _developerService.GetTags(ProjectModel);
+
+            if (ProjectModel is null)
+                return NotFound();
+            
+            ProjectModel.Tags = await _developerService.GetTags(ProjectModel) ?? new List<TagModel>();
             ProjectModel.Company = await _developerService.GetProjectCompany(id);
-            ProjectModel.Users = await _developerService.GetProjectUsers(id);
-            PostModels = await _postsService.GetProjectPosts(id);
+            ProjectModel.Users = await _developerService.GetProjectUsers(id) ?? new List<UserModel>();
+            PostModels = await _postsService.GetProjectPosts(id) ?? new List<PostModel>();
             Messages = await GetAllMessages(id);
             return Page();
         }
         
-        public async Task<IActionResult> OnPostAsync(int id, string text)
+        public async Task<IActionResult> OnPostAsync(int id, string type, string text)
         {
             //todo add image
             //todo add files
-            if (!ProjectModel.Users.Select(u => u.Id).Contains((await _userManager.GetUserAsync(User)).UserId))
+            ProjectModel = await _developerService.GetProject(id);
+
+            if (ProjectModel is null)
+                return NotFound();
+            
+            ProjectModel.Users = await _developerService.GetProjectUsers(id) ?? new List<UserModel>();
+            var userId = (await _userManager.GetUserAsync(User)).UserId;
+            
+            if (!ProjectModel.Users.Select(u => u.Id).Contains(userId))
                 return Forbid();
             
-            var post = new PostModel {ProjectId = id, Text = text};
+            var requiredType = type switch
+            {
+                "free" => PriceType.Free,
+                "basic" => PriceType.Basic,
+                "improved" => PriceType.Improved,
+                "max" => PriceType.Max,
+                _ => throw new NotSupportedException()
+            };
+            var post = new PostModel {ProjectId = id, UserId = userId, RequiredSubscriptionType = requiredType, Text = text};
             await _postsService.CreatePost(post);
             return Redirect($"/ProjectProfile?id={id}");
         }

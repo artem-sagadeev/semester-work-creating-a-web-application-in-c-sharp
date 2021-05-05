@@ -58,7 +58,7 @@ namespace Developer.API.Controllers
         {
             var users = _context
                 .User
-                .Where(u => u.Name.Contains(name))
+                .Where(u => u.Name.ToLower().Contains(name.ToLower()))
                 .ToList();
             return users.Count == 0 ? null : users;
         }
