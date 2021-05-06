@@ -10,6 +10,8 @@ namespace WebApp.Services.Files
         Task<FileModel> GetFile(string id);
         Task<AvatarModel> GetAvatar(int creatorId, CreatorType creatorType);
         Task CreateAvatar(AvatarModel avatar);
+        Task CreateCover(CoverModel cover);
+        Task CreateFile(FileModel file);
         Task<CoverModel> GetCover(int postId);
     }
 }

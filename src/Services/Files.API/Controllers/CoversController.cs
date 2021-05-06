@@ -21,5 +21,12 @@ namespace Files.API.Controllers
         {
             return await _fileRepository.GetCoverAsync(postId);
         }
+        
+        [HttpPost]
+        [Route("/Covers/Create")]
+        public async Task Create(Cover cover)
+        {
+            await _fileRepository.CreateCoverAsync(cover);
+        }
     }
 }

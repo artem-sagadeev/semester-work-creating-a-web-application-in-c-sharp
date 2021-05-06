@@ -52,9 +52,10 @@ namespace WebApp.Services.Posts
             return await response.ReadContentAs<IEnumerable<CommentModel>>();
         }
 
-        public async Task CreatePost(PostModel post)
+        public async Task<PostModel> CreatePost(PostModel post)
         {
-            await _client.PostAsJsonAsync($"/Posts/CreatePost", post);
+            var response = await _client.PostAsJsonAsync($"/Posts/CreatePost", post);
+            return await response.ReadContentAs<PostModel>();
         }
     }
 }

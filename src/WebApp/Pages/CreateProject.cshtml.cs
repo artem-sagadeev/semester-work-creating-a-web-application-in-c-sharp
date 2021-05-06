@@ -75,7 +75,7 @@ namespace WebApp.Pages
                     await avatar.CopyToAsync(fileStream);
                 }
 
-                await _fileService.CreateAvatar(new AvatarModel()
+                await _fileService.CreateAvatar(new AvatarModel
                 {
                     CreatorId = projectId,
                     Name = $"{projectForm.Name}.{avatar.FileName.Split(".").Last()}",

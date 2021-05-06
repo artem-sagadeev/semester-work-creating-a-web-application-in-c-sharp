@@ -75,6 +75,11 @@ namespace Files.API.Repositories
             await _avatars.InsertOneAsync(avatar);
         }
 
+        public async Task CreateCoverAsync(Cover cover)
+        {
+            await _covers.InsertOneAsync(cover);
+        }
+
         public async Task DeleteAvatarAsync(int creatorId)
         {
             var filter = Builders<Avatar>.Filter.Eq("CreatorId", creatorId);

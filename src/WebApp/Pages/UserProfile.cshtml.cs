@@ -52,17 +52,5 @@ namespace WebApp.Pages
             Avatar = await _fileService.GetAvatar(UserModel.Id, CreatorType.User);
             return Page();
         }
-
-        public async Task<IActionResult> OnPostAsync(int id, string text)
-        {
-            //todo add image
-            //todo add files
-            if ((await _userManager.GetUserAsync(User)).UserId != id)
-                return Forbid();
-            
-            var post = new PostModel {UserId = id, Text = text};
-            await _postsService.CreatePost(post);
-            return Redirect($"/UserProfile?id={id}");
-        }
     }
 }

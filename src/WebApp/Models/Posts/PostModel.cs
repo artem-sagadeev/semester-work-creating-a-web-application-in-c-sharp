@@ -25,11 +25,16 @@ namespace WebApp.Models.Posts
             if (user is null)
                 return false;
 
-            var isUserAuthorOfPost = user.UserId == UserId;
+            if (user.UserId == UserId)
+                return true;
+            
             var hasSubscribeToUser = await subscriptionService.HasUserAccess(user.UserId,
                 UserId,
                 RequiredSubscriptionType,
                 TypeOfSubscription.User);
+
+            if (hasSubscribeToUser)
+                return true;
 
             if (ProjectId == 0)
                 return false;
@@ -41,6 +46,9 @@ namespace WebApp.Models.Posts
                                             ProjectId,
                                             RequiredSubscriptionType,
                                             TypeOfSubscription.Project);
+
+            if (isUserMemberOfProject || hasSubscribeToProject)
+                return true;
 
             
             var companyId = (await developerService.GetProjectCompany(ProjectId)).Id;
@@ -56,11 +64,7 @@ namespace WebApp.Models.Posts
                                             RequiredSubscriptionType, 
                                             TypeOfSubscription.Team);
             
-            return isUserAuthorOfPost ||
-                   hasSubscribeToUser || 
-                   isUserMemberOfProject ||
-                   hasSubscribeToProject || 
-                   isUserMemberOfCompany ||
+            return isUserMemberOfCompany ||
                    hasSubscribeToCompany;
         }
     }
