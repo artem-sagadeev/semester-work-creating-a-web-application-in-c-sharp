@@ -22,16 +22,13 @@
 }
 
 .btn-follow{
-    margin: 27px auto 14px auto;
-    display: block;
+    margin-bottom: 2px;
     background-color: #4C45C2;
     color: white;
     font-weight: bold;
 }
 
 .btn-subscribe{
-    margin: 27px auto 14px auto;
-    display: block;
     background-color: #1E1E2C;
     color: white;
     font-weight: bold;

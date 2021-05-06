@@ -8,6 +8,7 @@ for details on configuring this project to bundle and minify static web assets. 
 @import "register.css";
 @import "creators.css";
 @import "info.css";
+@import "post.css";
 
 *
 {

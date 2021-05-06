@@ -1,15 +1,21 @@
 ﻿@page
 @model WebApp.Pages.Post
 
-<div>
-    @Model.PostModel.Id
-    @Model.PostModel.Text
-    <img src="@Model.CoverModel?.Path" alt="cover">
-    @foreach (var file in Model.Files)
-    {
-        <div>
-            @file.Name
-            @file.Type
+<div class="post container">
+    <!-- Model.PostModel.Id -->
+    <div class="row row-col-2">
+        <div class="col-auto">
+            <img src="@Model.CoverModel?.Path" alt="cover">
         </div>
-    }
+        <div class="col-auto">
+                <p>@Model.PostModel.Text</p>
+                @foreach (var file in Model.Files)
+                {
+                    <div>
+                        @file.Name
+                        @file.Type
+                    </div>
+                }
+        </div>
+    </div>
 </div>
