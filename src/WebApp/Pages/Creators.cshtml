@@ -2,59 +2,34 @@
 @model WebApp.Pages.Creators
 
 <form method="get">
-    <div>
-        <input type="text" name="searchString" placeholder="What are you searching for?">
+    <div class="container" style="padding-bottom: 10px">
+        <div class="row align-items-center">
+            <div class="col-6" style="min-width: 300px">
+                <input type="text" name="searchString" placeholder="What are you searching for?" class="input-search form-control">
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-search">Search</button>
+            </div>
+            <div class="round col-auto">
+                <input type="checkbox" name="needUsers" class="checkbox" id="checkbox-1" checked>
+                <label for="checkbox-1" class="checkbox-label">Users</label>
+            </div>
+            <div class="round col-auto">
+                <input type="checkbox" name="needProjects" class="checkbox" id="checkbox-2" checked>
+                <label for="checkbox-2" class="checkbox-label">Projects</label>
+            </div>
+            <div class="round col-auto">
+                <input type="checkbox" name="needCompanies" class="checkbox" id="checkbox-3" checked>
+                <label for="checkbox-3" class="checkbox-label">Companies</label>
+            </div>
+        </div>
     </div>
-    <div>
-        <label>Users</label>
-        <input type="checkbox" name="needUsers">
-    </div>
-    <div>
-        <label>Projects</label>
-        <input type="checkbox" name="needProjects">
-    </div>
-    <div>
-        <label>Companies</label>
-        <input type="checkbox" name="needCompanies">
-    </div>
-    <button>Search</button>
 </form>
 
 
-
-@foreach (var creator in Model.CreatorModels)
-{
-    @await Html.PartialAsync("Shared/_CreatorPreviewPartial", creator)
-}
-
-@section Scripts
-{
-    <script>
-    let params = window
-        .location
-        .search
-        .replace('?','')
-        .split('&')
-        .reduce(
-            function(p, e){
-                let a = e.split('=');
-                p[decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
-                return p;
-            },
-            {}
-        );
-    
-    window.onload = function () {
-        document.getElementsByName("searchString")[0].setAttribute("value", params["searchString"]);
-        
-        if (params["needUsers"] === "on")
-            document.getElementsByName("needUsers")[0].setAttribute("checked", "true");
-        
-        if (params["needProjects"] === "on")
-                    document.getElementsByName("needProjects")[0].setAttribute("checked", "true");
-        
-        if (params["needCompanies"] === "on")
-                    document.getElementsByName("needCompanies")[0].setAttribute("checked", "true");
+<div class="container">
+    @foreach (var creator in Model.CreatorModels)
+    {
+        @await Html.PartialAsync("Shared/_CreatorPreviewPartial", creator)
     }
-    </script>
-}
+</div>

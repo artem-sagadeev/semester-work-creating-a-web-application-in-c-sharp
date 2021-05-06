@@ -1,0 +1,38 @@
+.tags span{
+    background-color: #E6E6E6;
+    padding: 1px 5px 1px 5px;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+
+.img-preview{
+    object-fit: cover;
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 40px;
+}
+
+.info-card{
+    max-width: 400px;
+    margin: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border-radius: 20px;
+    background-color: #FAFAFA;
+}
+
+.btn-follow{
+    margin: 27px auto 14px auto;
+    display: block;
+    background-color: #4C45C2;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-subscribe{
+    margin: 27px auto 14px auto;
+    display: block;
+    background-color: #1E1E2C;
+    color: white;
+    font-weight: bold;
+}
