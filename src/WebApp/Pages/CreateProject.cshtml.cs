@@ -67,19 +67,22 @@ namespace WebApp.Pages
 
             var projectId = (await _developerService.GetProject(projectForm.Name)).Id;
 
-            var path = $"/avatars/{projectForm.Name}.{avatar.FileName.Split(".").Last()}";
-            await using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+            if (avatar is not null)
             {
-                await avatar.CopyToAsync(fileStream);
+                var path = $"/avatars/{projectForm.Name}.{avatar.FileName.Split(".").Last()}";
+                await using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                {
+                    await avatar.CopyToAsync(fileStream);
+                }
+
+                await _fileService.CreateAvatar(new AvatarModel
+                {
+                    CreatorId = projectId,
+                    Name = $"{projectForm.Name}.{avatar.FileName.Split(".").Last()}",
+                    CreatorType = CreatorType.Project
+                });
             }
 
-            await _fileService.CreateAvatar(new AvatarModel()
-            {
-                CreatorId = projectId,
-                Name = $"{projectForm.Name}.{avatar.Name.Split(".").Last()}",
-                CreatorType = CreatorType.Project
-            });
-            
             return Redirect($"/ProjectProfile?id={projectId}");
         }
     }

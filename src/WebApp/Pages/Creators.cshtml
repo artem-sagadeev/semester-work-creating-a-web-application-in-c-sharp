@@ -11,15 +11,15 @@
                 <button class="btn btn-search">Search</button>
             </div>
             <div class="round col-auto">
-                <input type="checkbox" name="needUsers" class="checkbox" id="checkbox-1" checked>
+                <input type="checkbox" name="needUsers" class="checkbox" id="checkbox-1">
                 <label for="checkbox-1" class="checkbox-label">Users</label>
             </div>
             <div class="round col-auto">
-                <input type="checkbox" name="needProjects" class="checkbox" id="checkbox-2" checked>
+                <input type="checkbox" name="needProjects" class="checkbox" id="checkbox-2">
                 <label for="checkbox-2" class="checkbox-label">Projects</label>
             </div>
             <div class="round col-auto">
-                <input type="checkbox" name="needCompanies" class="checkbox" id="checkbox-3" checked>
+                <input type="checkbox" name="needCompanies" class="checkbox" id="checkbox-3">
                 <label for="checkbox-3" class="checkbox-label">Companies</label>
             </div>
         </div>
@@ -33,3 +33,36 @@
         @await Html.PartialAsync("Shared/_CreatorPreviewPartial", creator)
     }
 </div>
+
+@section Scripts
+{
+    <script>
+    let params = window
+        .location
+        .search
+        .replace('?','')
+        .split('&')
+        .reduce(
+            function(p, e){
+                let a = e.split('=');
+                p[decodeURIComponent(a[0])] = decodeURIComponent(a[1]);
+                return p;
+            },
+            {}
+        );
+    
+    window.onload = function () {
+        if (params["searchString"].length > 0)
+            document.getElementsByName("searchString")[0].setAttribute("value", params["searchString"]);
+        
+        if (params["needUsers"] === "on")
+            document.getElementsByName("needUsers")[0].setAttribute("checked", "true");
+        
+        if (params["needProjects"] === "on")
+            document.getElementsByName("needProjects")[0].setAttribute("checked", "true");
+        
+        if (params["needCompanies"] === "on")
+            document.getElementsByName("needCompanies")[0].setAttribute("checked", "true");
+    }
+    </script>
+}
