@@ -20,7 +20,8 @@
 @if (await Model.HasUserAccessAsync(user, _subscriptionService, _developerService))
 {
     <div>
-        <a asp-page="Post" asp-route-id="@Model.Id">@Model.Id - @Model.Text</a>
+        @Model.Id
+        @Model.Text
         <img src="@cover?.Path" alt="cover">
     </div>
 }

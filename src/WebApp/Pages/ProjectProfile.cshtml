@@ -14,23 +14,11 @@
 }
 
 @if (_signInManager.IsSignedIn(User) &&
-     Model.ProjectModel.Users.Select(u => u.Id).Contains((await _userManager.GetUserAsync(User)).UserId))
+     !Model.ProjectModel.Users.Select(u => u.Id).Contains((await _userManager.GetUserAsync(User)).UserId))
 {
-    <form method="post" enctype="multipart/form-data">
+    <form method="post">
         <input type="hidden" name="id" value="@Model.ProjectModel.Id">
-        <div>
-            <label>Free</label>
-            <input type="radio" name="type" value="free">
-            <label>Basic</label>
-            <input type="radio" name="type" value="basic">
-            <label>Improved</label>
-            <input type="radio" name="type" value="improved">
-            <label>Max</label>
-            <input type="radio" name="type" value="max">
-        </div>
         <input type="text" name="text" placeholder="Whats new?">
-        <input type="file" name="cover">
-        @*<input type="file" name="files"> таких инпутов может быть много (несколько файлов к одному посту)*@
         <button type="submit">Send</button>
     </form>
 }

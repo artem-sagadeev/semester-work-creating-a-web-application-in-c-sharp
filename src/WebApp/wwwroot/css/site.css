@@ -6,6 +6,8 @@ for details on configuring this project to bundle and minify static web assets. 
 @import "navbar.css";
 @import "login.css";
 @import "register.css";
+@import "creators.css";
+@import "info.css";
 
 *
 {
@@ -15,8 +17,6 @@ for details on configuring this project to bundle and minify static web assets. 
 
 html,body {
   position: relative;
-  /*min-height: 100%;
-  height: 100%;*/
 }
 
 header{

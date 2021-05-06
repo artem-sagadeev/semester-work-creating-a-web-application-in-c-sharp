@@ -55,22 +55,19 @@ namespace WebApp.Pages
                 return BadRequest(message);
 
             var companyId = (await _developerService.GetCompany(companyForm.Name)).Id;
-
-            if (avatar is not null)
+            
+            var path = $"/avatars/{companyForm.Name}.{avatar.FileName.Split(".").Last()}";
+            await using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
             {
-                var path = $"/avatars/{companyForm.Name}.{avatar.FileName.Split(".").Last()}";
-                await using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
-                {
-                    await avatar.CopyToAsync(fileStream);
-                }
-
-                await _fileService.CreateAvatar(new AvatarModel()
-                {
-                    CreatorId = companyId,
-                    Name = $"{companyForm.Name}.{avatar.FileName.Split(".").Last()}",
-                    CreatorType = CreatorType.Company
-                });
+                await avatar.CopyToAsync(fileStream);
             }
+
+            await _fileService.CreateAvatar(new AvatarModel()
+            {
+                CreatorId = companyId,
+                Name = $"{companyForm.Name}.{avatar.Name.Split(".").Last()}",
+                CreatorType = CreatorType.Company
+            });
             
             return Redirect($"/CompanyProfile?id={companyId}");
         }

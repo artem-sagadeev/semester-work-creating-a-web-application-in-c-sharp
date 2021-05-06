@@ -23,13 +23,9 @@ namespace WebApp.Pages
         public async Task<ActionResult> OnGetAsync(int id)
         {
             CompanyModel = await _developerService.GetCompany(id);
-
-            if (CompanyModel is null)
-                return NotFound();
-            
-            CompanyModel.Tags = await _developerService.GetTags(CompanyModel) ?? new List<TagModel>();
-            CompanyModel.Users = await _developerService.GetCompanyUsers(id) ?? new List<UserModel>();
-            CompanyModel.Projects = await _developerService.GetCompanyProjects(id) ?? new List<ProjectModel>();
+            CompanyModel.Tags = await _developerService.GetTags(CompanyModel);
+            CompanyModel.Users = await _developerService.GetCompanyUsers(id);
+            CompanyModel.Projects = await _developerService.GetCompanyProjects(id);
             return Page();
         }
     }
