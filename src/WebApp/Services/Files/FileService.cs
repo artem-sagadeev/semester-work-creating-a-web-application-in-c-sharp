@@ -39,6 +39,16 @@ namespace WebApp.Services.Files
             await _client.PostAsJsonAsync("/Avatars/Create", avatar);
         }
 
+        public async Task CreateCover(CoverModel cover)
+        {
+            await _client.PostAsJsonAsync("/Covers/Create", cover);
+        }
+
+        public async Task CreateFile(FileModel file)
+        {
+            await _client.PostAsJsonAsync("/Files/Create", file);
+        }
+
         public async Task<CoverModel> GetCover(int postId)
         {
             var response = await _client.GetAsync($"/Covers/Get?postId={postId}");

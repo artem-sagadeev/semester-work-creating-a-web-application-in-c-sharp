@@ -68,11 +68,12 @@ namespace Posts.API.Controllers
 
         [HttpPost]
         [Route("/Posts/Create")]
-        public async Task Create(Post post)
+        public async Task<Post> Create(Post post)
         {
             //todo not checked
             await _context.AddAsync(post);
             await _context.SaveChangesAsync();
+            return post;
         }
         
         [HttpPost]

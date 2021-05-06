@@ -930,6 +930,30 @@
       ],
       "UpstreamPathTemplate": "/Avatars/Create",
       "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+        "DownStreamPathTemplate": "/Covers/Create",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+            {
+                "Host": "localhost",
+                "Port": 5004
+            }
+        ],
+        "UpstreamPathTemplate": "/Covers/Create",
+        "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+        "DownStreamPathTemplate": "/Files/Create",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+            {
+                "Host": "localhost",
+                "Port": 5004
+            }
+        ],
+        "UpstreamPathTemplate": "/Files/Create",
+        "UpstreamHttpMethod": [ "POST" ]
     }
     ],
   "GlobalConfiguration" : {
