@@ -7,7 +7,7 @@
 
 @inject SignInManager<ApplicationUser> _signInManager
 @inject UserManager<ApplicationUser> _userManager
-@inject IFileService _fileService 
+@inject IFileService _fileService
 
 @{
     //data for subscription
@@ -22,23 +22,20 @@
         ProjectModel => CreatorType.Project,
         CompanyModel => CreatorType.Company,
         _ => throw new NotSupportedException()
-    };
-    
+        };
     var creatorTypeLink = Model switch
     {
         UserModel => "UserProfile",
         ProjectModel => "ProjectProfile",
         CompanyModel => "CompanyProfile",
         _ => throw new NotSupportedException()
-    };
-
+        };
     var companies = Model switch {
         UserModel user => user.Companies,
         ProjectModel project => project.Company != null ? new List<CompanyModel> {project.Company} : new List<CompanyModel>(),
         CompanyModel => new List<CompanyModel>(),
         _ => throw new ArgumentOutOfRangeException()
-    };
-
+        };
     var avatar = await _fileService.GetAvatar(Model.Id, creatorType);
 }
 
@@ -58,11 +55,35 @@
         </div>
     }
 </div>
+@{
+    switch (Model)
+    {
+        case UserModel:
+            <form asp-controller="Subscribe" asp-action="FollowToUser" asp-route-developerId="@Model.Id" asp-route-userId="@userId">
+                <button type="submit">Follow</button>
+            </form>
+            <form asp-controller="Subscribe" asp-action="SubscribeToUser" asp-route-developerId="@Model.Id" asp-route-userId="@userId">
+                <button type="submit">Subscribe</button>
+            </form>
+            break;
+        case ProjectModel:
+            <form  asp-controller="Subscribe" asp-action="FollowToProject" asp-route-projectId="@Model.Id" asp-route-userId="@userId">
+                <button type="submit">Follow</button>
+            </form>
 
-<form method="post" asp-controller="Subsribe"  asp-action="Follow" asp-route-developerId="@Model.Id" asp-route-userId="@userId">
-    <button type="submit">Follow</button>
-</form>
-<form method="post" asp-controller="Subsribe"  asp-action="SubscribeToUser" asp-route-developerId="@Model.Id" asp-route-userId="@userId">
-    <button type="submit">Subscribe</button>
-</form>
-
+            <form asp-controller="Subscribe" asp-action="SubscribeToProject" asp-route-projectId="@Model.Id" asp-route-userId="@userId">
+                <button type="submit">Subscribe</button>
+            </form>
+            break;
+        case CompanyModel:
+            <form  asp-controller="Subscribe" asp-action="FollowToCompany" asp-route-companyId="@Model.Id" asp-route-userId="@userId">
+                <button type="submit">Follow</button>
+            </form>
+            <form asp-controller="Subscribe" asp-action="SubscribeToCompany" asp-route-companyId="@Model.Id" asp-route-userId="@userId">
+                <button type="submit">Subscribe</button>
+            </form>
+            break;
+        default:
+            throw new NotSupportedException();
+    }
+}

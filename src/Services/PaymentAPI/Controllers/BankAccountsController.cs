@@ -24,7 +24,7 @@ namespace PaymentAPI.Controllers
         [HttpGet]
         [Route("/BankAccounts/Get/{userId}")]
         public ActionResult<BankAccount> Get(int userId)
-            => _context.BankAccounts.First(c => c.UserId == userId);
+            => _context.BankAccounts.FirstOrDefault(c => c.UserId == userId);
 
         public class UserIdFormat
         {

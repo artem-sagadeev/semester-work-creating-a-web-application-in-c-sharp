@@ -14,6 +14,7 @@ using WebApp.Services;
 using WebApp.Services.Chats;
 using WebApp.Services.Developer;
 using WebApp.Services.Posts;
+using WebApp.Services.Subscription;
 
 namespace WebApp.Pages
 {
@@ -22,21 +23,23 @@ namespace WebApp.Pages
         private readonly IDeveloperService _developerService;
         private readonly IPostsService _postsService;
         private readonly IChatService _chatService;
-        
+        private readonly ISubscriptionService _subscriptionService;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ProjectProfile(IDeveloperService developerService, IPostsService postsService, IChatService chatService, UserManager<ApplicationUser> userManager)
+        public ProjectProfile(IDeveloperService developerService, IPostsService postsService, IChatService chatService, ISubscriptionService subscriptionService, UserManager<ApplicationUser> userManager)
         {
             _developerService = developerService;
             _postsService = postsService;
             _userManager = userManager;
             _chatService = chatService;
+            _subscriptionService = subscriptionService;
         }
 
         public ProjectModel ProjectModel { get; private set; }
         public IEnumerable<PostModel> PostModels { get; private set; }
         public List<(string, MessageModel)> Messages { get; private set; }
         
+        public bool HasAccessToChat { get; set; }
         public async Task<ActionResult> OnGetAsync(int id)
         {
             ProjectModel = await _developerService.GetProject(id);
@@ -45,6 +48,7 @@ namespace WebApp.Pages
             ProjectModel.Users = await _developerService.GetProjectUsers(id);
             PostModels = await _postsService.GetProjectPosts(id);
             Messages = await GetAllMessages(id);
+            HasAccessToChat = await HasAccessChat(id);
             return Page();
         }
         
@@ -60,6 +64,12 @@ namespace WebApp.Pages
             return Redirect($"/ProjectProfile?id={id}");
         }
 
+        public async Task<bool> HasAccessChat(int projectId)
+        {
+            var userId = (await _userManager.GetUserAsync(User))?.UserId;
+            var chatMember = (await _chatService.GetChatMembersByProjectId(projectId)).FirstOrDefault(x=> x.UserId == userId);
+            return chatMember != null;
+        }
         public async Task<List<(string, MessageModel)>> GetAllMessages(int projectId)
         {
             var messages = new List<(string, MessageModel)>();

@@ -1,10 +1,27 @@
 ﻿@page
+@using WebApp.Models.Subscription
 @model WebApp.Pages.SubscriptionsModel
 @{
 }
 
 @for (int i = 0; i < @Model.AllSubscriptions.Count; i++)
 {
+    if (@Model.AllSubscriptions[i].Tariff.TypeOfSubscription == TypeOfSubscription.Project)
+    {
+        <a asp-page="ProjectProfile" asp-route-id="@Model.AllSubscriptions[i].SubscribedToId">Проект</a>
+    }
+    else if (@Model.AllSubscriptions[i].Tariff.TypeOfSubscription == TypeOfSubscription.User)
+    {
+        <a asp-page="UserProfile" asp-route-id="@Model.AllSubscriptions[i].SubscribedToId">Разработчик</a>
+    }
+    else if (@Model.AllSubscriptions[i].Tariff.TypeOfSubscription == TypeOfSubscription.Team)
+    {
+        <a asp-page="UserProfile" asp-route-id="@Model.AllSubscriptions[i].SubscribedToId">Команда</a>
+    }
+    else
+    {
+        throw new Exception("Нет нужного типа");
+    }
     if (@Model.AllSubscriptions[i].IsAutorenewal)
     {
         <p>Автопродление; Следующее списание: @Model.AllSubscriptions[i].EndDate @Model.AllSubscriptions[i].Tariff.PricePerMonth руб/мес; Тип подписки: @Model.AllSubscriptions[i].Tariff.PriceType; @Model.AllSubscriptions[i].Tariff</p>
