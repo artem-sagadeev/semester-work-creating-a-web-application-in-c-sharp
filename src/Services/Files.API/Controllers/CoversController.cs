@@ -26,6 +26,7 @@ namespace Files.API.Controllers
         [Route("/Covers/Create")]
         public async Task Create(Cover cover)
         {
+            await _fileRepository.DeleteCoverAsync(cover.PostId);
             await _fileRepository.CreateCoverAsync(cover);
         }
     }
