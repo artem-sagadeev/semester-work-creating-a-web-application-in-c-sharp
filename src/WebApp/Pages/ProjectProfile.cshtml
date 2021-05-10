@@ -6,14 +6,25 @@
 @inject SignInManager<ApplicationUser> _signInManager
 @inject UserManager<ApplicationUser> _userManager
 
-@await Html.PartialAsync("Shared/_CreatorPreviewPartial", Model.ProjectModel)
+<div class="container">
+<div class="row row-cols-2">
+    <div class="col">
+        @await Html.PartialAsync("Shared/_CreatorPreviewPartial", Model.ProjectModel)
+    </div>
+    <div class="col" style="margin-top: 10px">
+        <div class="row row-cols-4">
+        @foreach (var user in Model.ProjectModel.Users)
+        {
+            <div class="col">
+            @await Html.PartialAsync("Shared/_UserMiniPreviewPartial", user)
+            </div>
+        }
+        </div>
+    </div>
+</div>
+</div>
 
-@foreach (var user in Model.ProjectModel.Users)
-{
-    @await Html.PartialAsync("Shared/_UserMiniPreviewPartial", user)
-}
-
-@if (_signInManager.IsSignedIn(User) &&
+    @if (_signInManager.IsSignedIn(User) &&
      Model.ProjectModel.Users.Select(u => u.Id).Contains((await _userManager.GetUserAsync(User)).UserId))
 {
     <form method="post" enctype="multipart/form-data">

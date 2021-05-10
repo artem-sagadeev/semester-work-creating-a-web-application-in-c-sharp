@@ -8,8 +8,8 @@
     var avatar = await _fileService.GetAvatar(Model.Id, CreatorType.Project);
 }
 
-<div>
-    @Model.Id
-    @Model.Name
+<div class="project-preview">
+    <!--Model.Id-->
     <img src="@avatar?.Path" alt="avatar">
+    <h5 style="font-weight: bold">@Model.Name</h5>
 </div>

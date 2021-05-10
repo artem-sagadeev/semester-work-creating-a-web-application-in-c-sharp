@@ -6,12 +6,16 @@
 @inject SignInManager<ApplicationUser> _signInManager
 @inject UserManager<ApplicationUser> _userManager
 
+<div class="container">
 @await Html.PartialAsync("Shared/_CreatorPreviewPartial", Model.UserModel)
+</div>
 
+<div class="projects-slider container">
 @foreach (var project in Model.UserModel.Projects)
 {
     @await Html.PartialAsync("Shared/_ProjectMiniPreviewPartial", project)
 }
+</div>
 
 @foreach (var post in Model.PostModels)
 {

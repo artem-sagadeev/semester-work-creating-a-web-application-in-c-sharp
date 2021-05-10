@@ -1,0 +1,10 @@
+.cover{
+    max-width: 800px;
+}
+
+.cover img{
+    max-width: 800px;
+    max-height: 800px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+}

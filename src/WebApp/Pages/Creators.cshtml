@@ -26,12 +26,13 @@
     </div>
 </form>
 
-
 <div class="container">
-    @foreach (var creator in Model.CreatorModels)
-    {
-        @await Html.PartialAsync("Shared/_CreatorPreviewPartial", creator)
-    }
+    <div class="row row-cols-2">
+        @foreach (var creator in Model.CreatorModels)
+        {
+            @await Html.PartialAsync("Shared/_CreatorPreviewPartial", creator)
+        }
+    </div>
 </div>
 
 @section Scripts
