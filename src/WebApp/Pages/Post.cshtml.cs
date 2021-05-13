@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using WebApp.Models.Developer;
 using WebApp.Models.Files;
 using WebApp.Models.Identity;
 using WebApp.Models.Posts;
@@ -60,17 +59,17 @@ namespace WebApp.Pages
             return Page();
         }
         
-        public async Task<IActionResult> OnPostAsync(int postId, int projectId, string type, string text, IFormFile cover, IFormFileCollection files)
+        public async Task<IActionResult> OnPostAsync(int postId, string type, string text, IFormFile cover, IFormFileCollection files)
         {
-            var project = await _developerService.GetProject(projectId);
+            if (!_signInManager.IsSignedIn(User))
+                return Forbid();
 
-            if (project is null)
-                return NotFound();
-
-            project.Users = await _developerService.GetProjectUsers(projectId) ?? new List<UserModel>();
             var userId = (await _userManager.GetUserAsync(User)).UserId;
+            var post = await _postsService.GetPost(postId);
 
-            if (!project.Users.Select(u => u.Id).Contains(userId))
+            var allowedUsers = (await _developerService.GetProjectUsers(post.ProjectId))
+                .Select(u => u.Id);
+            if (post.UserId != userId && !allowedUsers.Contains(userId))
                 return Forbid();
             
             var requiredType = type switch
@@ -82,13 +81,12 @@ namespace WebApp.Pages
                 _ => throw new NotSupportedException()
             };
 
-            var post = await _postsService.GetPost(postId);
             post.RequiredSubscriptionType = requiredType;
             post.Text = text;
 
-            /*if (cover is not null)
+            if (cover is not null)
             {
-                var path = $"/covers/{project.Id}_{cover.FileName}";
+                var path = $"/covers/{post.Id}_{cover.FileName}";
                 await using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
                 {
                     await cover.CopyToAsync(fileStream);
@@ -97,7 +95,7 @@ namespace WebApp.Pages
                 await _fileService.CreateCover(new CoverModel
                 {
                     PostId = post.Id,
-                    Name = $"{project.Id}_{cover.FileName}"
+                    Name = $"{post.Id}_{cover.FileName}"
                 });
             }
 
@@ -105,7 +103,7 @@ namespace WebApp.Pages
             {
                 if (file is not null)
                 {
-                    var path = $"/files/{project.Id}_{file.FileName}";
+                    var path = $"/files/{post.Id}_{file.FileName}";
                     await using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
                     {
                         await file.CopyToAsync(fileStream);
@@ -113,11 +111,11 @@ namespace WebApp.Pages
 
                     await _fileService.CreateFile(new FileModel
                     {
-                        PostId = createdPost.Id,
-                        Name = $"{ProjectModel.Id}_{file.FileName}"
+                        PostId = post.Id,
+                        Name = $"{post.Id}_{file.FileName}"
                     });
                 }
-            }*/
+            }
             
             return Redirect($"/Post?id={postId}");
         }
