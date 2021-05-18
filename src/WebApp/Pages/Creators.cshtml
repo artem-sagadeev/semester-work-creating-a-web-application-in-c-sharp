@@ -1,38 +1,38 @@
 ﻿@page
 @model WebApp.Pages.Creators
 
-<form method="get">
-    <div class="container" style="padding-bottom: 10px">
-        <div class="row align-items-center">
-            <div class="col-6" style="min-width: 300px">
-                <input type="text" name="searchString" placeholder="What are you searching for?" class="input-search form-control">
-            </div>
-            <div class="col-auto">
-                <button class="btn btn-search">Search</button>
-            </div>
-            <div class="round col-auto">
-                <input type="checkbox" name="needUsers" class="checkbox" id="checkbox-1">
-                <label for="checkbox-1" class="checkbox-label">Users</label>
-            </div>
-            <div class="round col-auto">
-                <input type="checkbox" name="needProjects" class="checkbox" id="checkbox-2">
-                <label for="checkbox-2" class="checkbox-label">Projects</label>
-            </div>
-            <div class="round col-auto">
-                <input type="checkbox" name="needCompanies" class="checkbox" id="checkbox-3">
-                <label for="checkbox-3" class="checkbox-label">Companies</label>
+<div class="container-xl">
+    <form method="get">
+        <div class="container" style="padding-bottom: 10px;">
+            <div class="row align-items-center">
+                <div class="col-6" style="min-width: 300px">
+                    <input type="text" name="searchString" placeholder="What are you searching for?" class="input-search form-control" autocomplete="off">
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-search">Search</button>
+                </div>
+                <div class="round col-auto">
+                    <input type="checkbox" name="needUsers" class="checkbox" id="checkbox-1">
+                    <label for="checkbox-1" class="checkbox-label">Users</label>
+                </div>
+                <div class="round col-auto">
+                    <input type="checkbox" name="needProjects" class="checkbox" id="checkbox-2">
+                    <label for="checkbox-2" class="checkbox-label">Projects</label>
+                </div>
+                <div class="round col-auto">
+                    <input type="checkbox" name="needCompanies" class="checkbox" id="checkbox-3">
+                    <label for="checkbox-3" class="checkbox-label">Companies</label>
+                </div>
             </div>
         </div>
-    </div>
-</form>
-
-<div class="container">
-    <div class="row row-cols-2">
-        @foreach (var creator in Model.CreatorModels)
-        {
-            @await Html.PartialAsync("Shared/_CreatorPreviewPartial", creator)
-        }
-    </div>
+    </form>
+    
+        <div class="row row-cols-2">
+            @foreach (var creator in Model.CreatorModels)
+            {
+                @await Html.PartialAsync("Shared/_CreatorPreviewPartial", creator)
+            }
+        </div>
 </div>
 
 @section Scripts

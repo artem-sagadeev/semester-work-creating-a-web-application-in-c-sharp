@@ -21,15 +21,11 @@ for details on configuring this project to bundle and minify static web assets. 
 
 html,body {
   position: relative;
+  height: 100%;
 }
 
 header{
-  position: fixed;
   width: 100%;
-}
-
-main{
-  padding-top: 60px;
 }
 
 footer{
@@ -57,4 +53,13 @@ footer{
 
 .text-center{
   text-align: center !important;
+}
+
+.main {
+  position: relative;
+  min-height: 100%;
+}
+
+.content {
+  min-height: calc(100vh - 70px);
 }
