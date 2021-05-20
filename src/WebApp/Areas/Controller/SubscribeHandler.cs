@@ -18,7 +18,7 @@ using WebApp.Services.Subscription;
 
 namespace WebApp.Controller
 {
-    public class SubscribeController : Microsoft.AspNetCore.Mvc.Controller
+    public class SubscribeHandler
     {
         // GET
 
@@ -27,8 +27,10 @@ namespace WebApp.Controller
         private IDeveloperService _developerService;
         private IChatService _chatService;
 
-        SubscribeController(ISubscriptionService subscriptionService, IPaymentService paymentService,
-            IDeveloperService developerService, IChatService chatService)
+        public SubscribeHandler() { }
+
+        SubscribeHandler(ISubscriptionService subscriptionService, IPaymentService paymentService,
+               IDeveloperService developerService, IChatService chatService)
         {
             _subscriptionService = subscriptionService;
             _developerService = developerService;
@@ -56,6 +58,7 @@ namespace WebApp.Controller
             await _subscriptionService.AddPaidSubscription(newPaidSubscription);
         }
 
+        [HttpPost]
         public async Task FollowToProject(int userId, int projectId)
         {
             var newPaidSubscription = new PaidSubscriptionModel()
@@ -70,7 +73,7 @@ namespace WebApp.Controller
             };
             await _subscriptionService.AddPaidSubscription(newPaidSubscription);
         }
-        
+
         public async Task FollowToCompany(int userId, int companyId)
         {
             var newPaidSubscription = new PaidSubscriptionModel()
@@ -97,7 +100,7 @@ namespace WebApp.Controller
 
         private async Task SendMoneyToVirtualPursesOfDevs(TariffModel tariff, IEnumerable<UserModel> allDevelopers)
         {
-            var adminMoney = (int) (tariff.PricePerMonth * PercentForAdmin);
+            var adminMoney = (int)(tariff.PricePerMonth * PercentForAdmin);
             await _paymentService.TransferMoneyToAdminPurse(adminMoney);
             foreach (var developer in allDevelopers)
             {
@@ -116,7 +119,7 @@ namespace WebApp.Controller
                 await _subscriptionService.GetTariffByPriceTypeAndSubscriptionType(typeOfSubscription, priceType);
             //Перекидываем в виртуальный кошелек девелопера, вычитая процент
             var developerPurse = await _paymentService.GetVirtualPurse(developerId);
-            var adminMoney = (int) (tariff.PricePerMonth * PercentForAdmin);
+            var adminMoney = (int)(tariff.PricePerMonth * PercentForAdmin);
             await _paymentService.UpdateVirtualPurse(developerId,
                 developerPurse.Money + tariff.PricePerMonth - adminMoney);
             await _paymentService.TransferMoneyToAdminPurse(adminMoney);

@@ -2,6 +2,7 @@
 @model WebApp.Pages.PaidSubscription.IndexModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-        <form asp-controller="Subscribe" asp-action="FollowToProject" >
-            <input type="submit"></input>
-        </form>
+<form method="post" asp-controller="Subscribe" asp-action="FollowToProject" asp-area="Controller"  >
+    <input type="submit"></input>
+</form>
+

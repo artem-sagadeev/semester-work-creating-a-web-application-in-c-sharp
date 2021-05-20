@@ -17,7 +17,9 @@ using WebApp.Areas.Identity.Data;
 using WebApp.Models;
 using WebApp.Models.Developer;
 using WebApp.Models.Identity;
+using WebApp.Models.Payment;
 using WebApp.Services.Developer;
+using WebApp.Services.Payment;
 
 namespace WebApp.Areas.Identity.Pages.Account
 {
@@ -29,18 +31,21 @@ namespace WebApp.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IDeveloperService _developerService;
+        private readonly IPaymentService _paymentService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender, IDeveloperService developerService)
+            IEmailSender emailSender, IDeveloperService developerService,
+            IPaymentService paymentService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             _developerService = developerService;
+            _paymentService = paymentService;
         }
 
         [BindProperty]
@@ -96,6 +101,11 @@ namespace WebApp.Areas.Identity.Pages.Account
                     await _developerService.CreateUser(new UserModel() {Id = user.UserId, Name = Input.Login});
                     
                     await _signInManager.SignInAsync(user, isPersistent: false);
+                    await _paymentService.AddVirtualPurse(new VirtualPurseModel()
+                     {
+                        Money = 0,
+                        UserId = user.UserId
+                });
                     return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using WebApp.Controller;
 using WebApp.Models;
 using WebApp.Models.Chats;
 using WebApp.Models.Developer;
@@ -51,15 +52,27 @@ namespace WebApp.Pages
             HasAccessToChat = await HasAccessChat(id);
             return Page();
         }
-        
+
+        public async Task OnPostFollowToProjectAsync(int projectId, int userId)
+        {
+            var handler = new SubscribeHandler();
+            await handler.FollowToProject(userId, projectId);
+        }
+
+        public async Task OnPostSubscribeToProjectAsync(int projectId, int userId, bool isBasic, bool isImproved, bool isMax)
+        {
+            var handler = new SubscribeHandler();
+            await handler.SubscribeToProject(userId, projectId, isBasic, isImproved, isMax);
+        }
+
         public async Task<IActionResult> OnPostAsync(int id, string text)
         {
             //todo add image
             //todo add files
             if (!ProjectModel.Users.Select(u => u.Id).Contains((await _userManager.GetUserAsync(User)).UserId))
                 return Forbid();
-            
-            var post = new PostModel {ProjectId = id, Text = text};
+
+            var post = new PostModel { ProjectId = id, Text = text };
             await _postsService.CreatePost(post);
             return Redirect($"/ProjectProfile?id={id}");
         }

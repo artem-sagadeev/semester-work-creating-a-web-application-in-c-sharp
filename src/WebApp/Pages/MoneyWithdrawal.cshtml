@@ -1,0 +1,21 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@using WebApp.Models.Identity
+@using WebApp.Services.Payment
+@model WebApp.Pages.MoneyWithdrawalModel
+@inject SignInManager<ApplicationUser> _signInManager
+@inject UserManager<ApplicationUser> _userManager
+@inject IPaymentService _paymentService;
+@{
+    var userId = (await _userManager.GetUserAsync(User)).UserId;
+    var money = (await _paymentService.GetVirtualPurse(userId)).Money;
+}
+
+@if (_signInManager.IsSignedIn(User))
+{
+    <p>Virtual account: @money </p>
+    <form method="post" asp-route-money="@money">
+        <button type="submit">Withdraw money</button>
+    </form>
+}
+

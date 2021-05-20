@@ -106,9 +106,8 @@ namespace WebApp.Services.Subscription
             var obj = await response.ReadContentAs<PaidSubscriptionModel>();
             bool answ;
             if (obj == null)
-                answ = false;
-            answ = (int)obj.Tariff.PriceType >= (int)priceType;
-            return answ;
+                return false;
+            return (int)obj.Tariff.PriceType >= (int)priceType;
         }
     }
 }
