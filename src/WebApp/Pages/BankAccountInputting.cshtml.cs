@@ -30,11 +30,11 @@ namespace WebApp.Pages
             var userId = (await _userManager.GetUserAsync(User)).UserId;
 
 
-            //await _paymentService.AddBankAccount(new BankAccountModel()
-            //{
-            //    UserId = userId,
-            //    Number = number
-            //});
+            await _paymentService.AddBankAccount(new BankAccountModel()
+            {
+                UserId = userId,
+                Number = number
+            });
 
             //TODO:ÏÎ×ÅÌÓ ÊÈÄÀÅÒ ÈÑËŞ×ÅÍÈÅ?
             var referer = HttpContext.Session.GetString("Referer");

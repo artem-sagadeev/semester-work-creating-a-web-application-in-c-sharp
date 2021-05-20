@@ -16,20 +16,20 @@ using WebApp.Services.Developer;
 using WebApp.Services.Payment;
 using WebApp.Services.Subscription;
 
-namespace WebApp.Controller
+namespace WebApp
 {
     public class SubscribeHandler
     {
         // GET
 
-        private ISubscriptionService _subscriptionService;
-        private IPaymentService _paymentService;
-        private IDeveloperService _developerService;
-        private IChatService _chatService;
+        private readonly ISubscriptionService _subscriptionService;
+        private readonly IPaymentService _paymentService;
+        private readonly IDeveloperService _developerService;
+        private readonly IChatService _chatService;
 
         public SubscribeHandler() { }
 
-        SubscribeHandler(ISubscriptionService subscriptionService, IPaymentService paymentService,
+        public SubscribeHandler(ISubscriptionService subscriptionService, IPaymentService paymentService,
                IDeveloperService developerService, IChatService chatService)
         {
             _subscriptionService = subscriptionService;
