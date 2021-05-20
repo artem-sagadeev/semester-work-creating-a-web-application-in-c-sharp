@@ -36,6 +36,7 @@ namespace WebApp
         {
             services.AddRazorPages();
             services.AddSignalR();
+            services.AddSession();
 
             services.AddHttpClient<IDeveloperService, DeveloperService>(c =>
                 c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
@@ -69,6 +70,7 @@ namespace WebApp
                 app.UseHsts();
             }
 
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

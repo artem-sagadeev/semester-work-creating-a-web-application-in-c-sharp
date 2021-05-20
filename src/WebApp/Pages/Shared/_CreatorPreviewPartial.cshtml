@@ -6,39 +6,37 @@
 @using WebApp.Services.Subscription
 @using System.Security.Cryptography.X509Certificates
 @using WebApp.Models.Subscription
+@using WebApp.Services.Payment
 @model ICreator
 
 @inject SignInManager<ApplicationUser> _signInManager
 @inject UserManager<ApplicationUser> _userManager
 @inject IFileService _fileService
 @inject ISubscriptionService _subscriptionService;
-@{
-    //data for subscription
-    //var userId = (await _userManager.GetUserAsync(User))?.UserId;
-    //var hasBankAccount = _
-}
+@inject IPaymentService _paymentService;
 
 @{
-    var creatorType = Model switch 
+    var creatorType = Model switch
     {
         UserModel => CreatorType.User,
         ProjectModel => CreatorType.Project,
         CompanyModel => CreatorType.Company,
         _ => throw new NotSupportedException()
-        };
+    };
     var creatorTypeLink = Model switch
     {
         UserModel => "UserProfile",
         ProjectModel => "ProjectProfile",
         CompanyModel => "CompanyProfile",
         _ => throw new NotSupportedException()
-        };
-    var companies = Model switch {
+    };
+    var companies = Model switch
+    {
         UserModel user => user.Companies,
-        ProjectModel project => project.Company != null ? new List<CompanyModel> {project.Company} : new List<CompanyModel>(),
+        ProjectModel project => project.Company != null ? new List<CompanyModel> { project.Company } : new List<CompanyModel>(),
         CompanyModel => new List<CompanyModel>(),
         _ => throw new ArgumentOutOfRangeException()
-        };
+    };
     var avatar = await _fileService.GetAvatar(Model.Id, creatorType);
 }
 
@@ -62,71 +60,83 @@
     if (_signInManager.IsSignedIn(User))
     {
         var userId = (await _userManager.GetUserAsync(User)).UserId;
-        //var hasSubscription = (await _subscriptionService.GetPaidSubscriptionsByUserId(userId)).Where(x=>x.SubscribedToId == @Model.Id);
-        switch (Model)
+        if (await _paymentService.GetBankAccount(userId) == null)
         {
-            case UserModel:
-                if ((await _subscriptionService.GetPaidSubscriptionsByUserId(userId)).FirstOrDefault(x => x.SubscribedToId == @Model.Id && x.Tariff.TypeOfSubscription == TypeOfSubscription.User) == null)
-                {
-                    <form asp-page-handler="FollowToUser" asp-route-developerId="@Model.Id" asp-route-userId="@userId">
-                        <button type="submit">Follow</button>
-                    </form>
-                    <form asp-page-handler="SubscribeToUser" asp-route-developerId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@true" asp-route-isImproved="@false" asp-route-isMax="@false">
-                        <button type="submit">Subscribe</button>                                                          
-                    </form>                                                                                               
-                                                                                                                          
-                    <form asp-page-handler="SubscribeToUser" asp-route-developerId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@true" asp-route-isMax="@false">
-                        <button type="submit">Subscribe by "Improved" tariff</button>
-                    </form>                                                                                               
-                                                                                                                          
-                    <form asp-page-handler="SubscribeToUser" asp-route-developerId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@false" asp-route-isMax="@true">
-                        <button type="submit">Subscribe by "Max" tariff</button>
-                    </form>
-                }
-                break;
-            case ProjectModel:
-                if ((await _subscriptionService.GetPaidSubscriptionsByUserId(userId)).FirstOrDefault(x => x.SubscribedToId == @Model.Id && x.Tariff.TypeOfSubscription == TypeOfSubscription.Project) == null)
-                {
-                    <form  asp-page-handler="FollowToProject" asp-route-projectId="@Model.Id" asp-route-userId="@userId">
-                        <button type="submit">Follow</button>
-                    </form>
-
-                    <form asp-page-handler="SubscribeToProject" asp-route-projectId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@true" asp-route-isImproved="@false" asp-route-isMax="@false">
-                        <button type="submit">Subscribe by "Basic" tariff</button>
-                    </form>
-
-                    <form asp-page-handler="SubscribeToProject" asp-route-projectId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@true" asp-route-isMax="@false">
-                        <button type="submit">Subscribe by "Improved" tariff</button>
-                    </form>
-
-                    <form asp-page-handler="SubscribeToProject" asp-route-projectId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@false" asp-route-isMax="@true">
-                        <button type="submit">Subscribe by "Max" tariff</button>
-                    </form>
-                }
-                break;
-            case CompanyModel:
-                if ((await _subscriptionService.GetPaidSubscriptionsByUserId(userId)).FirstOrDefault(x => x.SubscribedToId == @Model.Id && x.Tariff.TypeOfSubscription == TypeOfSubscription.Team) == null)
-                {
-
-                    <form asp-page-handler="FollowToCompany" asp-route-companyId="@Model.Id" asp-route-userId="@userId">
-                        <button type="submit">Follow</button>
-                    </form>
-                    <form asp-page-handler="SubscribeToCompany" asp-route-companyId="@Model.Id" asp-route-userId="@userId"asp-route-isBasic="@true" asp-route-isImproved="@false" asp-route-isMax="@false">
-                        <button type="submit">Subscribe</button>
-                    </form>
-
-                    <form asp-page-handler="SubscribeToCompany" asp-route-companyId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@true" asp-route-isMax="@false">
-                        <button type="submit">Subscribe by "Improved" tariff</button>
-                    </form>
-
-                    <form asp-page-handler="SubscribeToCompany" asp-route-companyId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@false" asp-route-isMax="@true">
-                        <button type="submit">Subscribe by "Max" tariff</button>
-                    </form>
-                }
-                break;
-            default:
-                throw new NotSupportedException();
+            <p>Input bank card data</p>
+            <button type="submit"><a asp-page="BankAccountInputting">Input data</a></button>
         }
+        else
+        {
+            switch (Model)
+            {
+                case UserModel:
+                    if ((await _subscriptionService.GetPaidSubscriptionsByUserId(userId)).FirstOrDefault(x => x.SubscribedToId == @Model.Id && x.Tariff.TypeOfSubscription == TypeOfSubscription.User) == null)
+                    {
+                        <form asp-page-handler="FollowToUser" asp-route-developerId="@Model.Id" asp-route-userId="@userId">
+                            <button type="submit">Follow</button>
+                        </form>
+                        <form asp-page-handler="SubscribeToUser" asp-route-developerId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@true" asp-route-isImproved="@false" asp-route-isMax="@false">
+                            <button type="submit">Subscribe</button>
+                        </form>
+
+
+
+                        <form asp-page-handler="SubscribeToUser" asp-route-developerId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@true" asp-route-isMax="@false">
+                            <button type="submit">Subscribe by "Improved" tariff</button>
+                        </form>
+
+
+
+                        <form asp-page-handler="SubscribeToUser" asp-route-developerId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@false" asp-route-isMax="@true">
+                            <button type="submit">Subscribe by "Max" tariff</button>
+                        </form>
+                    }
+                    break;
+                case ProjectModel:
+                    if ((await _subscriptionService.GetPaidSubscriptionsByUserId(userId)).FirstOrDefault(x => x.SubscribedToId == @Model.Id && x.Tariff.TypeOfSubscription == TypeOfSubscription.Project) == null)
+                    {
+                        <form asp-page-handler="FollowToProject" asp-route-projectId="@Model.Id" asp-route-userId="@userId">
+                            <button type="submit">Follow</button>
+                        </form>
+
+                        <form asp-page-handler="SubscribeToProject" asp-route-projectId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@true" asp-route-isImproved="@false" asp-route-isMax="@false">
+                            <button type="submit">Subscribe by "Basic" tariff</button>
+                        </form>
+
+                        <form asp-page-handler="SubscribeToProject" asp-route-projectId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@true" asp-route-isMax="@false">
+                            <button type="submit">Subscribe by "Improved" tariff</button>
+                        </form>
+
+                        <form asp-page-handler="SubscribeToProject" asp-route-projectId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@false" asp-route-isMax="@true">
+                            <button type="submit">Subscribe by "Max" tariff</button>
+                        </form>
+                    }
+                    break;
+                case CompanyModel:
+                    if ((await _subscriptionService.GetPaidSubscriptionsByUserId(userId)).FirstOrDefault(x => x.SubscribedToId == @Model.Id && x.Tariff.TypeOfSubscription == TypeOfSubscription.Team) == null)
+                    {
+
+                        <form asp-page-handler="FollowToCompany" asp-route-companyId="@Model.Id" asp-route-userId="@userId">
+                            <button type="submit">Follow</button>
+                        </form>
+                        <form asp-page-handler="SubscribeToCompany" asp-route-companyId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@true" asp-route-isImproved="@false" asp-route-isMax="@false">
+                            <button type="submit">Subscribe</button>
+                        </form>
+
+                        <form asp-page-handler="SubscribeToCompany" asp-route-companyId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@true" asp-route-isMax="@false">
+                            <button type="submit">Subscribe by "Improved" tariff</button>
+                        </form>
+
+                        <form asp-page-handler="SubscribeToCompany" asp-route-companyId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@false" asp-route-isMax="@true">
+                            <button type="submit">Subscribe by "Max" tariff</button>
+                        </form>
+                    }
+                    break;
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
     }
 }
 
