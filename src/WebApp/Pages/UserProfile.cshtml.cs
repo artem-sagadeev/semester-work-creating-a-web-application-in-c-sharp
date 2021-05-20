@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using WebApp.Controller;
 using WebApp.Models;
 using WebApp.Models.Developer;
 using WebApp.Models.Files;
@@ -47,6 +48,18 @@ namespace WebApp.Pages
             PostModels = await _postsService.GetUserPosts(id);
             Avatar = await _fileService.GetAvatar(UserModel.Id, CreatorType.User);
             return Page();
+        }
+
+        public async Task OnPostFollowToUserAsync(int developerId, int userId)
+        {
+            var handler = new SubscribeHandler();
+            await handler.FollowToUser(userId, developerId);
+        }
+
+        public async Task OnPostSubscribeToUserAsync(int userId, int developerId, bool isBasic, bool isImproved, bool isMax)
+        {
+            var handler = new SubscribeHandler();
+            await handler.SubscribeToUser(userId, developerId, isBasic, isImproved, isMax);
         }
 
         public async Task<IActionResult> OnPostAsync(int id, string text)

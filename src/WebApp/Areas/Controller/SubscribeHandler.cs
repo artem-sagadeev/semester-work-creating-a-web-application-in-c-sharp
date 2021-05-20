@@ -201,6 +201,7 @@ namespace WebApp.Controller
                 },
                 UserId = userId
             });
+            //Добавление в чаты
             var projects = await _developerService.GetCompanyProjects(companyId);
             foreach (var project in projects)
             {
