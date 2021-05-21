@@ -37,8 +37,9 @@ namespace WebApp.Pages
             });
 
             //TODO:ÏÎ×ÅÌÓ ÊÈÄÀÅÒ ÈÑËŞ×ÅÍÈÅ?
-            var referer = HttpContext.Session.GetString("Referer");
-            HttpContext.Session.Remove("Referer");
+            //var referer = HttpContext.Session.GetString("Referer");
+            //HttpContext.Session.Remove("Referer");
+            string referer = Request.Headers["Referer"].ToString();
             Response.Redirect(referer);
         }
         public async Task<IActionResult> OnGetAsync()
