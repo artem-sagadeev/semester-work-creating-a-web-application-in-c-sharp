@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.Language;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.DependencyInjection;
 using WebApp.Models;
 using WebApp.Models.Chats;
 using WebApp.Models.Developer;
@@ -26,17 +27,27 @@ namespace WebApp
         private readonly IPaymentService _paymentService;
         private readonly IDeveloperService _developerService;
         private readonly IChatService _chatService;
+        private readonly IServiceProvider _serviceProvider;
 
-        public SubscribeHandler() { }
-
-        public SubscribeHandler(ISubscriptionService subscriptionService, IPaymentService paymentService,
-               IDeveloperService developerService, IChatService chatService)
+        public SubscribeHandler(IServiceProvider serviceProvider)
         {
-            _subscriptionService = subscriptionService;
-            _developerService = developerService;
-            _paymentService = paymentService;
-            _chatService = chatService;
+            _serviceProvider = serviceProvider;
+            _subscriptionService = serviceProvider.GetRequiredService<ISubscriptionService>();
+            _developerService = serviceProvider.GetRequiredService<IDeveloperService>();
+            _paymentService = serviceProvider.GetRequiredService<IPaymentService>();
+            _chatService = serviceProvider.GetRequiredService<IChatService>();
+
         }
+
+        //public SubscribeHandler(ISubscriptionService subscriptionService, IPaymentService paymentService,
+        //       IDeveloperService developerService, IChatService chatService, IServiceProvider serviceProvider)
+        //{
+        //    _subscriptionService = subscriptionService;
+        //    _developerService = developerService;
+        //    _paymentService = paymentService;
+        //    _chatService = chatService;
+        //    _serviceProvider = serviceProvider;
+        //}
 
         public bool HasBankAccount(int userId)
         {
