@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using WebApp.Models.Chats;
 using WebApp.Models.Developer;
 using WebApp.Models.Identity;
 using WebApp.Models.Posts;
+using WebApp.Models.Subscription;
 using WebApp.Services;
 using WebApp.Services.Chats;
 using WebApp.Services.Developer;
@@ -25,12 +27,15 @@ namespace WebApp.Pages
         private readonly IChatService _chatService;
         private readonly ISubscriptionService _subscriptionService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IServiceProvider _serviceProvider;
 
-        public ProjectProfile(IDeveloperService developerService, IPostsService postsService, IChatService chatService, ISubscriptionService subscriptionService, UserManager<ApplicationUser> userManager)
+
+        public ProjectProfile(IDeveloperService developerService, IPostsService postsService, IChatService chatService, ISubscriptionService subscriptionService, UserManager<ApplicationUser> userManager, IServiceProvider serviceProvider)
         {
             _developerService = developerService;
             _postsService = postsService;
             _userManager = userManager;
+            _serviceProvider = serviceProvider;
             _chatService = chatService;
             _subscriptionService = subscriptionService;
         }
@@ -52,16 +57,16 @@ namespace WebApp.Pages
             return Page();
         }
 
-        public async Task OnPostFollowToProjectAsync(int projectId, int userId)
+        public async Task OnPostFollowAsync(int userId, int subscribedToId, TypeOfSubscription typeOfSubscription)
         {
-            var handler = new SubscribeHandler();
-            await handler.FollowToProject(userId, projectId);
+            var handler = new SubscribeHandler(_serviceProvider);
+            await handler.Follow(userId, subscribedToId, typeOfSubscription);
         }
 
-        public async Task OnPostSubscribeToProjectAsync(int projectId, int userId, bool isBasic, bool isImproved, bool isMax)
+        public async Task OnPostSubscribeAsync(int subscribedToId, int userId, bool isBasic, bool isImproved, bool isMax, TypeOfSubscription typeOfSubscription)
         {
-            var handler = new SubscribeHandler();
-            await handler.SubscribeToProject(userId, projectId, isBasic, isImproved, isMax);
+            var handler = new SubscribeHandler(_serviceProvider);
+            await handler.Subscribe(userId, subscribedToId, isBasic, isImproved, isMax, typeOfSubscription);
         }
 
         public async Task<IActionResult> OnPostAsync(int id, string text)

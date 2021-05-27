@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -8,9 +9,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Areas.Identity.Data;
+using WebApp.Models.Chats;
 using WebApp.Models.Developer;
 using WebApp.Models.Files;
 using WebApp.Models.Identity;
+using WebApp.Services.Chats;
 using WebApp.Services.Developer;
 using WebApp.Services.Files;
 
@@ -23,7 +26,7 @@ namespace WebApp.Pages
         //todo add tags
         public int UserId { get; set; }
     }
-    
+
     public class CreateProject : PageModel
     {
         private readonly IDeveloperService _developerService;
@@ -31,18 +34,20 @@ namespace WebApp.Pages
         private readonly IWebHostEnvironment _appEnvironment;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IChatService _chatService;
 
-        public CreateProject(IDeveloperService developerService, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IWebHostEnvironment appEnvironment, IFileService fileService)
+        public CreateProject(IDeveloperService developerService, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IWebHostEnvironment appEnvironment, IFileService fileService, IChatService chatService)
         {
             _developerService = developerService;
             _signInManager = signInManager;
             _userManager = userManager;
             _appEnvironment = appEnvironment;
             _fileService = fileService;
+            _chatService = chatService;
         }
-        
+
         public IEnumerable<CompanyModel> UserCompanies { get; set; }
-        
+
         public async Task<ActionResult> OnGetAsync()
         {
             if (!_signInManager.IsSignedIn(User))
@@ -50,7 +55,7 @@ namespace WebApp.Pages
 
             var userId = (await _userManager.GetUserAsync(User)).UserId;
             UserCompanies = await _developerService.GetUserCompanies(userId);
-            
+
             return Page();
         }
 
@@ -58,7 +63,7 @@ namespace WebApp.Pages
         {
             if (!_signInManager.IsSignedIn(User))
                 return Forbid();
-            
+
             projectForm.UserId = (await _userManager.GetUserAsync(User)).UserId;
             var message = await _developerService.CreateProject(projectForm);
 
@@ -79,7 +84,31 @@ namespace WebApp.Pages
                 Name = $"{projectForm.Name}.{avatar.Name.Split(".").Last()}",
                 CreatorType = CreatorType.Project
             });
-            
+            //Создал для себя
+            if (projectForm.CompanyId == 0)
+            {
+                await _chatService.AddChatMember(new ChatMemberModel()
+                {
+                    IsAuthor = true,
+                    UserId = projectForm.UserId,
+                    ProjectId = projectId
+                });
+            }
+            //Создал для компании
+            else
+            {
+                var allDevelopersOfCompany = await _developerService.GetCompanyUsers(projectForm.CompanyId);
+                foreach (var developer in allDevelopersOfCompany)
+                {
+                    await _chatService.AddChatMember(new ChatMemberModel()
+                    {
+                        IsAuthor = true,
+                        UserId = developer.Id,
+                        ProjectId = projectId
+                    });
+                }
+            }
+
             return Redirect($"/ProjectProfile?id={projectId}");
         }
     }

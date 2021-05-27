@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using WebApp.Models.Developer;
 using WebApp.Models.Files;
 using WebApp.Models.Identity;
 using WebApp.Models.Posts;
+using WebApp.Models.Subscription;
 using WebApp.Services;
 using WebApp.Services.Developer;
 using WebApp.Services.Files;
@@ -20,18 +22,21 @@ namespace WebApp.Pages
         private readonly IDeveloperService _developerService;
         private readonly IPostsService _postsService;
         private readonly IFileService _fileService;
+        private readonly IServiceProvider _serviceProvider;
+
 
         private readonly UserManager<ApplicationUser> _userManager;
 
         public UserProfile(IDeveloperService developerService, 
             IPostsService postsService, 
             UserManager<ApplicationUser> userManager, 
-            IFileService fileService)
+            IFileService fileService, IServiceProvider serviceProvider)
         {
             _developerService = developerService;
             _postsService = postsService;
             _userManager = userManager;
             _fileService = fileService;
+            _serviceProvider = serviceProvider;
         }
 
         public UserModel UserModel { get; private set; }
@@ -49,16 +54,16 @@ namespace WebApp.Pages
             return Page();
         }
 
-        public async Task OnPostFollowToUserAsync(int developerId, int userId)
+        public async Task OnPostFollowAsync(int userId, int subscribedToId, TypeOfSubscription typeOfSubscription)
         {
-            var handler = new SubscribeHandler();
-            await handler.FollowToUser(userId, developerId);
+            var handler = new SubscribeHandler(_serviceProvider);
+            await handler.Follow(userId, subscribedToId, typeOfSubscription);
         }
 
-        public async Task OnPostSubscribeToUserAsync(int userId, int developerId, bool isBasic, bool isImproved, bool isMax)
+        public async Task OnPostSubscribeAsync(int subscribedToId, int userId, bool isBasic, bool isImproved, bool isMax, TypeOfSubscription typeOfSubscription)
         {
-            var handler = new SubscribeHandler();
-            await handler.SubscribeToUser(userId, developerId, isBasic, isImproved, isMax);
+            var handler = new SubscribeHandler(_serviceProvider);
+            await handler.Subscribe(userId, subscribedToId, isBasic, isImproved, isMax, typeOfSubscription);
         }
 
         public async Task<IActionResult> OnPostAsync(int id, string text)

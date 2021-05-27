@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.Language;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using WebApp.Models;
 using WebApp.Models.Chats;
 using WebApp.Models.Developer;
@@ -39,190 +41,131 @@ namespace WebApp
 
         }
 
-        //public SubscribeHandler(ISubscriptionService subscriptionService, IPaymentService paymentService,
-        //       IDeveloperService developerService, IChatService chatService, IServiceProvider serviceProvider)
-        //{
-        //    _subscriptionService = subscriptionService;
-        //    _developerService = developerService;
-        //    _paymentService = paymentService;
-        //    _chatService = chatService;
-        //    _serviceProvider = serviceProvider;
-        //}
-
         public bool HasBankAccount(int userId)
         {
             return _paymentService.GetBankAccount(userId) != null;
         }
 
-        public async Task FollowToUser(int userId, int developerId)
+        public async Task Follow(int userId, int subscribedToId, TypeOfSubscription typeOfSubscription)
         {
             var newPaidSubscription = new PaidSubscriptionModel()
             {
-                SubscribedToId = developerId,
+                SubscribedToId = subscribedToId,
                 Tariff = new TariffModel()
                 {
                     PriceType = PriceType.Free,
-                    TypeOfSubscription = TypeOfSubscription.User
+                    TypeOfSubscription = typeOfSubscription
                 },
                 UserId = userId
             };
             await _subscriptionService.AddPaidSubscription(newPaidSubscription);
         }
 
-        [HttpPost]
-        public async Task FollowToProject(int userId, int projectId)
+        //1. Если впервые, то должен ввести данные карты (BankAccount)
+        //2. Берем номер карты, списываем деньги, переводя их в хранилище, фиксируем списывание
+        //3. Перекидываем в виртуальный кошелек девелопера, вычитая процент
+        //4. Добавляем в список подписок PaidSubscription
+        //5. Добавляет в список членов чата (если тариф позволяет)
+        public async Task Subscribe(int userId, int subscribedToId, bool isBasic, bool isImproved, bool isMax,
+          TypeOfSubscription typeOfSubscription)
         {
-            var newPaidSubscription = new PaidSubscriptionModel()
+            //2. ---Берем номер карты, списываем деньги, переводя их в хранилище, фиксируем списывание
+            var priceType =
+                await WriteOffMoneyFromUserAndGetPriceType(userId, typeOfSubscription, isBasic, isImproved, isMax);
+            var tariff =
+                await _subscriptionService.GetTariffByPriceTypeAndSubscriptionType(typeOfSubscription, priceType);
+            if (typeOfSubscription == TypeOfSubscription.User)
             {
-                SubscribedToId = projectId,
+                //Перекидываем в виртуальный кошелек девелопера, вычитая процент
+                var developerPurse = await _paymentService.GetVirtualPurse(subscribedToId);
+                var adminMoney = (int)(tariff.PricePerMonth * PercentForAdmin);
+                await _paymentService.UpdateVirtualPurse(subscribedToId,
+                    developerPurse.Money + tariff.PricePerMonth - adminMoney);
+                await _paymentService.TransferMoneyToAdminPurse(adminMoney);
+            }
+            else
+            {
+                // Перекидываем в виртуальный кошелек девелоперОВ, вычитая процент
+                IEnumerable<UserModel> allDevelopers = new List<UserModel>();
+                switch (typeOfSubscription)
+                {
+                    case TypeOfSubscription.Project:
+                        allDevelopers = await _developerService.GetProjectUsers(subscribedToId);
+                        break;
+                    case TypeOfSubscription.Team:
+                        allDevelopers = await _developerService.GetCompanyUsers(subscribedToId);
+                        break;
+                }
+                await SendMoneyToVirtualPursesOfDevs(tariff, allDevelopers);
+            }
+            //Добавляем в список подписок 
+            await _subscriptionService.AddPaidSubscription(new PaidSubscriptionModel()
+            {
+                SubscribedToId = subscribedToId,
                 Tariff = new TariffModel()
                 {
-                    PriceType = PriceType.Free,
-                    TypeOfSubscription = TypeOfSubscription.Project
+                    PriceType = priceType,
+                    TypeOfSubscription = typeOfSubscription
                 },
                 UserId = userId
-            };
-            await _subscriptionService.AddPaidSubscription(newPaidSubscription);
+            });
+            //Добавляем в чаты
+            if (typeOfSubscription == TypeOfSubscription.Project)
+            {
+                var currentChatMember = new ChatMemberModel()
+                {
+                    IsAuthor = false,
+                    ProjectId = subscribedToId,
+                    UserId = userId
+                };
+                await _chatService.AddChatMember(currentChatMember);
+            }
+            else
+            {
+                IEnumerable<ProjectModel> projects = new List<ProjectModel>();
+                switch (typeOfSubscription)
+                {
+                    case TypeOfSubscription.User:
+                        projects = await _developerService.GetUserProjects(subscribedToId);
+                        break;
+                    case TypeOfSubscription.Team:
+                        projects = await _developerService.GetCompanyProjects(subscribedToId);
+                        break;
+                }
+
+                if (projects != null)
+                {
+                    foreach (var project in projects)
+                    {
+                        var currentChatMember = new ChatMemberModel()
+                        {
+                            IsAuthor = false,
+                            ProjectId = project.Id,
+                            UserId = userId
+                        };
+                        await _chatService.AddChatMember(currentChatMember);
+                    }
+                }
+            }
         }
 
-        public async Task FollowToCompany(int userId, int companyId)
-        {
-            var newPaidSubscription = new PaidSubscriptionModel()
-            {
-                SubscribedToId = companyId,
-                Tariff = new TariffModel()
-                {
-                    PriceType = PriceType.Free,
-                    TypeOfSubscription = TypeOfSubscription.Team
-                },
-                UserId = userId
-            };
-            await _subscriptionService.AddPaidSubscription(newPaidSubscription);
-        }
 
         //TODO: процент где фиксировать?
         public double PercentForAdmin = 0.1;
 
-        //1. ---Если впервые, то должен ввести данные карты (BankAccount)
-        //2. ---Берем номер карты, списываем деньги, переводя их в хранилище, фиксируем списывание
-        //3. ----Перекидываем в виртуальный кошелек девелопера, вычитая процент
-        //4. ----Добавляем в список подписок PaidSubscription
-        //5. Добавляет в список членов чата (если тариф позволяет)
-
         private async Task SendMoneyToVirtualPursesOfDevs(TariffModel tariff, IEnumerable<UserModel> allDevelopers)
         {
+            //Перевидываем процент админу, остальное распределяем по разработчикам
             var adminMoney = (int)(tariff.PricePerMonth * PercentForAdmin);
             await _paymentService.TransferMoneyToAdminPurse(adminMoney);
-            foreach (var developer in allDevelopers)
+            if (allDevelopers != null)
             {
-                var developerPurse = await _paymentService.GetVirtualPurse(developer.Id); //  
-                await _paymentService.UpdateVirtualPurse(developer.Id,
-                    developerPurse.Money + (tariff.PricePerMonth - adminMoney) / allDevelopers.Count());
-            }
-        }
-
-        public async Task SubscribeToUser(int userId, int developerId, bool isBasic, bool isImproved, bool isMax)
-        {
-            var typeOfSubscription = TypeOfSubscription.User;
-            var priceType =
-                await WriteOffMoneyFromUserAndGetPriceType(userId, typeOfSubscription, isBasic, isImproved, isMax);
-            var tariff =
-                await _subscriptionService.GetTariffByPriceTypeAndSubscriptionType(typeOfSubscription, priceType);
-            //Перекидываем в виртуальный кошелек девелопера, вычитая процент
-            var developerPurse = await _paymentService.GetVirtualPurse(developerId);
-            var adminMoney = (int)(tariff.PricePerMonth * PercentForAdmin);
-            await _paymentService.UpdateVirtualPurse(developerId,
-                developerPurse.Money + tariff.PricePerMonth - adminMoney);
-            await _paymentService.TransferMoneyToAdminPurse(adminMoney);
-            //Добавляем в список подписок 
-            await _subscriptionService.AddPaidSubscription(new PaidSubscriptionModel()
-            {
-                SubscribedToId = developerId,
-                Tariff = new TariffModel()
+                foreach (var developer in allDevelopers)
                 {
-                    PriceType = priceType,
-                    TypeOfSubscription = typeOfSubscription
-                },
-                UserId = userId
-            });
-            var projects = await _developerService.GetUserProjects(developerId);
-            foreach (var project in projects)
-            {
-                var currentChatMember = new ChatMemberModel()
-                {
-                    IsAuthor = false,
-                    ProjectId = project.Id,
-                    UserId = userId
-                };
-                await _chatService.AddChatMember(currentChatMember);
-            }
-        }
-
-        public async Task SubscribeToProject(int userId, int projectId, bool isBasic, bool isImproved, bool isMax)
-        {
-            //Берем номер карты, списываем деньги, переводя их в хранилище, фиксируем списывание
-            var typeOfSubscription = TypeOfSubscription.Project;
-            var priceType =
-                await WriteOffMoneyFromUserAndGetPriceType(userId, typeOfSubscription, isBasic, isImproved, isMax);
-            var tariff =
-                await _subscriptionService.GetTariffByPriceTypeAndSubscriptionType(typeOfSubscription, priceType);
-            // Перекидываем в виртуальный кошелек девелоперОВ, вычитая процент
-            var allDevelopers = await _developerService.GetProjectUsers(projectId);
-            await SendMoneyToVirtualPursesOfDevs(tariff, allDevelopers);
-
-            //4. ----Добавляем в список подписок PaidSubscription
-            await _subscriptionService.AddPaidSubscription(new PaidSubscriptionModel()
-            {
-                SubscribedToId = projectId,
-                Tariff = new TariffModel()
-                {
-                    PriceType = priceType,
-                    TypeOfSubscription = typeOfSubscription
-                },
-                UserId = userId
-            });
-            var currentChatMember = new ChatMemberModel()
-            {
-                IsAuthor = false,
-                ProjectId = projectId,
-                UserId = userId
-            };
-            await _chatService.AddChatMember(currentChatMember);
-        }
-
-        public async Task SubscribeToCompany(int userId, int companyId, bool isBasic, bool isImproved, bool isMax)
-        {
-            //2. ---Берем номер карты, списываем деньги, переводя их в хранилище, фиксируем списывание
-            var typeOfSubscription = TypeOfSubscription.Team;
-            var priceType =
-                await WriteOffMoneyFromUserAndGetPriceType(userId, typeOfSubscription, isBasic, isImproved, isMax);
-            var tariff =
-                await _subscriptionService.GetTariffByPriceTypeAndSubscriptionType(typeOfSubscription, priceType);
-            //3. ----Перекидываем в виртуальный кошелек девелоперОВ, вычитая процент
-            var allDevelopers = await _developerService.GetCompanyUsers(companyId);
-            await SendMoneyToVirtualPursesOfDevs(tariff, allDevelopers);
-            //4. ----Добавляем в список подписок PaidSubscription
-            await _subscriptionService.AddPaidSubscription(new PaidSubscriptionModel()
-            {
-                SubscribedToId = companyId,
-                Tariff = new TariffModel()
-                {
-                    PriceType = priceType,
-                    TypeOfSubscription = typeOfSubscription
-                },
-                UserId = userId
-            });
-            //Добавление в чаты
-            var projects = await _developerService.GetCompanyProjects(companyId);
-            foreach (var project in projects)
-            {
-                var currentChatMember = new ChatMemberModel()
-                {
-                    IsAuthor = false,
-                    ProjectId = project.Id,
-                    UserId = userId
-                };
-                await _chatService.AddChatMember(currentChatMember);
+                    var developerPurse = await _paymentService.GetVirtualPurse(developer.Id); //  
+                    await _paymentService.UpdateVirtualPurse(developer.Id,
+                        developerPurse.Money + (tariff.PricePerMonth - adminMoney) / allDevelopers.Count());
+                }
             }
         }
 

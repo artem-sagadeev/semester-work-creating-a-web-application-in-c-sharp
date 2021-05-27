@@ -44,6 +44,7 @@ namespace SubscriptionAPI.Controllers
         [Route("/Tariffs/GetBySubscriptionTypeAndPiceType/{subscriptionTypeId}/{priceType}")]
         public ActionResult<Tariff> GetBySubscriptionTypeAndPiceType(TypeOfSubscription subscriptionTypeId, PriceType priceType)
         {
+            var all = _context.Tariffs.ToList();
             var temp = _context.Tariffs.First(c => c.TypeOfSubscription == subscriptionTypeId && c.PriceType == priceType);
             return temp;
         }
