@@ -35,13 +35,6 @@ namespace WebApp.Pages
                 UserId = userId,
                 Number = number
             });
-
-            //TODO:œŒ◊≈Ã”  »ƒ¿≈“ »—Àﬁ◊≈Õ»≈?
-            //var referer = HttpContext.Session.GetString("Referer");
-            //HttpContext.Session.Remove("Referer");
-            //string referer = Request.Headers["Referer"].ToString();
-
-            //Response.Redirect(refererLink);
             return Redirect(refererLink);
         }
         public async Task<IActionResult> OnGetAsync()
@@ -57,28 +50,6 @@ namespace WebApp.Pages
             {
                 ViewData["Referer"] = uriReferer.ToString();
             }
-
-            //if (!HttpContext.Session.Keys.Contains("Referer"))
-            //{
-            //    RequestHeaders header = Request.GetTypedHeaders();
-            //    Uri uriReferer = header.Referer;
-            //    if (uriReferer == null)
-            //    {
-            //        return RedirectToPage("Index");
-            //    }
-            //    else
-            //    {
-            //          HttpContext.Session.SetString("Referer", uriReferer.ToString());
-            //    }
-
-            //}
-            //if (await _paymentService.GetBankAccount(userId) != null)
-            //{
-            //    var referer = HttpContext.Session.GetString("Referer");
-            //    HttpContext.Session.Remove("Referer");
-            //    Response.Redirect(referer);
-            //}
-
             return Page();
         }
     }
