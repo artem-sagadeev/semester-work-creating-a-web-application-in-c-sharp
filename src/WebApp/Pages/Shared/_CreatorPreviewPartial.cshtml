@@ -111,6 +111,7 @@
                                     }
                                     break;
                                 case ProjectModel:
+                                    var x = (await _subscriptionService.GetPaidSubscriptionsByUserId(userId)).FirstOrDefault(x => x.SubscribedToId == @Model.Id && x.Tariff.TypeOfSubscription == TypeOfSubscription.Project);
                                     if ((await _subscriptionService.GetPaidSubscriptionsByUserId(userId)).FirstOrDefault(x => x.SubscribedToId == @Model.Id && x.Tariff.TypeOfSubscription == TypeOfSubscription.Project) == null)
                                     {
                                         <form asp-page-handler="Follow" asp-route-subscribedToId="@Model.Id" asp-route-userId="@userId" asp-route-typeOfSubscription="@TypeOfSubscription.Project">
