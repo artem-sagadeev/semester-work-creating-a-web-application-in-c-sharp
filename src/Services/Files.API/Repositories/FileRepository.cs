@@ -80,6 +80,12 @@ namespace Files.API.Repositories
             await _covers.InsertOneAsync(cover);
         }
 
+        public async Task DeleteCoverAsync(int postId)
+        {
+            var filter = Builders<Cover>.Filter.Eq("PostId", postId);
+            await _covers.FindOneAndDeleteAsync(filter);
+        }
+
         public async Task DeleteAvatarAsync(int creatorId)
         {
             var filter = Builders<Avatar>.Filter.Eq("CreatorId", creatorId);

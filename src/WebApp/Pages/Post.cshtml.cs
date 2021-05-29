@@ -1,11 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Models.Files;
 using WebApp.Models.Identity;
 using WebApp.Models.Posts;
+using WebApp.Models.Subscription;
 using WebApp.Services.Developer;
 using WebApp.Services.Files;
 using WebApp.Services.Posts;
@@ -21,8 +27,9 @@ namespace WebApp.Pages
         private readonly IDeveloperService _developerService;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IWebHostEnvironment _appEnvironment;
 
-        public Post(IPostsService postService, IFileService fileService, ISubscriptionService subscriptionService, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IDeveloperService developerService)
+        public Post(IPostsService postService, IFileService fileService, ISubscriptionService subscriptionService, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IDeveloperService developerService, IWebHostEnvironment appEnvironment)
         {
             _postsService = postService;
             _fileService = fileService;
@@ -30,6 +37,7 @@ namespace WebApp.Pages
             _signInManager = signInManager;
             _userManager = userManager;
             _developerService = developerService;
+            _appEnvironment = appEnvironment;
         }
 
         public PostModel PostModel { get; set; }
@@ -49,6 +57,67 @@ namespace WebApp.Pages
             Files = await _fileService.GetPostFiles(id);
             
             return Page();
+        }
+        
+        public async Task<IActionResult> OnPostAsync(int postId, string type, string text, IFormFile cover, IFormFileCollection files)
+        {
+            if (!_signInManager.IsSignedIn(User))
+                return Forbid();
+
+            var userId = (await _userManager.GetUserAsync(User)).UserId;
+            var post = await _postsService.GetPost(postId);
+
+            var allowedUsers = (await _developerService.GetProjectUsers(post.ProjectId))
+                .Select(u => u.Id);
+            if (post.UserId != userId && !allowedUsers.Contains(userId))
+                return Forbid();
+            
+            var requiredType = type switch
+            {
+                "free" => PriceType.Free,
+                "basic" => PriceType.Basic,
+                "improved" => PriceType.Improved,
+                "max" => PriceType.Max,
+                _ => throw new NotSupportedException()
+            };
+
+            post.RequiredSubscriptionType = requiredType;
+            post.Text = text;
+
+            if (cover is not null)
+            {
+                var path = $"/covers/{post.Id}_{cover.FileName}";
+                await using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                {
+                    await cover.CopyToAsync(fileStream);
+                }
+                
+                await _fileService.CreateCover(new CoverModel
+                {
+                    PostId = post.Id,
+                    Name = $"{post.Id}_{cover.FileName}"
+                });
+            }
+
+            foreach (var file in files)
+            {
+                if (file is not null)
+                {
+                    var path = $"/files/{post.Id}_{file.FileName}";
+                    await using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+
+                    await _fileService.CreateFile(new FileModel
+                    {
+                        PostId = post.Id,
+                        Name = $"{post.Id}_{file.FileName}"
+                    });
+                }
+            }
+            
+            return Redirect($"/Post?id={postId}");
         }
     }
 }
