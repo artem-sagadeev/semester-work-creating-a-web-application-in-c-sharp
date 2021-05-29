@@ -1,0 +1,8 @@
+﻿@page
+@model WebApp.Pages.Feed
+
+@foreach (var post in Model.PostModels)
+{
+    @post.Id
+    @post.Text;
+}
