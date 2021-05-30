@@ -27,9 +27,9 @@ namespace WebApp.Pages.PaidSubscription
             return null;
         }
 
-        public async Task OnPostAsync(int userId, int subscribedToId, int tariffId)
-        {
-            await _subscriptionService.DeletePaidSubscription(userId, tariffId, subscribedToId);
-        }
+        // public async Task OnPostAsync(int userId, int subscribedToId, int tariffId)
+        // {
+        //     await _subscriptionService.DeletePaidSubscription(userId, tariffId, subscribedToId);
+        // }
     }
 }

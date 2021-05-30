@@ -21,6 +21,7 @@ using WebApp.Services.Chats;
 using WebApp.Services.Developer;
 using WebApp.Services.Files;
 using WebApp.Services.Posts;
+using WebApp.Services.Subscription;
 
 namespace WebApp.Pages
 {
@@ -31,23 +32,28 @@ namespace WebApp.Pages
         private readonly IChatService _chatService;
         private readonly IWebHostEnvironment _appEnvironment;
         private readonly IFileService _fileService;
-        
+        private readonly ISubscriptionService _subscriptionService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IServiceProvider _serviceProvider;
 
-        public ProjectProfile(IDeveloperService developerService, IPostsService postsService, IChatService chatService, UserManager<ApplicationUser> userManager, IFileService fileService, IWebHostEnvironment appEnvironment)
+        
+        public ProjectProfile(IDeveloperService developerService, IPostsService postsService, IChatService chatService, ISubscriptionService subscriptionService, UserManager<ApplicationUser> userManager, IServiceProvider serviceProvider, IWebHostEnvironment appEnvironment, IFileService fileService)
         {
             _developerService = developerService;
             _postsService = postsService;
             _userManager = userManager;
-            _fileService = fileService;
+            _serviceProvider = serviceProvider;
             _appEnvironment = appEnvironment;
+            _fileService = fileService;
             _chatService = chatService;
+            _subscriptionService = subscriptionService;
         }
 
         public ProjectModel ProjectModel { get; private set; }
         public IEnumerable<PostModel> PostModels { get; private set; }
         public List<(string, MessageModel)> Messages { get; private set; }
         
+        public bool HasAccessToChat { get; set; }
         public async Task<ActionResult> OnGetAsync(int id)
         {
             ProjectModel = await _developerService.GetProject(id);
@@ -60,9 +66,25 @@ namespace WebApp.Pages
             ProjectModel.Users = await _developerService.GetProjectUsers(id) ?? new List<UserModel>();
             PostModels = await _postsService.GetProjectPosts(id) ?? new List<PostModel>();
             Messages = await GetAllMessages(id);
+            HasAccessToChat = await HasAccessChat(id);
             return Page();
         }
-        
+
+        public async Task<IActionResult> OnPostFollowAsync(int userId, int subscribedToId, TypeOfSubscription typeOfSubscription)
+        {
+            var handler = new SubscribeHandler(_serviceProvider);
+            await handler.Follow(userId, subscribedToId, typeOfSubscription);
+            return Redirect($"/ProjectProfile?id={subscribedToId}");
+
+        }
+
+        public async Task<IActionResult> OnPostSubscribeAsync(int subscribedToId, int userId, bool isBasic, bool isImproved, bool isMax, TypeOfSubscription typeOfSubscription)
+        {
+            var handler = new SubscribeHandler(_serviceProvider);
+            await handler.Subscribe(userId, subscribedToId, isBasic, isImproved, isMax, typeOfSubscription);
+            return Redirect($"/ProjectProfile?id={subscribedToId}");
+        }
+
         public async Task<IActionResult> OnPostAsync(int id, string type, string text, IFormFile cover, IFormFileCollection files)
         {
             ProjectModel = await _developerService.GetProject(id);
@@ -75,7 +97,7 @@ namespace WebApp.Pages
 
             if (!ProjectModel.Users.Select(u => u.Id).Contains(userId))
                 return Forbid();
-            
+
             var requiredType = type switch
             {
                 "free" => PriceType.Free,
@@ -120,10 +142,15 @@ namespace WebApp.Pages
                     });
                 }
             }
-            
             return Redirect($"/ProjectProfile?id={id}");
         }
 
+        public async Task<bool> HasAccessChat(int projectId)
+        {
+            var userId = (await _userManager.GetUserAsync(User))?.UserId;
+            var chatMember = (await _chatService.GetChatMembersByProjectId(projectId)).FirstOrDefault(x=> x.UserId == userId);
+            return chatMember != null;
+        }
         public async Task<List<(string, MessageModel)>> GetAllMessages(int projectId)
         {
             var messages = new List<(string, MessageModel)>();

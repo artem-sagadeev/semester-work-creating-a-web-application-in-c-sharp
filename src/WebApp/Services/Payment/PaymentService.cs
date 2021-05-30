@@ -42,7 +42,7 @@ namespace WebApp.Services.Payment
             });
         }
 
-        
+
         public async Task AddBankAccount(BankAccountModel newBankAccount)
         {
             await _client.PostAsJsonAsync($"/Payment/AddBankAccount", newBankAccount);
@@ -52,7 +52,7 @@ namespace WebApp.Services.Payment
         {
             await _client.PostAsJsonAsync($"/Payment/WriteOffMoney", newBankAccount);
         }
-        
+
         public class MoneyFromat
         {
             public int money { get; set; }
@@ -76,7 +76,7 @@ namespace WebApp.Services.Payment
         {
             await _client.PostAsJsonAsync($"/Payment/AddMoneyToStorageOfMoney", new MoneyFromat()
             {
-                money =  money
+                money = money
             });
         }
 
@@ -124,15 +124,17 @@ namespace WebApp.Services.Payment
         }
         public async Task UpdateVirtualPurse(int userId, int money)
         {
-            await _client.PostAsJsonAsync($"/Payment/UpdateVirtualPurse", new UserIdMoneyIdFormat(){
+            await _client.PostAsJsonAsync($"/Payment/UpdateVirtualPurse", new UserIdMoneyIdFormat()
+            {
                 userId = userId,
-                    money = money
+                money = money
             });
         }
 
         public async Task DeleteVirtualPurse(int userId)
         {
-            await _client.PostAsJsonAsync($"/Payment/DeleteVirtualPurse", new UserIdFormat(){
+            await _client.PostAsJsonAsync($"/Payment/DeleteVirtualPurse", new UserIdFormat()
+            {
                 userId = userId,
             });
         }
@@ -149,7 +151,7 @@ namespace WebApp.Services.Payment
             return await response.ReadContentAs<IEnumerable<WithdrawalModel>>();
         }
 
-        
+
         public async Task<IEnumerable<WithdrawalModel>> GetWithdrawalsByUserId(int userId)
         {
             var response = await _client.GetAsync($"/Payment/GetWithdrawalsByUserId?userId={userId}");
@@ -164,7 +166,7 @@ namespace WebApp.Services.Payment
             }
             else
             {
-                
+
             }
             await _client.PostAsJsonAsync($"/Payment/AddWithdrawal", newWithdrawal);
         }

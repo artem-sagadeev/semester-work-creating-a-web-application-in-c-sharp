@@ -1,13 +1,14 @@
 ﻿@page
+@using Microsoft.AspNetCore.Identity
+@using WebApp.Models.Identity
 @model WebApp.Pages.VirtualPurse.IndexModel
-@foreach (var virtualPurse in Model.VirtualPursesModels)
+
+@inject SignInManager<ApplicationUser> _signInManager
+@inject UserManager<ApplicationUser> _userManager
+@if (_signInManager.IsSignedIn(User))
 {
-    <p><a asp-page="/VirtualPurse/Details" asp-route-userId="@virtualPurse.UserId">@virtualPurse.UserId - @virtualPurse.Money</a></p>
-    <form method="post">
-        <label>Добавить:</label>
-        
-        <input type="number" name="userId"/>
-        <input type="number" name="money"/>
-        <input type="submit" value="Отправить"/>
-    </form>   
+    <p>Virtual account: @Model.VirtualPurse.Money </p>
+    <form method="post" asp-route-money="@Model.VirtualPurse.Money">
+        <button type="submit">Withdraw money</button>
+    </form>
 }

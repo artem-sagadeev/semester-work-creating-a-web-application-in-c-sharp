@@ -104,7 +104,7 @@ namespace WebApp.Services.Subscription
         {
             var response = await _client.GetAsync($"/Subscription/HasUserAccess?subscriberId={subscriberId}&subscribedToId={subscribedToId}&typeOfSubscription={typeOfSubscription}");
             var obj = await response.ReadContentAs<PaidSubscriptionModel>();
-           if (obj == null)
+            if (obj == null)
                 return false;
            return (int)obj.Tariff.PriceType >= (int)priceType;
         }

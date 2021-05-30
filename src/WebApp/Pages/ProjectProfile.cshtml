@@ -55,19 +55,19 @@
     var userId = (await _userManager.GetUserAsync(User))?.UserId;
     var projectId = @Model.ProjectModel.Id;
 }
-
-<div id="inputForm">
-    <input type="text" id="message"/>
-    <input type="button" id="sendBtn" value="Отправить"/>
-</div>
-<div id="chatroom"></div>
+@if (_signInManager.IsSignedIn(User) && @Model.HasAccessToChat)
+{
+    <div id="inputForm">
+        <input type="text" id="message"/>
+        <input type="button" id="sendBtn" value="Отправить"/>
+    </div>
+    <div id="chatroom"></div>
 @foreach (var pair in @Model.Messages)
 {
     <p>@pair.Item1 : @pair.Item2.Text (@pair.Item2.DateTime)</p>
 }
-<script src="js/signalr/dist/browser/signalr.min.js"></script>
-
-<script>
+    <script src="js/signalr/dist/browser/signalr.min.js"></script>
+    <script>
         const hubConnection = new signalR.HubConnectionBuilder()
             .withUrl("/chat")
             .build(); 
@@ -97,3 +97,4 @@
  
         hubConnection.start();
 </script>
+}
