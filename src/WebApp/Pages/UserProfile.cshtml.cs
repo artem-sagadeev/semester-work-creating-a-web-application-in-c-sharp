@@ -51,10 +51,12 @@ namespace WebApp.Pages
 
             if (UserModel is null)
                 return NotFound();
+
             UserModel.Tags = await _developerService.GetTags(UserModel) ?? new List<TagModel>();
             UserModel.Companies = await _developerService.GetUserCompanies(id) ?? new List<CompanyModel>();
             UserModel.Projects = await _developerService.GetUserProjects(id) ?? new List<ProjectModel>();
             PostModels = await _postsService.GetUserPosts(id) ?? new List<PostModel>();
+
             Avatar = await _fileService.GetAvatar(UserModel.Id, CreatorType.User);
             return Page();
         }
@@ -73,16 +75,6 @@ namespace WebApp.Pages
             var handler = new SubscribeHandler(_serviceProvider);
             await handler.Subscribe(userId, subscribedToId, isBasic, isImproved, isMax, typeOfSubscription);
             return Redirect($"/UserProfile?id={subscribedToId}");
-
-        }
-
-        public async Task<IActionResult> OnPostAsync(int id, string text)
-        {
-            //todo add image
-            //todo add files
-            if ((await _userManager.GetUserAsync(User)).UserId != id)
-                return Forbid();
         }
     }
-
 }
