@@ -13,10 +13,19 @@
 
 @if (_signInManager.IsSignedIn(User))
 {
-    <p>Virtual account: @money </p>
-    <form method="post">
-        <input type ="number" name="money"placeholder="Money"/>
-        <button type="submit">Withdraw money</button>
-    </form>
+    <div class="container-xl" style="margin-top: 20px">
+        <div class="row justify-content-center">
+            <div class="col-4 align-self-center">
+                <p>Virtual account: @money </p>
+                <form method="post" asp-route-money="@money">
+                    <input type ="number" name="money"placeholder="Money"/>
+                    <button type="submit" class="btn" style="background-color: var(--btn-main-color); color: white">Withdraw money</button>
+                </form>
+            </div>
+                <div class="col-auto align-self-center">
+                    <img src="img/undraw_Receipt_re_fre3.svg" alt="" style="width: 60%">
+                </div>
+        </div>
+    </div>
 }
 
