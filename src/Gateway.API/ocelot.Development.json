@@ -807,6 +807,18 @@
       "UpstreamPathTemplate": "/Developers/CreateCompany",
       "UpstreamHttpMethod": [ "POST" ]
     },
+    {
+        "DownStreamPathTemplate": "/Companies/Update",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+            {
+                "Host": "localhost",
+                "Port": 5003
+            }
+        ],
+        "UpstreamPathTemplate": "/Developers/UpdateCompany",
+        "UpstreamHttpMethod": [ "POST" ]
+    },
     //Tags
     {
       "DownStreamPathTemplate": "/Tags/GetByUser/{userId}",

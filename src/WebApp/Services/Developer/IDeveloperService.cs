@@ -34,6 +34,7 @@ namespace WebApp.Services.Developer
         Task<IEnumerable<UserModel>> GetCompanyUsers(int companyId);
         Task<IEnumerable<ProjectModel>> GetCompanyProjects(int companyId);
         Task<string> CreateCompany(CompanyForm companyForm);
+        Task UpdateCompany(CompanyModel company);
         
         //Tags
         Task<IEnumerable<TagModel>> GetTags(ICreator creator);

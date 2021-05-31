@@ -102,5 +102,14 @@ namespace Developer.API.Controllers
             var project = await _context.Project.FirstAsync(p => p.Id == projectId);
             company.Projects.Add(project);
         }
+
+        [HttpPost]
+        [Route("/Companies/Update")]
+        public async Task Update(Company company)
+        {
+            var updateCompany = await _context.Company.FirstAsync(c => c.Id == company.Id);
+            updateCompany.Name = company.Name;
+            await _context.SaveChangesAsync();
+        }
     }
 }

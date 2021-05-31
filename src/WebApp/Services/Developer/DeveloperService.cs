@@ -147,6 +147,11 @@ namespace WebApp.Services.Developer
             return await response.Content.ReadAsStringAsync();
         }
 
+        public async Task UpdateCompany(CompanyModel company)
+        {
+            await _client.PostAsJsonAsync("/Developers/UpdateCompany", company);
+        }
+
         public async Task<IEnumerable<TagModel>> GetTags(ICreator creator)
         {
             return creator switch
