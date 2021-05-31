@@ -56,10 +56,15 @@ namespace WebApp.Pages
                 .Select(s => s.SubscribedToId);
 
             foreach (var id in companyIds)
-                projectIds = projectIds?
-                    .Concat((await _developerService.GetCompanyProjects(id)).Select(p => p.Id));
+            {
+                var companyProjects = (await _developerService.GetCompanyProjects(id));
+                if (companyProjects == null)
+                    continue;
 
-            projectIds = projectIds?.Distinct();
+                projectIds = projectIds.Concat(companyProjects.Select(p => p.Id));
+            }
+            
+            projectIds = projectIds.Distinct();
             
             foreach (var id in userIds)
                 posts.AddRange(await _postsService.GetUserPosts(id) ?? new List<PostModel>());

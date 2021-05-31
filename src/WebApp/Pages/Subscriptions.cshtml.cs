@@ -28,7 +28,7 @@ namespace WebApp.Pages
         public async Task<ActionResult> OnGetAsync()
         {
             var developerId = (await _userManager.GetUserAsync(User)).UserId;
-            if (developerId != null)
+            if (developerId != 0)
             {
                 AllSubscriptions = (await _subscriptionService.GetPaidSubscriptionsByUserId(developerId)).ToList();
             }
