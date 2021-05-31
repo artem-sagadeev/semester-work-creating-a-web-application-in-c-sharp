@@ -2,27 +2,57 @@
 @model WebApp.Pages.Post
 
 <div class="post container">
-    <!-- Model.PostModel.Id -->
-    <div class="row row-col-2">
+    <div class="row">
         <div class="col-auto">
-            <img src="@Model.CoverModel?.Path" alt="cover">
+            <img src="@Model.CoverModel?.Path" alt="cover" style="max-width: 700px">
         </div>
-        <div class="col-auto">
-            <p>@Model.PostModel.Text</p>
-            @foreach (var file in Model.Files)
-            {
-                <div>
-                    @file.Name
-                    @file.Type
-                </div>
-            }
+        <div class="col">
+            <p style="margin-top: 10px">@Model.PostModel.Text</p>
         </div>
     </div>
-    <a asp-page="EditPost" asp-route-id="@Model.PostModel.Id">Edit</a>
+    <!-- Model.PostModel.Id -->
+    @foreach (var file in Model.Files)
+    {
+        <div>
+            @file.Name
+            @file.Type
+        </div>
+    }
+    
+    <div class="container">
+        <p>
+            <a class="btn btn-main" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Edit
+            </a>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <div class="change-text">
+                                <form method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="postId" value="@Model.PostModel.Id">
+                                    <div>
+                                        <label>Free</label>
+                                        <input type="radio" name="type" value="free">
+                                        <label>Basic</label>
+                                        <input type="radio" name="type" value="basic">
+                                        <label>Improved</label>
+                                        <input type="radio" name="type" value="improved">
+                                        <label>Max</label>
+                                        <input type="radio" name="type" value="max">
+                                    </div>
+                                    <input class="input-search form-control" type="text" name="text" value="@Model.PostModel.Text" style="margin-bottom: 10px">
+                                    @*Сюда надо добавить удаление/добавление файлов - сделай это*@
+                                    @*В зависимости от фронта я пристрою бэк работы с файлами*@
+                                    <button type="submit" class="btn btn-search">Send</button>
+                                </form>
+                            </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @*Это код для изменения поста, можешь его куда-то спрятать, чтобы он появлялся в нужный момент*@
-<div>
+<!--<div class="change-text">
     <form method="post" enctype="multipart/form-data">
         <input type="hidden" name="postId" value="@Model.PostModel.Id">
         <div>
@@ -40,4 +70,4 @@
         @*В зависимости от фронта я пристрою бэк работы с файлами*@
         <button type="submit">Send</button>
     </form>
-</div>
+</div>-->

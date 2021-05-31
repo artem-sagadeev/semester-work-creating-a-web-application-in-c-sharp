@@ -24,38 +24,56 @@
     </div>
 </div>
 </div>
-
-    @if (_signInManager.IsSignedIn(User) &&
-     Model.ProjectModel.Users.Select(u => u.Id).Contains((await _userManager.GetUserAsync(User)).UserId))
-{
-    <form method="post" enctype="multipart/form-data">
-        <input type="hidden" name="id" value="@Model.ProjectModel.Id">
-        <div>
-            <label>Free</label>
-            <input type="radio" name="type" value="free">
-            <label>Basic</label>
-            <input type="radio" name="type" value="basic">
-            <label>Improved</label>
-            <input type="radio" name="type" value="improved">
-            <label>Max</label>
-            <input type="radio" name="type" value="max">
+<div class="container">
+    <div class="row">
+        <div class="col-auto">
+            @if (_signInManager.IsSignedIn(User) &&
+                 Model.ProjectModel.Users.Select(u => u.Id).Contains((await _userManager.GetUserAsync(User)).UserId))
+            {
+                <form method="post" enctype="multipart/form-data" style="margin-bottom: 20px">
+                    <input type="hidden" name="id" value="@Model.ProjectModel.Id">
+                    <div>
+                        <label>Free</label>
+                        <input type="radio" name="type" value="free" checked style="margin-right: 5px">
+                        <label>Basic</label>
+                        <input type="radio" name="type" value="basic" style="margin-right: 5px">
+                        <label>Improved</label>
+                        <input type="radio" name="type" value="improved" style="margin-right: 5px">
+                        <label>Max</label>
+                        <input type="radio" name="type" value="max">
+                    </div>
+                    <div class="form-floating">
+                      <textarea class="input-search form-control" type="text" name="text" placeholder="Whats new?" style="margin-bottom: 4px"></textarea>
+                    </div>
+                    <!--<input type="text" name="text" placeholder="Whats new?" class="input-search form-control" style="margin-bottom: 4px">-->
+                    <div class="input-group mb-3" style="max-width: 400px">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="cover" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        </div>
+                    </div>
+                    @*<input type="file" name="files"> таких инпутов может быть много (несколько файлов к одному посту)*@
+                    <button type="submit" class="btn btn-search">Send</button>
+                </form>
+            }
+            
+            @foreach (var post in Model.PostModels)
+            {
+                @await Html.PartialAsync("Shared/_PostPartial", post)
+            }
+            
         </div>
-        <input type="text" name="text" placeholder="Whats new?">
-        <input type="file" name="cover">
-        @*<input type="file" name="files"> таких инпутов может быть много (несколько файлов к одному посту)*@
-        <button type="submit">Send</button>
-    </form>
-}
-
-@foreach (var post in Model.PostModels)
-{
-    @await Html.PartialAsync("Shared/_PostPartial", post)
-}
+        <div class="col-auto">
+            
+        </div>
+    </div>
+</div>
 
 @{
     var userId = (await _userManager.GetUserAsync(User))?.UserId;
     var projectId = @Model.ProjectModel.Id;
 }
+
 @if (_signInManager.IsSignedIn(User) && @Model.HasAccessToChat)
 {
     <div id="inputForm">
@@ -63,11 +81,12 @@
         <input type="button" id="sendBtn" value="Отправить"/>
     </div>
     <div id="chatroom"></div>
-
+    
 @foreach (var pair in @Model.Messages.OrderByDescending(m => m.Item2.DateTime))
 {
     <p>@pair.Item1 : @pair.Item2.Text (@pair.Item2.DateTime)</p>
 }
+    
     <script src="js/signalr/dist/browser/signalr.min.js"></script>
     <script>
         const hubConnection = new signalR.HubConnectionBuilder()
@@ -98,5 +117,5 @@
         });
  
         hubConnection.start();
-</script>
+    </script>
 }

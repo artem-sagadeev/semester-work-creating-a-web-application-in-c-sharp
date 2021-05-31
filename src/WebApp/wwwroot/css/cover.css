@@ -1,10 +1,11 @@
-.cover{
+/*.cover{
     max-width: 800px;
-}
+}*/
 
-.cover img{
-    max-width: 800px;
-    max-height: 800px;
-    margin-bottom: 10px;
+.post-cover-img{
+    width: 300px;
+    margin-bottom: 5px;
+    margin-top: 5px;
     border-radius: 20px;
+    object-fit: cover;
 }
