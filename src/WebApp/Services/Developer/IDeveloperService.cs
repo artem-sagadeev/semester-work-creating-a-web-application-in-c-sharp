@@ -24,6 +24,8 @@ namespace WebApp.Services.Developer
         Task<IEnumerable<UserModel>> GetProjectUsers(int projectId);
         Task<CompanyModel> GetProjectCompany(int projectId);
         Task<string> CreateProject(ProjectForm projectForm);
+        Task UpdateProject(ProjectModel project);
+        Task AddUserToProject(int userId, int projectId);
 
         //Companies
         Task<IEnumerable<CompanyModel>> GetCompanies();
@@ -33,7 +35,9 @@ namespace WebApp.Services.Developer
         Task<IEnumerable<UserModel>> GetCompanyUsers(int companyId);
         Task<IEnumerable<ProjectModel>> GetCompanyProjects(int companyId);
         Task<string> CreateCompany(CompanyForm companyForm);
-        
+        Task UpdateCompany(CompanyModel company);
+        Task AddUserToCompany(int userId, int companyId);
+
         //Tags
         Task<IEnumerable<TagModel>> GetTags(ICreator creator);
     }

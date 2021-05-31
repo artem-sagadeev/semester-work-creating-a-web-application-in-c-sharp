@@ -14,6 +14,7 @@ using WebApp.Models;
 using WebApp.Models.Developer;
 using WebApp.Models.Files;
 using WebApp.Models.Identity;
+using WebApp.Models.Payment;
 using WebApp.Services.Developer;
 using WebApp.Services.Files;
 using WebApp.Services.Payment;
@@ -146,7 +147,8 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
             var card = (await _paymentService.GetBankAccount(user.UserId)).Number;
             if (Input.Card != card)
             {
-                //todo
+                await _paymentService.UpdateBankAccount(
+                    new BankAccountModel {UserId = user.UserId, Number = Input.Card});
             }
 
             if (Avatar is {ContentType: "image/jpeg" or "image/png"})

@@ -14,6 +14,8 @@ namespace WebApp.Services.Payment
 
         public Task AddBankAccount(BankAccountModel newBankAccount);
 
+        public Task UpdateBankAccount(BankAccountModel bankAccount);
+
         public Task WriteOffMoneyFromBankAccount(BankAccountModel newBankAccount, int money);
         
         //AdminPurse
