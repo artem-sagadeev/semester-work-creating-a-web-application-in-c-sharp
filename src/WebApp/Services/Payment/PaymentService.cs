@@ -48,6 +48,11 @@ namespace WebApp.Services.Payment
             await _client.PostAsJsonAsync($"/Payment/AddBankAccount", newBankAccount);
         }
 
+        public async Task UpdateBankAccount(BankAccountModel bankAccount)
+        {
+            await _client.PostAsJsonAsync($"/Payment/UpdateBankAccount", bankAccount);
+        }
+
         public async Task WriteOffMoneyFromBankAccount(BankAccountModel newBankAccount, int money)
         {
             await _client.PostAsJsonAsync($"/Payment/WriteOffMoney", newBankAccount);

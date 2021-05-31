@@ -78,7 +78,7 @@ namespace WebApp.Pages
                 "basic" => PriceType.Basic,
                 "improved" => PriceType.Improved,
                 "max" => PriceType.Max,
-                _ => throw new NotSupportedException()
+                _ => PriceType.Free
             };
 
             post.RequiredSubscriptionType = requiredType;
