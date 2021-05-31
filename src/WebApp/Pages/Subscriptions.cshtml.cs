@@ -17,23 +17,32 @@ namespace WebApp.Pages
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IDeveloperService _developerService;
         private readonly ISubscriptionService _subscriptionService;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
         public List<PaidSubscriptionModel> AllSubscriptions;
-        public SubscriptionsModel(UserManager<ApplicationUser> userManager, IDeveloperService developerService, ISubscriptionService subscriptionService)
+        public SubscriptionsModel(UserManager<ApplicationUser> userManager, IDeveloperService developerService, ISubscriptionService subscriptionService, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _developerService = developerService;
             _subscriptionService = subscriptionService;
+            _signInManager = signInManager;
         }
         public async Task<ActionResult> OnGetAsync()
         {
-            var developerId = (await _userManager.GetUserAsync(User)).UserId;
-            if (developerId != null)
+            if (_signInManager.IsSignedIn(User))
             {
-                AllSubscriptions = (await _subscriptionService.GetPaidSubscriptionsByUserId(developerId)).ToList();
-            }
+                var developerId = (await _userManager.GetUserAsync(User)).UserId;
+                if (developerId != null)
+                {
+                    AllSubscriptions = (await _subscriptionService.GetPaidSubscriptionsByUserId(developerId)).ToList();
+                }
 
-            return Page();
+                return Page();
+            }
+            else
+            {
+                return RedirectToPage("Index");
+            }
         }
     }
 }

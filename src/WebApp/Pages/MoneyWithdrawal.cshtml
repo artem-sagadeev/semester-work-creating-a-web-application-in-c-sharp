@@ -14,7 +14,8 @@
 @if (_signInManager.IsSignedIn(User))
 {
     <p>Virtual account: @money </p>
-    <form method="post" asp-route-money="@money">
+    <form method="post">
+        <input type ="number" name="money"placeholder="Money"/>
         <button type="submit">Withdraw money</button>
     </form>
 }
