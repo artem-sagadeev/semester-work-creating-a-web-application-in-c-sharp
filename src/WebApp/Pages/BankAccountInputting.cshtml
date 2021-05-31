@@ -1,8 +1,16 @@
 ﻿@page
 @model WebApp.Pages.BankAccountInputtingModel
 
-<form method="post"  >
-    <input name="number" type="text" placeholder="Number of your bank card"/>
-    <input name ="refererLink" type ="hidden" value ="@ViewData["Referer"]" />
-    <input type="submit" asp-page-handler="AddBankAccount"/>
-</form>
+<div class="credit-card container">
+    <form method="post">
+        <div class="row credit-info">
+            <div class="col-auto">
+                <input name="number" type="text" placeholder="xxxx xxxx xxxx xxxx" class="input-credit-card form-control"/>
+            </div>
+            <div class="col-auto">
+                <input name="refererLink" type="hidden" value="@ViewData["Referer"]"/>
+                <input type="submit" asp-page-handler="AddBankAccount" class="btn btn-add-card"/>
+            </div>
+        </div>
+    </form>
+</div>
