@@ -39,6 +39,9 @@ namespace WebApp.Pages
         {
             [Display(Name = "Name")]
             public string Name { get; set; }
+            
+            [Display(Name = "Add user")]
+            public int NewUserId { get; set; }
         }
         
         [BindProperty]
@@ -97,7 +100,10 @@ namespace WebApp.Pages
             if (user is null)
                 return Redirect("/Identity/Account/Login");
 
-            if (!(await _developerService.GetCompanyUsers(id)).Select(u => u.Id).Contains(user.UserId))
+            var companyUsersIds = (await _developerService.GetCompanyUsers(id))
+                .Select(u => u.Id)
+                .ToList();
+            if (!companyUsersIds.Contains(user.UserId))
                 return Forbid();
             
             if (!ModelState.IsValid)
@@ -110,6 +116,11 @@ namespace WebApp.Pages
             if (Input.Name != name)
             {
                 await _developerService.UpdateCompany(new CompanyModel {Id = company.Id, Name = Input.Name});
+            }
+
+            if (Input.NewUserId > 0 && !companyUsersIds.Contains(Input.NewUserId))
+            {
+                await _developerService.AddUserToCompany(Input.NewUserId, company.Id);
             }
             
             if (Avatar is {ContentType: "image/jpeg" or "image/png"})

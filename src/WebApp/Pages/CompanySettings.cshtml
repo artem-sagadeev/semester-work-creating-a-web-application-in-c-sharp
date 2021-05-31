@@ -9,6 +9,11 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input asp-for="CompanyId" type="hidden"/>
                 <div class="form-group">
+                    <label asp-for="Input.NewUserId"></label>
+                    <input asp-for="Input.NewUserId" class="form-control"/>
+                    <span asp-validation-for="Input.NewUserId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
                     <label asp-for="Input.Name"></label>
                     <input asp-for="Input.Name" class="form-control"/>
                     <span asp-validation-for="Input.Name" class="text-danger"></span>

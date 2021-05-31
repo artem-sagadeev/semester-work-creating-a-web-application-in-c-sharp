@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Developer.API.DTOs;
 using Developer.API.Entities;
 using Developer.API.Forms;
 using Microsoft.AspNetCore.Mvc;
@@ -83,15 +84,6 @@ namespace Developer.API.Controllers
         }
 
         [HttpPost]
-        [Route("/Companies/AddUser")]
-        public async Task AddUser(int companyId, int userId)
-        {
-            var company = await _context.Company.FirstAsync(c => c.Id == companyId);
-            var user = await _context.User.FirstAsync(u => u.Id == userId);
-            company.Users.Add(user);
-        }
-
-        [HttpPost]
         [Route("/Companies/AddProject")]
         public async Task AddProject(int companyId, int projectId)
         {
@@ -106,6 +98,19 @@ namespace Developer.API.Controllers
         {
             var updateCompany = await _context.Company.FirstAsync(c => c.Id == company.Id);
             updateCompany.Name = company.Name;
+            await _context.SaveChangesAsync();
+        }
+
+        [HttpPost]
+        [Route("/Companies/AddUser")]
+        public async Task AddUser(AddUserDto dto)
+        {
+            var company = await _context
+                .Company
+                .Include(c => c.Users)
+                .FirstAsync(c => c.Id == dto.ProjectOrCompanyId);
+            var user = await _context.User.FirstAsync(u => u.Id == dto.UserId);
+            company.Users.Add(user);
             await _context.SaveChangesAsync();
         }
     }

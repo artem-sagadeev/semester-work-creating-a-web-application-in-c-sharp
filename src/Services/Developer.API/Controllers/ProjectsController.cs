@@ -96,12 +96,12 @@ namespace Developer.API.Controllers
         [Route("/Projects/AddUser")]
         public async Task AddUser(AddUserDto dto)
         {
-            var updateProject = await _context
+            var project = await _context
                 .Project
                 .Include(p => p.Users)
                 .FirstAsync(p => p.Id == dto.ProjectOrCompanyId);
             var user = await _context.User.FirstAsync(u => u.Id == dto.UserId);
-            updateProject.Users.Add(user);
+            project.Users.Add(user);
             await _context.SaveChangesAsync();
         }
     }

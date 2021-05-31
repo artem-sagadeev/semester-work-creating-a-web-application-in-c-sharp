@@ -158,6 +158,12 @@ namespace WebApp.Services.Developer
             await _client.PostAsJsonAsync("/Developers/UpdateCompany", company);
         }
 
+        public async Task AddUserToCompany(int userId, int companyId)
+        {
+            await _client.PostAsJsonAsync("/Developers/AddUserToCompany",
+                new AddUserDto {UserId = userId, ProjectOrCompanyId = companyId});
+        }
+
         public async Task<IEnumerable<TagModel>> GetTags(ICreator creator)
         {
             return creator switch
