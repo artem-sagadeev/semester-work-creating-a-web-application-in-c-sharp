@@ -23,7 +23,11 @@ namespace PaymentAPI.Controllers
         [HttpGet]
         [Route("/VirtualPurses/Get/{userId}")]
         public ActionResult<VirtualPurse> Get(int userId)
-            => _context.VirtualPurses.First(c => c.UserId == userId);
+        {
+            var x = _context.VirtualPurses.ToList();
+           return x.First(c => c.UserId == userId);
+        }
+            
 
         public class UserIdMoneyIdFormat
         {

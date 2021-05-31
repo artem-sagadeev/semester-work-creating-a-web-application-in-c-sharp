@@ -31,19 +31,22 @@ namespace WebApp.Pages
             VirtualPurse = await _paymentService.GetVirtualPurse(userId);
         }
 
-        public async void OnPostAsync(int money)
+        public async Task<IActionResult> OnPostAsync(int money)
         {
             var userId = (await _userManager.GetUserAsync(User)).UserId;
-            await _paymentService.AddWithdrawal(new WithdrawalModel()
+            if (money <= (await _paymentService.GetVirtualPurse(userId)).Money)
             {
-                DateTime = DateTime.Now,
-                Sum = (await _paymentService.GetVirtualPurse(userId)).Money,
-                UserID = userId,
-                ViewOfBankNumber = ViewOfBankNumber.Virtual
-            });
-            await _paymentService.TransferMoneyToBankAccount(await _paymentService.GetBankAccount(userId));
-            await _paymentService.UpdateVirtualPurse(userId, 0);
-
+                await _paymentService.AddWithdrawal(new WithdrawalModel()
+                {
+                    DateTime = DateTime.Now,
+                    Sum = (await _paymentService.GetVirtualPurse(userId)).Money,
+                    UserID = userId,
+                    ViewOfBankNumber = ViewOfBankNumber.Virtual
+                });
+                await _paymentService.TransferMoneyToBankAccount(await _paymentService.GetBankAccount(userId));
+                await _paymentService.UpdateVirtualPurse(userId, 0);
+            }
+            return RedirectToPage("MoneyWithdrawal");
         }
     }
 }

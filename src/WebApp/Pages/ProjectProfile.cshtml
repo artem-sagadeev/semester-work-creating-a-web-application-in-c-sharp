@@ -62,7 +62,7 @@
         <input type="button" id="sendBtn" value="Отправить"/>
     </div>
     <div id="chatroom"></div>
-@foreach (var pair in @Model.Messages)
+@foreach (var pair in @Model.Messages.OrderByDescending(x=>x.Item2.DateTime))
 {
     <p>@pair.Item1 : @pair.Item2.Text (@pair.Item2.DateTime)</p>
 }
