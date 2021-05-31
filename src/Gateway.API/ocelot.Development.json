@@ -601,6 +601,18 @@
       "UpstreamPathTemplate": "/Developers/CreateUser",
       "UpstreamHttpMethod": [ "POST" ]
     },
+    {
+        "DownStreamPathTemplate": "/Users/Update",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+            {
+                "Host": "localhost",
+                "Port": 5003
+            }
+        ],
+        "UpstreamPathTemplate": "/Developers/UpdateUser",
+        "UpstreamHttpMethod": [ "POST" ]
+    },
     //Projects
     {
       "DownStreamPathTemplate": "/Projects/Get",

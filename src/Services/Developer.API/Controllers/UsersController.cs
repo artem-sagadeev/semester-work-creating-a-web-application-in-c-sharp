@@ -81,5 +81,14 @@ namespace Developer.API.Controllers
             _context.User.Remove(user);
             await _context.SaveChangesAsync();
         }
+
+        [HttpPost]
+        [Route("/Users/Update")]
+        public async Task Update(User user)
+        {
+            var updateUser = _context.User.First(u => u.Id == user.Id);
+            updateUser.Name = user.Name;
+            await _context.SaveChangesAsync();
+        } 
     }
 }

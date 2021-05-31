@@ -1,14 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.Areas.Identity.Data;
 using WebApp.Models;
+using WebApp.Models.Developer;
 using WebApp.Models.Files;
 using WebApp.Models.Identity;
 using WebApp.Services.Developer;
@@ -24,16 +27,18 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
         private readonly IDeveloperService _developerService;
         private readonly IPaymentService _paymentService;
         private readonly IFileService _fileService;
+        private readonly IWebHostEnvironment _appEnvironment;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager, IDeveloperService developerService, IPaymentService paymentService, IFileService fileService)
+            SignInManager<ApplicationUser> signInManager, IDeveloperService developerService, IPaymentService paymentService, IFileService fileService, IWebHostEnvironment appEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _developerService = developerService;
             _paymentService = paymentService;
             _fileService = fileService;
+            _appEnvironment = appEnvironment;
         }
 
         [TempData]
@@ -113,7 +118,7 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
             var name = (await _developerService.GetUser(user.UserId)).Name;
             if (Input.Name != name)
             {
-                //todo
+                await _developerService.UpdateUser(new UserModel {Id = user.UserId, Name = Input.Name});
             }
 
             var email = await _userManager.GetUserNameAsync(user);
@@ -150,8 +155,16 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
                 {
                     CreatorId = user.UserId,
                     CreatorType = CreatorType.User,
-                    Name = user.UserId + Avatar.FileName
+                    Name = $"{user.UserId}_{Avatar.FileName}"
                 };
+                
+                
+                var path = $"/avatars/{avatar.Name}";
+                await using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                {
+                    await Avatar.CopyToAsync(fileStream);
+                }
+
                 await _fileService.CreateAvatar(avatar);
             }
             
