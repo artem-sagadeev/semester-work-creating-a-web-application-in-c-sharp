@@ -710,6 +710,18 @@
       "UpstreamPathTemplate": "/Developers/CreateProject",
       "UpstreamHttpMethod": [ "POST" ]
     },
+    {
+        "DownStreamPathTemplate": "/Projects/Update",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+            {
+                "Host": "localhost",
+                "Port": 5003
+            }
+        ],
+        "UpstreamPathTemplate": "/Developers/UpdateProject",
+        "UpstreamHttpMethod": [ "POST" ]
+    },
     //Companies
     {
       "DownStreamPathTemplate": "/Companies/Get",

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Developer.API.Entities;
 using Developer.API.Forms;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -79,6 +80,15 @@ namespace Developer.API.Controllers
             //todo not checked
             var project = await _context.Project.FirstAsync(p => p.Id == id);
             _context.Project.Remove(project);
+            await _context.SaveChangesAsync();
+        }
+
+        [HttpPost]
+        [Route("/Projects/Update")]
+        public async Task Update(Project project)
+        {
+            var updateProject = await _context.Project.FirstAsync(p => p.Id == project.Id);
+            updateProject.Name = project.Name;
             await _context.SaveChangesAsync();
         }
     }

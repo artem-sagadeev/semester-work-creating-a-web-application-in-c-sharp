@@ -100,6 +100,11 @@ namespace WebApp.Services.Developer
             return await response.Content.ReadAsStringAsync();
         }
 
+        public async Task UpdateProject(ProjectModel project)
+        {
+            await _client.PostAsJsonAsync("/Developers/UpdateProject", project);
+        }
+
         public async Task<IEnumerable<CompanyModel>> GetCompanies()
         {
             var response = await _client.GetAsync($"/Developers/GetCompanies");
