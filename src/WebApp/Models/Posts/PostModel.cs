@@ -51,16 +51,16 @@ namespace WebApp.Models.Posts
                 return true;
 
             
-            var companyId = (await developerService.GetProjectCompany(ProjectId)).Id;
+            var companyId = (await developerService.GetProjectCompany(ProjectId))?.Id;
 
-            if (companyId == 0)
+            if (companyId == null)
                 return false;
             
-            var isUserMemberOfCompany = (await developerService.GetCompanyUsers(companyId))
+            var isUserMemberOfCompany = (await developerService.GetCompanyUsers(companyId.Value))
                 .Select(u => u.Id)
                 .Contains(user.UserId);
             var hasSubscribeToCompany = await subscriptionService.HasUserAccess(user.UserId, 
-                                            companyId, 
+                                            companyId.Value, 
                                             RequiredSubscriptionType, 
                                             TypeOfSubscription.Team);
             

@@ -38,6 +38,18 @@
             "UpstreamHttpMethod": [ "POST" ]
         },
         {
+            "DownStreamPathTemplate": "/BankAccounts/UpdateBankAccount",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5005
+                }
+            ],
+            "UpstreamPathTemplate": "/Payment/UpdateBankAccount",
+            "UpstreamHttpMethod": [ "POST" ]
+        },
+        {
             "DownStreamPathTemplate": "/BankAccounts/Delete",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
@@ -698,6 +710,30 @@
       "UpstreamPathTemplate": "/Developers/CreateProject",
       "UpstreamHttpMethod": [ "POST" ]
     },
+    {
+        "DownStreamPathTemplate": "/Projects/Update",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+            {
+                "Host": "localhost",
+                "Port": 5003
+            }
+        ],
+        "UpstreamPathTemplate": "/Developers/UpdateProject",
+        "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+        "DownStreamPathTemplate": "/Projects/AddUser",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+            {
+                "Host": "localhost",
+                "Port": 5003
+            }
+        ],
+        "UpstreamPathTemplate": "/Developers/AddUserToProject",
+        "UpstreamHttpMethod": [ "POST" ]
+    },
     //Companies
     {
       "DownStreamPathTemplate": "/Companies/Get",
@@ -782,6 +818,30 @@
       ],
       "UpstreamPathTemplate": "/Developers/CreateCompany",
       "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+        "DownStreamPathTemplate": "/Companies/Update",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+            {
+                "Host": "localhost",
+                "Port": 5003
+            }
+        ],
+        "UpstreamPathTemplate": "/Developers/UpdateCompany",
+        "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+        "DownStreamPathTemplate": "/Companies/AddUser",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+            {
+                "Host": "localhost",
+                "Port": 5003
+            }
+        ],
+        "UpstreamPathTemplate": "/Developers/AddUserToCompany",
+        "UpstreamHttpMethod": [ "POST" ]
     },
     //Tags
     {

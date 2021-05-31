@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using WebApp.DTOs;
 using WebApp.Extensions;
 using WebApp.Models.Developer;
 using WebApp.Pages;
@@ -100,6 +101,16 @@ namespace WebApp.Services.Developer
             return await response.Content.ReadAsStringAsync();
         }
 
+        public async Task UpdateProject(ProjectModel project)
+        {
+            await _client.PostAsJsonAsync("/Developers/UpdateProject", project);
+        }
+
+        public async Task AddUserToProject(int userId, int projectId)
+        {
+            await _client.PostAsJsonAsync("/Developers/AddUserToProject", new AddUserDto {UserId = userId, ProjectOrCompanyId = projectId});
+        }
+
         public async Task<IEnumerable<CompanyModel>> GetCompanies()
         {
             var response = await _client.GetAsync($"/Developers/GetCompanies");
@@ -140,6 +151,17 @@ namespace WebApp.Services.Developer
         {
             var response = await _client.PostAsJsonAsync($"/Developers/CreateCompany", companyForm);
             return await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task UpdateCompany(CompanyModel company)
+        {
+            await _client.PostAsJsonAsync("/Developers/UpdateCompany", company);
+        }
+
+        public async Task AddUserToCompany(int userId, int companyId)
+        {
+            await _client.PostAsJsonAsync("/Developers/AddUserToCompany",
+                new AddUserDto {UserId = userId, ProjectOrCompanyId = companyId});
         }
 
         public async Task<IEnumerable<TagModel>> GetTags(ICreator creator)
