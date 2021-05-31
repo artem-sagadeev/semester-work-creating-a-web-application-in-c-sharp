@@ -12,6 +12,7 @@ for details on configuring this project to bundle and minify static web assets. 
 @import "project.css";
 @import "cover.css";
 @import "company.css";
+@import "subscriptions.css";
 
 *
 {
@@ -29,8 +30,8 @@ header{
 }
 
 footer{
-  height: 120px;
-  background-color: black;
+  color: #d7d7d7;
+  background-color: #181818;
 }
 
 @media (min-width: 768px) {
@@ -62,4 +63,12 @@ footer{
 
 .content {
   min-height: calc(100vh - 70px);
+}
+
+.price{
+  background-color: #f6f6f6;
+  border: 10px;
+  border-radius: 20px;
+  margin: 4px;
+  text-align: center;
 }

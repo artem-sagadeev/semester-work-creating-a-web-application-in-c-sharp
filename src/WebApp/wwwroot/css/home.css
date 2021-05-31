@@ -38,6 +38,7 @@
     display: block;
     background-color: var(--btn-main-color);
     color: white;
+    width: 300px;
 }
 
 .home-main .container .find{
@@ -48,6 +49,7 @@
     border-width: 1px;
     border-color: #000000;
     color: white;
+    width: 300px;
 }
 
 .home-main .container .btn{
