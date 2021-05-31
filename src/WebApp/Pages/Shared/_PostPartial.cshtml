@@ -19,10 +19,12 @@
 
 @if (await Model.HasUserAccessAsync(user, _subscriptionService, _developerService))
 {
-    <div class="container cover">
-        <!--< asp-page="Post" asp-route-id="Model.Id">Model.Id - Model.Text</>-->
-        <img src="@cover?.Path" alt="cover">
-        <p>@Model.Text</p>
+    <div class="cover">
+        <a asp-page="Post" asp-route-id="@Model.Id" style="text-decoration: none; color: black;">
+            <!--< asp-page="Post" asp-route-id="Model.Id">Model.Id - Model.Text</>-->
+            <img src="@cover?.Path" alt="cover" class="post-cover-img">
+            <p style="max-width: 300px">@Model.Text</p>
+        </a>
     </div>
 }
 else
