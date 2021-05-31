@@ -46,6 +46,15 @@ namespace PaymentAPI.Controllers
             _context.BankAccounts.Add(bankAccount);
             await _context.SaveChangesAsync();
         }
+        
+        [HttpPost]
+        [Route("/BankAccounts/UpdateBankAccount")]
+        public async Task UpdateBankAccount([FromBody]BankAccount bankAccount)
+        {
+            var oldAccount = _context.BankAccounts.First(b => b.UserId == bankAccount.UserId);
+            oldAccount.Number = bankAccount.Number;
+            await _context.SaveChangesAsync();
+        }
 
         [HttpPost]
         [Route("/BankAccounts/WriteOffMoney")]

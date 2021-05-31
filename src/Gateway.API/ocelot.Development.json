@@ -38,6 +38,18 @@
             "UpstreamHttpMethod": [ "POST" ]
         },
         {
+            "DownStreamPathTemplate": "/BankAccounts/UpdateBankAccount",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5005
+                }
+            ],
+            "UpstreamPathTemplate": "/Payment/UpdateBankAccount",
+            "UpstreamHttpMethod": [ "POST" ]
+        },
+        {
             "DownStreamPathTemplate": "/BankAccounts/Delete",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
