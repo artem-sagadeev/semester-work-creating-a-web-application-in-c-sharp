@@ -24,9 +24,22 @@
     </div>
 </div>
 
+<div class="container">
+    <p>
+        <a class="btn btn-main" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Office
+        </a>
+    </p>
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+            <img class="dropdown-item" alt="" src="img/map.jpg" style="height: 40%">
+        </div>
+    </div>
+</div>
+
 <div class="projects-slider container">
-@foreach (var project in Model.CompanyModel.Projects)
-{
-    @await Html.PartialAsync("Shared/_ProjectMiniPreviewPartial", project)
-}
+    @foreach (var project in Model.CompanyModel.Projects)
+    {
+        @await Html.PartialAsync("Shared/_ProjectMiniPreviewPartial", project)
+    }
 </div>

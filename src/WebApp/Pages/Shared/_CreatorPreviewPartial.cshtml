@@ -65,7 +65,8 @@
                         if (await _paymentService.GetBankAccount(userId) == null)
                         {
                             <p>Input bank card data</p>
-                            <button type="submit"><a asp-page="BankAccountInputting">Input data</a></button>
+                            <a asp-page="BankAccountInputting" class="btn btn-search" style="max-width: 200px">Input data</a>
+                            <!--<button type="submit"><a asp-page="BankAccountInputting" class="btn btn-search">Input data</a></button>-->
                         }
                         else
                         {
@@ -91,18 +92,14 @@
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <form asp-page-handler="Subscribe" asp-route-subscribedToId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@true" asp-route-isImproved="@false" asp-route-isMax="@false" asp-route-typeOfSubscription="@TypeOfSubscription.User" class="dropdown-item">
                                                     <button type="submit" class="btn">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                                                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                                                        </svg> Subscribe by "Basic" tariff
+                                                        "Basic" tariff
                                                     </button>
                                                     </form>
 
 
                                                 <form asp-page-handler="Subscribe" asp-route-subscribedToId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@true" asp-route-isMax="@false" asp-route-typeOfSubscription="@TypeOfSubscription.User" class="dropdown-item">
                                                     <button type="submit" class="btn">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                                                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                                                        </svg> Subscribe by "Improved" tariff
+                                                        "Improved" tariff
                                                     </button>
                                                 </form>
                                                 
@@ -110,9 +107,7 @@
                                                 
                                                 <form asp-page-handler="Subscribe" asp-route-subscribedToId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@false" asp-route-isMax="@true" asp-route-typeOfSubscription="@TypeOfSubscription.User" class="dropdown-item">
                                                     <button type="submit" class="btn">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                                                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                                                            </svg> Subscribe by "Max" tariff
+                                                        "Max" tariff
                                                         </button>
                                                     </form>
                                             </div>
@@ -129,30 +124,38 @@
                                                 </svg> Follow
                                             </button>
                                         </form>
-
-                                        <form asp-page-handler="Subscribe" asp-route-subscribedToId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@true" asp-route-isImproved="@false" asp-route-isMax="@false" asp-route-typeOfSubscription="@TypeOfSubscription.Project">
-                                            <button type="submit" class="btn btn-subscribe">
+                                        
+                                        <div class="dropdown">
+                                            <button class="btn btn-subscribe dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
                                                     <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                                                </svg> Subscribe by "Basic" tariff
+                                                </svg> Subscribe
                                             </button>
-                                        </form>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                
+                                                <form asp-page-handler="Subscribe" asp-route-subscribedToId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@true" asp-route-isImproved="@false" asp-route-isMax="@false" asp-route-typeOfSubscription="@TypeOfSubscription.Project">
+                                                    <button type="submit" class="btn">
+                                                        "Basic" tariff
+                                                    </button>
+                                                </form>
 
-                                        <form asp-page-handler="Subscribe" asp-route-subscribedToId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@true" asp-route-isMax="@false" asp-route-typeOfSubscription="@TypeOfSubscription.Project">
-                                            <button type="submit" class="btn btn-subscribe">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                                                    <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                                                </svg> Subscribe by "Improved" tariff
-                                            </button>
-                                        </form>
 
-                                        <form asp-page-handler="Subscribe" asp-route-subscribedToId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@false" asp-route-isMax="@true" asp-route-typeOfSubscription="@TypeOfSubscription.Project">
-                                            <button type="submit" class="btn btn-subscribe">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                                                    <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                                                </svg> Subscribe by "Max" tariff
-                                            </button>
-                                        </form>
+
+                                                <form asp-page-handler="Subscribe" asp-route-subscribedToId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@true" asp-route-isMax="@false" asp-route-typeOfSubscription="@TypeOfSubscription.Project">
+                                                    <button type="submit" class="btn">
+                                                        "Improved" tariff
+                                                    </button>
+                                                </form>
+
+
+
+                                                <form asp-page-handler="Subscribe" asp-route-subscribedToId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@false" asp-route-isMax="@true" asp-route-typeOfSubscription="@TypeOfSubscription.Project">
+                                                    <button type="submit" class="btn">
+                                                        "Max" tariff
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     }
                                     break;
                                 case CompanyModel:
@@ -166,29 +169,37 @@
                                                 </svg> Follow
                                             </button>
                                         </form>
-                                        <form asp-page-handler="Subscribe" asp-route-subscribedToId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@true" asp-route-isImproved="@false" asp-route-isMax="@false" asp-route-typeOfSubscription="@TypeOfSubscription.Team">
-                                            <button type="submit" class="btn btn-subscribe">
+                                        
+                                        <div class="dropdown">
+                                            <button class="btn btn-subscribe dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
                                                     <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                                                </svg> Subscribe by "Basic" tariff
+                                                </svg> Subscribe
                                             </button>
-                                        </form>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                
+                                                <form asp-page-handler="Subscribe" asp-route-subscribedToId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@true" asp-route-isImproved="@false" asp-route-isMax="@false" asp-route-typeOfSubscription="@TypeOfSubscription.Team">
+                                                    <button type="submit" class="btn">
+                                                        "Basic" tariff
+                                                    </button>
+                                                </form>
 
-                                        <form asp-page-handler="Subscribe" asp-route-subscribedToId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@true" asp-route-isMax="@false" asp-route-typeOfSubscription="@TypeOfSubscription.Team">
-                                            <button type="submit" class="btn btn-subscribe">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                                                    <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                                                </svg> Subscribe by "Improved" tariff
-                                            </button>
-                                        </form>
 
-                                        <form asp-page-handler="Subscribe" asp-route-subscribedToId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@false" asp-route-isMax="@true" asp-route-typeOfSubscription="@TypeOfSubscription.Team">
-                                            <button type="submit" class="btn btn-subscribe">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                                                    <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                                                </svg> Subscribe by "Max" tariff
-                                            </button>
-                                        </form>
+                                                <form asp-page-handler="Subscribe" asp-route-subscribedToId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@true" asp-route-isMax="@false" asp-route-typeOfSubscription="@TypeOfSubscription.Team">
+                                                    <button type="submit" class="btn">
+                                                        "Improved" tariff
+                                                    </button>
+                                                </form>
+
+
+
+                                                <form asp-page-handler="Subscribe" asp-route-subscribedToId="@Model.Id" asp-route-userId="@userId" asp-route-isBasic="@false" asp-route-isImproved="@false" asp-route-isMax="@true" asp-route-typeOfSubscription="@TypeOfSubscription.Team">
+                                                    <button type="submit" class="btn">
+                                                        "Max" tariff
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     }
                                     break;
                                 default:

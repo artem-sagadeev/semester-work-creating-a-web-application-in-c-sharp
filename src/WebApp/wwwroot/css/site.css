@@ -30,9 +30,8 @@ header{
 }
 
 footer{
-  height: 50px;
-  color: white;
-  background-color: #111111;
+  color: #d7d7d7;
+  background-color: #181818;
 }
 
 @media (min-width: 768px) {
