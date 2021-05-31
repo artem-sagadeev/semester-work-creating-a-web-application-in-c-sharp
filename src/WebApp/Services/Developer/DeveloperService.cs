@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using WebApp.DTOs;
 using WebApp.Extensions;
 using WebApp.Models.Developer;
 using WebApp.Pages;
@@ -103,6 +104,11 @@ namespace WebApp.Services.Developer
         public async Task UpdateProject(ProjectModel project)
         {
             await _client.PostAsJsonAsync("/Developers/UpdateProject", project);
+        }
+
+        public async Task AddUserToProject(int userId, int projectId)
+        {
+            await _client.PostAsJsonAsync("/Developers/AddUserToProject", new AddUserDto {UserId = userId, ProjectOrCompanyId = projectId});
         }
 
         public async Task<IEnumerable<CompanyModel>> GetCompanies()

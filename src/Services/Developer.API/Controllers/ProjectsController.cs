@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Developer.API.DTOs;
 using Developer.API.Entities;
 using Developer.API.Forms;
 using Microsoft.AspNetCore.Identity;
@@ -77,7 +78,6 @@ namespace Developer.API.Controllers
         [Route("/Projects/Delete")]
         public async Task Delete(int id)
         {
-            //todo not checked
             var project = await _context.Project.FirstAsync(p => p.Id == id);
             _context.Project.Remove(project);
             await _context.SaveChangesAsync();
@@ -89,6 +89,19 @@ namespace Developer.API.Controllers
         {
             var updateProject = await _context.Project.FirstAsync(p => p.Id == project.Id);
             updateProject.Name = project.Name;
+            await _context.SaveChangesAsync();
+        }
+
+        [HttpPost]
+        [Route("/Projects/AddUser")]
+        public async Task AddUser(AddUserDto dto)
+        {
+            var updateProject = await _context
+                .Project
+                .Include(p => p.Users)
+                .FirstAsync(p => p.Id == dto.ProjectOrCompanyId);
+            var user = await _context.User.FirstAsync(u => u.Id == dto.UserId);
+            updateProject.Users.Add(user);
             await _context.SaveChangesAsync();
         }
     }

@@ -77,7 +77,6 @@ namespace Developer.API.Controllers
         [Route("/Companies/Delete")]
         public async Task Delete(int id)
         {
-            //todo not checked
             var company = await _context.Company.FirstAsync(c => c.Id == id);
             _context.Company.Remove(company);
             await _context.SaveChangesAsync();
@@ -87,7 +86,6 @@ namespace Developer.API.Controllers
         [Route("/Companies/AddUser")]
         public async Task AddUser(int companyId, int userId)
         {
-            //todo not checked
             var company = await _context.Company.FirstAsync(c => c.Id == companyId);
             var user = await _context.User.FirstAsync(u => u.Id == userId);
             company.Users.Add(user);
@@ -97,7 +95,6 @@ namespace Developer.API.Controllers
         [Route("/Companies/AddProject")]
         public async Task AddProject(int companyId, int projectId)
         {
-            //todo not checkded
             var company = await _context.Company.FirstAsync(c => c.Id == companyId);
             var project = await _context.Project.FirstAsync(p => p.Id == projectId);
             company.Projects.Add(project);

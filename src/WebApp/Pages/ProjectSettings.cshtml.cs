@@ -40,6 +40,9 @@ namespace WebApp.Pages
         {
             [Display(Name = "Name")]
             public string Name { get; set; }
+            
+            [Display(Name = "Add user")]
+            public int NewUserId { get; set; }
         }
         
         [BindProperty]
@@ -98,7 +101,10 @@ namespace WebApp.Pages
             if (user is null)
                 return Redirect("/Identity/Account/Login");
 
-            if (!(await _developerService.GetProjectUsers(id)).Select(u => u.Id).Contains(user.UserId))
+            var projectUsersIds = (await _developerService.GetProjectUsers(id))
+                .Select(u => u.Id)
+                .ToList();
+            if (!projectUsersIds.Contains(user.UserId))
                 return Forbid();
             
             if (!ModelState.IsValid)
@@ -111,6 +117,11 @@ namespace WebApp.Pages
             if (Input.Name != name)
             {
                 await _developerService.UpdateProject(new ProjectModel {Id = project.Id, Name = Input.Name});
+            }
+
+            if (Input.NewUserId > 0 && !projectUsersIds.Contains(Input.NewUserId))
+            {
+                await _developerService.AddUserToProject(Input.NewUserId, ProjectId);
             }
             
             if (Avatar is {ContentType: "image/jpeg" or "image/png"})

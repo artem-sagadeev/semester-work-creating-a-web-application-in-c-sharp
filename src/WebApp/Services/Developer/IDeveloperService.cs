@@ -25,6 +25,7 @@ namespace WebApp.Services.Developer
         Task<CompanyModel> GetProjectCompany(int projectId);
         Task<string> CreateProject(ProjectForm projectForm);
         Task UpdateProject(ProjectModel project);
+        Task AddUserToProject(int userId, int projectId);
 
         //Companies
         Task<IEnumerable<CompanyModel>> GetCompanies();
