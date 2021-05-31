@@ -53,6 +53,11 @@ namespace WebApp.Services.Developer
             await _client.PostAsJsonAsync($"/Developers/CreateUser", user);
         }
 
+        public async Task UpdateUser(UserModel user)
+        {
+            await _client.PostAsJsonAsync($"/Developers/UpdateUser", user);
+        }
+
         public async Task<IEnumerable<ProjectModel>> GetProjects()
         {
             var response = await _client.GetAsync($"/Developers/GetProjects");
