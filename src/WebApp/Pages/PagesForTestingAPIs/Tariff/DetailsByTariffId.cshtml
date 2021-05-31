@@ -1,9 +1,0 @@
-﻿@page
-@model WebApp.Pages.Tariff.DetailsByTariffIdModel
-
-<p>
-    Id = <a asp-page="/Tariff/DetailsByTariffId" asp-route-tariffId="@Model.TariffModels.Id">@Model.TariffModels.Id</a>;
-    SubscribedTypeId = <a asp-page="/Tariff/DetailsBySubscriptionTypeId" asp-route-subscriptionTypeId="@Model.TariffModels.TypeOfSubscription"> @Model.TariffModels.TypeOfSubscription</a>;
-   @Model.TariffModels.PricePerMonth руб
-</p>
-<p><a asp-page="/Tariff/Index">Все</a></p>

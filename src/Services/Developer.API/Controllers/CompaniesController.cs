@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Developer.API.Controllers
 {
+    [ApiController]
     public class CompaniesController : Controller
     {
         private readonly DeveloperDbContext _context;
