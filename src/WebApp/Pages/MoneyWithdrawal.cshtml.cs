@@ -39,12 +39,12 @@ namespace WebApp.Pages
                 await _paymentService.AddWithdrawal(new WithdrawalModel()
                 {
                     DateTime = DateTime.Now,
-                    Sum = (await _paymentService.GetVirtualPurse(userId)).Money,
+                    Sum = money,
                     UserID = userId,
                     ViewOfBankNumber = ViewOfBankNumber.Virtual
                 });
                 await _paymentService.TransferMoneyToBankAccount(await _paymentService.GetBankAccount(userId));
-                await _paymentService.UpdateVirtualPurse(userId, 0);
+                await _paymentService.UpdateVirtualPurse(userId, (await _paymentService.GetVirtualPurse(userId)).Money - money);
             }
             return RedirectToPage("MoneyWithdrawal");
         }
