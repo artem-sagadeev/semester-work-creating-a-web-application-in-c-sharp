@@ -31,9 +31,7 @@
         </a>
     </p>
     <div class="collapse" id="collapseExample">
-        <div class="card card-body">
-            <img class="dropdown-item" alt="" src="img/map.jpg" style="height: 40%">
-        </div>
+        <div id="map" class="card card-body" style="height: 800px;"></div>
     </div>
 </div>
 
@@ -43,3 +41,28 @@
         @await Html.PartialAsync("Shared/_ProjectMiniPreviewPartial", project)
     }
 </div>
+
+@section Scripts
+{
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=ed9ee632-4f57-4dd1-ad11-59fae15159cd&lang=ru_RU" type="text/javascript"></script>
+    <script type="text/javascript">
+        ymaps.ready(init);
+        function init(){
+            let latitude = parseFloat("@Model.CompanyModel.Latitude".replace(",", "."));
+            let longitude = parseFloat("@Model.CompanyModel.Longitude".replace(",", "."));
+            
+            let myMap = new ymaps.Map("map", {
+                center: [latitude, longitude],
+                zoom: 11
+            });
+    
+            let myGeoObject = new ymaps.Placemark([latitude, longitude]);
+    
+            let myClusterer = new ymaps.Clusterer(
+              {clusterDisableClickZoom: false}
+            );
+            myClusterer.add(myGeoObject);
+            myMap.geoObjects.add(myClusterer);
+        }
+    </script>
+}

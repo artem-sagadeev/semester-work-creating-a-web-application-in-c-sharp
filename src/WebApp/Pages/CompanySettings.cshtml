@@ -19,6 +19,19 @@
                     <span asp-validation-for="Input.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
+                    <label asp-for="Input.Coordinates"></label>
+                    <input asp-for="Input.Coordinates" class="form-control"/>
+                    <span asp-validation-for="Input.Coordinates" class="text-danger"></span>
+                    <p>
+                        <a class="btn btn-main" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            Choose a location
+                        </a>
+                    </p>
+                    <div class="collapse" id="collapseExample">
+                        <div id="map" class="card card-body" style="height: 500px;"></div>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label asp-for="Avatar"></label>
                     <div>
                         @if (Model.AvatarPath != null)
@@ -34,3 +47,34 @@
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=ed9ee632-4f57-4dd1-ad11-59fae15159cd&lang=ru_RU" type="text/javascript"></script>
+    <script type="text/javascript">
+        ymaps.ready(init);
+        function init(){
+            let latitude = parseFloat("@Model.Latitude".replace(",", "."));
+            let longitude = parseFloat("@Model.Longitude".replace(",", "."));
+            
+            let myMap = new ymaps.Map("map", {
+                center: [latitude, longitude],
+                zoom: 11
+            });
+    
+            let myGeoObject = new ymaps.Placemark([latitude, longitude]);
+    
+            let myClusterer = new ymaps.Clusterer(
+              {clusterDisableClickZoom: false}
+            );
+            myClusterer.add(myGeoObject);
+            myMap.geoObjects.add(myClusterer);
+            
+            myMap.events.add('click', function (e) {
+                let coords = String(e.get("coords"));
+                let result = coords.split(',')[0] + " " + coords.split(',')[1];
+                document.getElementById("Input_Coordinates").value = result;
+            });
+        }
+    </script>
+}

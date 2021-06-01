@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebApp.DTOs;
 using WebApp.Models.Developer;
 using WebApp.Pages;
 
@@ -35,8 +36,9 @@ namespace WebApp.Services.Developer
         Task<IEnumerable<UserModel>> GetCompanyUsers(int companyId);
         Task<IEnumerable<ProjectModel>> GetCompanyProjects(int companyId);
         Task<string> CreateCompany(CompanyForm companyForm);
-        Task UpdateCompany(CompanyModel company);
+        Task UpdateCompanyName(CompanyModel company);
         Task AddUserToCompany(int userId, int companyId);
+        Task UpdateCoordinates(CoordinatesDto dto);
 
         //Tags
         Task<IEnumerable<TagModel>> GetTags(ICreator creator);
