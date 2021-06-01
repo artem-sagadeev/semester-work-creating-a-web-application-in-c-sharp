@@ -3,15 +3,17 @@ using System;
 using Developer.API;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Developer.API.Migrations
 {
     [DbContext(typeof(DeveloperDbContext))]
-    partial class DeveloperDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210601063241_EditCoordinatesType")]
+    partial class EditCoordinatesType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,11 +59,11 @@ namespace Developer.API.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<decimal>("Latitude")
-                        .HasColumnType("numeric");
+                    b.Property<double>("Latitude")
+                        .HasColumnType("double precision");
 
-                    b.Property<decimal>("Longitude")
-                        .HasColumnType("numeric");
+                    b.Property<double>("Longitude")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
