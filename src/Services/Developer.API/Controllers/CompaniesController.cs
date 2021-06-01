@@ -93,8 +93,8 @@ namespace Developer.API.Controllers
         }
 
         [HttpPost]
-        [Route("/Companies/Update")]
-        public async Task Update(Company company)
+        [Route("/Companies/UpdateName")]
+        public async Task UpdateName(Company company)
         {
             var updateCompany = await _context.Company.FirstAsync(c => c.Id == company.Id);
             updateCompany.Name = company.Name;
@@ -111,6 +111,18 @@ namespace Developer.API.Controllers
                 .FirstAsync(c => c.Id == dto.ProjectOrCompanyId);
             var user = await _context.User.FirstAsync(u => u.Id == dto.UserId);
             company.Users.Add(user);
+            await _context.SaveChangesAsync();
+        }
+
+        [HttpPost]
+        [Route("/Companies/UpdateCoordinates")]
+        public async Task UpdateCoordinates(CoordinatesDto dto)
+        {
+            var company = await _context
+                .Company
+                .FirstAsync(c => c.Id == dto.CompanyId);
+            company.Latitude = dto.Latitude;
+            company.Longitude = dto.Longitude;
             await _context.SaveChangesAsync();
         }
     }

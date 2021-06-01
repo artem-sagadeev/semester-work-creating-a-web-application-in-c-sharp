@@ -820,7 +820,7 @@
       "UpstreamHttpMethod": [ "POST" ]
     },
     {
-        "DownStreamPathTemplate": "/Companies/Update",
+        "DownStreamPathTemplate": "/Companies/UpdateName",
         "DownstreamScheme": "http",
         "DownstreamHostAndPorts": [
             {
@@ -828,7 +828,7 @@
                 "Port": 5003
             }
         ],
-        "UpstreamPathTemplate": "/Developers/UpdateCompany",
+        "UpstreamPathTemplate": "/Developers/UpdateCompanyName",
         "UpstreamHttpMethod": [ "POST" ]
     },
     {
@@ -841,6 +841,18 @@
             }
         ],
         "UpstreamPathTemplate": "/Developers/AddUserToCompany",
+        "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+        "DownStreamPathTemplate": "/Companies/UpdateCoordinates",
+        "DownstreamScheme": "http",
+        "DownstreamHostAndPorts": [
+            {
+                "Host": "localhost",
+                "Port": 5003
+            }
+        ],
+        "UpstreamPathTemplate": "/Developers/UpdateCoordinates",
         "UpstreamHttpMethod": [ "POST" ]
     },
     //Tags

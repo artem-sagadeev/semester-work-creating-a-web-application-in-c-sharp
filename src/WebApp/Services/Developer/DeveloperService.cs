@@ -153,15 +153,20 @@ namespace WebApp.Services.Developer
             return await response.Content.ReadAsStringAsync();
         }
 
-        public async Task UpdateCompany(CompanyModel company)
+        public async Task UpdateCompanyName(CompanyModel company)
         {
-            await _client.PostAsJsonAsync("/Developers/UpdateCompany", company);
+            await _client.PostAsJsonAsync("/Developers/UpdateCompanyName", company);
         }
 
         public async Task AddUserToCompany(int userId, int companyId)
         {
             await _client.PostAsJsonAsync("/Developers/AddUserToCompany",
                 new AddUserDto {UserId = userId, ProjectOrCompanyId = companyId});
+        }
+
+        public async Task UpdateCoordinates(CoordinatesDto dto)
+        {
+            await _client.PostAsJsonAsync("/Developers/UpdateCoordinates", dto);
         }
 
         public async Task<IEnumerable<TagModel>> GetTags(ICreator creator)

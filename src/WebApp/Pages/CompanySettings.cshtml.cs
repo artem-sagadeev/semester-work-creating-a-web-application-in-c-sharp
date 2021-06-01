@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using WebApp.DTOs;
 using WebApp.Models.Developer;
 using WebApp.Models.Files;
 using WebApp.Models.Identity;
@@ -42,7 +43,13 @@ namespace WebApp.Pages
             
             [Display(Name = "Add user")]
             public int NewUserId { get; set; }
+            
+            [Display(Name = "Coordinates")]
+            public string Coordinates { get; set; }
         }
+        
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
         
         [BindProperty]
         public InputModel Input { get; set; }
@@ -63,10 +70,13 @@ namespace WebApp.Pages
             var name = company.Name;
             AvatarPath = (await _fileService.GetAvatar(company.Id, CreatorType.Company)).Path;
             CompanyId = company.Id;
+            Latitude = company.Latitude;
+            Longitude = company.Longitude;
 
             Input = new InputModel
             {
-                Name = name
+                Name = name,
+                Coordinates = $"{company.Latitude} {company.Longitude}"
             };
         }
         
@@ -115,12 +125,29 @@ namespace WebApp.Pages
             var name = company.Name;
             if (Input.Name != name)
             {
-                await _developerService.UpdateCompany(new CompanyModel {Id = company.Id, Name = Input.Name});
+                await _developerService.UpdateCompanyName(new CompanyModel {Id = company.Id, Name = Input.Name});
             }
 
             if (Input.NewUserId > 0 && !companyUsersIds.Contains(Input.NewUserId))
             {
                 await _developerService.AddUserToCompany(Input.NewUserId, company.Id);
+            }
+
+            if (!string.IsNullOrEmpty(Input.Coordinates))
+            {
+                var coordinates = Input.Coordinates.Replace(".", ",").Split(" ");
+                var latitudeParseResult = decimal.TryParse(coordinates[0], out var latitude);
+                var longitudeParseResult = decimal.TryParse(coordinates[1], out var longitude);
+
+                if (latitudeParseResult && longitudeParseResult)
+                {
+                    await _developerService.UpdateCoordinates(new CoordinatesDto
+                    {
+                        CompanyId = company.Id,
+                        Latitude = latitude,
+                        Longitude = longitude
+                    });
+                }
             }
             
             if (Avatar is {ContentType: "image/jpeg" or "image/png"})
