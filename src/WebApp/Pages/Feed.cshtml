@@ -1,8 +1,9 @@
 ﻿@page
 @model WebApp.Pages.Feed
 
-@foreach (var post in Model.PostModels)
-{
-    @post.Id
-    @post.Text;
-}
+<div class="container">
+    @foreach (var post in Model.PostModels)
+    {
+        @await Html.PartialAsync("Shared/_PostPartial", post)
+    }
+</div>
