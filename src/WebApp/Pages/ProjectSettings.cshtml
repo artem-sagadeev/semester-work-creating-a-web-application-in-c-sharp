@@ -24,13 +24,18 @@
                     <div>
                         @if (Model.AvatarPath != null)
                         {
-                            <img src="/@Model.AvatarPath" alt="avatar">
+                            <img src="/@Model.AvatarPath" alt="avatar" style="max-width: 300px">
                         }
                     </div>
-                    <input asp-for="Avatar" class="form-control"/>
-                    <span asp-validation-for="Avatar" class="text-danger"></span>
+                    <div class="input-group mb-3" style="max-width: 400px; margin-top: 10px">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="avatar" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            <span asp-validation-for="Avatar" class="text-danger"></span>
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        </div>
+                    </div>
                 </div>
-                <button id="update-project-button" type="submit" class="btn btn-primary">Save</button>
+                <button id="update-project-button" type="submit" class="btn btn-primary" style="margin-bottom: 10px">Save</button>
             </form>
         </div>
     </div>
