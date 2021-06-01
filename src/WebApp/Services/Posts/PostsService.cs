@@ -2,8 +2,10 @@
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using WebApp.DTOs;
 using WebApp.Extensions;
 using WebApp.Models.Posts;
+using WebApp.Models.Subscription;
 
 namespace WebApp.Services.Posts
 {
@@ -56,6 +58,16 @@ namespace WebApp.Services.Posts
         {
             var response = await _client.PostAsJsonAsync($"/Posts/CreatePost", post);
             return await response.ReadContentAs<PostModel>();
+        }
+
+        public async Task UpdateRequiredType(RequiredTypeDto dto)
+        {
+            await _client.PostAsJsonAsync("/Posts/UpdateRequiredtype", dto);
+        }
+
+        public async Task UpdateText(TextDto dto)
+        {
+            await _client.PostAsJsonAsync("/Posts/UpdateText", dto);
         }
     }
 }

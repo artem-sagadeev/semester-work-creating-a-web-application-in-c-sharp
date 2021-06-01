@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Posts.API.DTOs;
 using Posts.API.Entities;
 
 namespace Posts.API.Controllers
@@ -70,19 +71,26 @@ namespace Posts.API.Controllers
         [Route("/Posts/Create")]
         public async Task<Post> Create(Post post)
         {
-            //todo not checked
             await _context.AddAsync(post);
             await _context.SaveChangesAsync();
             return post;
         }
         
         [HttpPost]
-        [Route("/Posts/Update")]
-        public async Task Update(int id, string text)
+        [Route("/Posts/UpdateRequiredType")]
+        public async Task UpdateRequiredType(RequiredTypeDto dto)
         {
-            //todo not checked
-            var post = await _context.Post.FirstAsync(p => p.Id == id);
-            post.Text = text;
+            var post = await _context.Post.FirstAsync(p => p.Id == dto.PostId);
+            post.RequiredSubscriptionType = dto.PriceType;
+            await _context.SaveChangesAsync();
+        }
+        
+        [HttpPost]
+        [Route("/Posts/UpdateText")]
+        public async Task UpdateText(TextDto dto)
+        {
+            var post = await _context.Post.FirstAsync(p => p.Id == dto.PostId);
+            post.Text = dto.Text;
             await _context.SaveChangesAsync();
         }
 
@@ -90,7 +98,6 @@ namespace Posts.API.Controllers
         [Route("/Posts/Delete")]
         public async Task Delete(int id)
         {
-            //todo not checked
             var post = await _context
                 .Post
                 .Include(p => p.Comments)
