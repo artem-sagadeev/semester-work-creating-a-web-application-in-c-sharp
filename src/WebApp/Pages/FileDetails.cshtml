@@ -1,0 +1,19 @@
+﻿@page
+@model WebApp.Pages.FileDetails
+
+@section Scripts
+{
+    <script src="/js/highlight.js"></script>
+    <script>hljs.highlightAll();</script>
+}
+
+@section Styles 
+{
+    <link rel="stylesheet" href="/css/highlight.css">
+}
+
+<pre>
+    <code>
+        @Model.Code
+    </code>
+</pre>

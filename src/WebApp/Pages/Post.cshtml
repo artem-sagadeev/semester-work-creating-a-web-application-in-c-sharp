@@ -19,11 +19,11 @@
         </div>
     </div>
     <!-- Model.PostModel.Id -->
+    <div>Files</div>
     @foreach (var file in Model.Files)
     {
         <div>
-            @file.Name
-            @file.Type
+            <a asp-page="FileDetails" asp-route-name="@file.Name">@file.Name.Split("_")[1]</a>
         </div>
     }
     
