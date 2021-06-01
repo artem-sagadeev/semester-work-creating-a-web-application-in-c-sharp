@@ -24,16 +24,19 @@
     </div>
 </div>
 
-<div class="container">
-    <p>
-        <a class="btn btn-main" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-            Office
-        </a>
-    </p>
-    <div class="collapse" id="collapseExample">
-        <div id="map" class="card card-body" style="height: 800px;"></div>
+@if (Model.CompanyModel.Latitude > 0 && Model.CompanyModel.Longitude > 0)
+{
+    <div class="container">
+        <p>
+            <a class="btn btn-main" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Office
+            </a>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div id="map" class="card card-body" style="height: 800px;"></div>
+        </div>
     </div>
-</div>
+}
 
 <div class="projects-slider container">
     @foreach (var project in Model.CompanyModel.Projects)

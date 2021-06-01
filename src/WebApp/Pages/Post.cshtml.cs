@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using WebApp.DTOs;
 using WebApp.Models.Files;
 using WebApp.Models.Identity;
 using WebApp.Models.Posts;
@@ -81,8 +82,9 @@ namespace WebApp.Pages
                 _ => PriceType.Free
             };
 
-            post.RequiredSubscriptionType = requiredType;
-            post.Text = text;
+
+            await _postsService.UpdateRequiredType(new RequiredTypeDto {PostId = postId, PriceType = (int) requiredType});
+            await _postsService.UpdateText(new TextDto {PostId = postId, Text = text});
 
             if (cover is not null)
             {

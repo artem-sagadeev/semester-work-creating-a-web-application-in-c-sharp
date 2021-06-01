@@ -1,6 +1,14 @@
 ﻿@page
 @model WebApp.Pages.Post
 
+@{
+    var priceType = Model.PostModel.RequiredSubscriptionType;
+    var freeChecked = (int) priceType == 0 ? "checked" : "";
+    var basicChecked = (int) priceType == 1 ? "checked" : "";
+    var improvedChecked = (int) priceType == 2 ? "checked" : "";
+    var maxChecked = (int) priceType == 3 ? "checked" : "";
+}
+
 <div class="post container">
     <div class="row">
         <div class="col-auto">
@@ -28,24 +36,22 @@
         <div class="collapse" id="collapseExample">
             <div class="card card-body">
                 <div class="change-text">
-                                <form method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="postId" value="@Model.PostModel.Id">
-                                    <div>
-                                        <label>Free</label>
-                                        <input type="radio" name="type" value="free">
-                                        <label>Basic</label>
-                                        <input type="radio" name="type" value="basic">
-                                        <label>Improved</label>
-                                        <input type="radio" name="type" value="improved">
-                                        <label>Max</label>
-                                        <input type="radio" name="type" value="max">
-                                    </div>
-                                    <input class="input-search form-control" type="text" name="text" value="@Model.PostModel.Text" style="margin-bottom: 10px">
-                                    @*Сюда надо добавить удаление/добавление файлов - сделай это*@
-                                    @*В зависимости от фронта я пристрою бэк работы с файлами*@
-                                    <button type="submit" class="btn btn-search">Send</button>
-                                </form>
-                            </div>
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="postId" value="@Model.PostModel.Id">
+                        <div>
+                            <label>Free</label>
+                            <input type="radio" name="type" value="free" @freeChecked>
+                            <label>Basic</label>
+                            <input type="radio" name="type" value="basic" @basicChecked>
+                            <label>Improved</label>
+                            <input type="radio" name="type" value="improved" @improvedChecked>
+                            <label>Max</label>
+                            <input type="radio" name="type" value="max" @maxChecked>
+                        </div>
+                        <input class="input-search form-control" type="text" name="text" value="@Model.PostModel.Text" style="margin-bottom: 10px">
+                        <button type="submit" class="btn btn-search">Send</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

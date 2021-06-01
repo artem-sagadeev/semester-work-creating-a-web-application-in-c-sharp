@@ -104,7 +104,7 @@ namespace WebApp.Pages
                 "basic" => PriceType.Basic,
                 "improved" => PriceType.Improved,
                 "max" => PriceType.Max,
-                _ => throw new NotSupportedException()
+                _ => PriceType.Free
             };
 
             var post = new PostModel {ProjectId = id, UserId = userId, RequiredSubscriptionType = requiredType, Text = text};
