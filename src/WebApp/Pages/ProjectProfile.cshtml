@@ -13,13 +13,14 @@
         @await Html.PartialAsync("Shared/_CreatorPreviewPartial", Model.ProjectModel)
     </div>
     <div class="col" style="margin-top: 10px">
-        <div class="row row-cols-4">
-        @foreach (var user in Model.ProjectModel.Users)
-        {
-            <div class="col">
-            @await Html.PartialAsync("Shared/_UserMiniPreviewPartial", user)
-            </div>
-        }
+        <a asp-page="/ProjectSettings" asp-route-id="@Model.ProjectModel.Id" class="btn btn-main" style="max-width: 100px">Edit</a>
+        <div class="row row-cols-4" style="margin-top: 5px">
+            @foreach (var user in Model.ProjectModel.Users)
+            {
+                <div class="col-auto">
+                    @await Html.PartialAsync("Shared/_UserMiniPreviewPartial", user)
+                </div>
+            }
         </div>
     </div>
 </div>

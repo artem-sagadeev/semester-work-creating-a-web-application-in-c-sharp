@@ -17,8 +17,10 @@
 }
 </div>
 
-@foreach (var post in Model.PostModels)
-{
-    @await Html.PartialAsync("Shared/_PostPartial", post)
-}
+<div class="container">
+    @foreach (var post in Model.PostModels)
+    {
+        @await Html.PartialAsync("Shared/_PostPartial", post)
+    }
+</div>
 
