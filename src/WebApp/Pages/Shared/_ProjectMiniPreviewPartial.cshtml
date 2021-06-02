@@ -8,8 +8,8 @@
     var avatar = await _fileService.GetAvatar(Model.Id, CreatorType.Project);
 }
 
-<div class="project-preview">
+<a class="project-preview" asp-page="/ProjectProfile" asp-route-id="@Model.Id" style="text-decoration: none; color: black;">
     <!--Model.Id-->
     <img src="@avatar?.Path" alt="avatar">
     <h5 style="font-weight: bold">@Model.Name</h5>
-</div>
+</a>

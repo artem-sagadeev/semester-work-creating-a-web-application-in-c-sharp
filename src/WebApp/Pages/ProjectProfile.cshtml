@@ -44,7 +44,7 @@
                         <input type="radio" name="type" value="max">
                     </div>
                     <div class="form-floating">
-                      <textarea class="input-search form-control" type="text" name="text" placeholder="Whats new?" style="margin-bottom: 4px"></textarea>
+                        <textarea class="input-search form-control" type="text" name="text" placeholder="Whats new?" style="margin-bottom: 4px"></textarea>
                     </div>
                     <div class="input-group mb-3" style="max-width: 400px">
                         <div class="custom-file">
@@ -69,7 +69,24 @@
             
         </div>
         <div class="col-auto">
-            
+            @if (_signInManager.IsSignedIn(User) && @Model.HasAccessToChat)
+            {
+                <div id="inputForm" style="margin-top: 30px">
+                    <div class="form-floating">
+                        <textarea class="input-search form-control" id="message" type="text" name="text" placeholder="Create message" style="margin-bottom: 4px"></textarea>
+                    </div>
+                    <input type="button" id="sendBtn" class="btn btn-main" value="Отправить"/>
+                </div>
+                
+                <div id="chatroom">
+                    <div class="container">
+                        @foreach (var pair in @Model.Messages.OrderByDescending(m => m.Item2.DateTime))
+                        {
+                            <p>@pair.Item1 : @pair.Item2.Text (@pair.Item2.DateTime)</p>
+                        }
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>
@@ -81,17 +98,11 @@
 
 @if (_signInManager.IsSignedIn(User) && @Model.HasAccessToChat)
 {
-    <div id="inputForm">
+    /*<div id="inputForm">
         <input type="text" id="message"/>
         <input type="button" id="sendBtn" value="Отправить"/>
-    </div>
-    <div id="chatroom"></div>
-    
-@foreach (var pair in @Model.Messages.OrderByDescending(m => m.Item2.DateTime))
-{
-    <p>@pair.Item1 : @pair.Item2.Text (@pair.Item2.DateTime)</p>
-}
-    
+    </div>*/
+    /*<div id="chatroom"></div>*/
     <script src="js/signalr/dist/browser/signalr.min.js"></script>
     <script>
         const hubConnection = new signalR.HubConnectionBuilder()
