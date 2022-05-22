@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChatsAPI
 {
@@ -26,12 +27,20 @@ namespace ChatsAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<ChatsContext>();
+            services.AddDbContext<ChatsContext>(options =>
+            {
+                options.UseNpgsql(Configuration["Database:ConnectionString"]);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ChatsContext context)
         {
+            if (Configuration.GetValue<bool>("Automigration"))
+            {
+                context.Database.Migrate();
+            }
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

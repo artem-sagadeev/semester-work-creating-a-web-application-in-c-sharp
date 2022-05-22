@@ -71,7 +71,16 @@ namespace Developer.API.Controllers
         [Route("/Companies/Create")]
         public ActionResult<string> Create(CompanyForm companyForm)
         {
-            return Company.Create(companyForm);
+            if (_context.Company.Select(c => c.Name).Contains(companyForm.Name))
+                return "Company with same name already exists";
+
+            var user = _context
+                .User
+                .First(u => u.Id == companyForm.UserId);
+
+            _context.Company.Add(new Company(companyForm.Name) {Users = new List<User> {user}});
+            _context.SaveChanges();
+            return string.Empty;
         }
         
         [HttpPost]

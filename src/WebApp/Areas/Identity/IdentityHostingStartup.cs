@@ -17,8 +17,6 @@ namespace WebApp.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<ApplicationContext>();
-
                 services.AddDefaultIdentity<ApplicationUser>(options =>
                     {
                         options.Password.RequiredLength = 8;

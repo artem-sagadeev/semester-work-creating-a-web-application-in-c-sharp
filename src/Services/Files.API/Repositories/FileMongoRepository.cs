@@ -8,7 +8,7 @@ using MongoDB.Driver;
 
 namespace Files.API.Repositories
 {
-    public class FileRepository : IFileRepository
+    public class FileMongoRepository : IFileRepository
     {
         private readonly IMongoCollection<File> _files;
         private readonly IMongoCollection<Avatar> _avatars;
@@ -19,7 +19,7 @@ namespace Files.API.Repositories
         private readonly Avatar _defaultCompanyAvatar = new Avatar(0, "defaultCompanyAvatar.jpg", 2);
         private readonly Cover _defaultCover = new Cover(0, "defaultCover.jpg");
 
-        public FileRepository()
+        public FileMongoRepository()
         {
             const string connectionString = "mongodb://localhost:27017/files";
             var connection = new MongoUrlBuilder(connectionString);

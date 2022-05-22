@@ -71,7 +71,38 @@ namespace Developer.API.Controllers
         [Route("/Projects/Create")]
         public ActionResult<string> Create(ProjectForm projectForm)
         {
-            return Project.Create(projectForm);
+            if (_context.Project.Select(p => p.Name).Contains(projectForm.Name))
+                return "Project with same name already exists";
+            
+            if (projectForm.CompanyId == 0)
+            {
+                var project = new Project(projectForm.Name)
+                {
+                    Users = new List<User> {_context.User.First(u => u.Id == projectForm.UserId)}
+                };
+                _context.Project.Add(project);
+                _context.SaveChanges();
+            }
+            else
+            {
+                var userCompaniesIds = _context
+                    .User
+                    .Where(u => u.Id == projectForm.UserId)
+                    .Select(u => u.Companies.Select(c => c.Id))
+                    .First();
+                if (!userCompaniesIds.Contains(projectForm.CompanyId))
+                    return "You don't have access to create projects for this company";
+            
+                var project = new Project(projectForm.Name)
+                {
+                    Company = _context.Company.First(c => c.Id == projectForm.CompanyId),
+                    Users = new List<User> {_context.User.First(u => u.Id == projectForm.UserId)}
+                };
+                _context.Project.Add(project);
+                _context.SaveChanges();
+            }
+
+            return string.Empty;
         }
         
         [HttpPost]
