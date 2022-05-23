@@ -78,8 +78,8 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(applicationUser);
             var user = await _developerService.GetUser(applicationUser.UserId);
             var name = user.Name;
-            var card = (await _paymentService.GetBankAccount(user.Id)).Number;
-            AvatarPath = (await _fileService.GetAvatar(user.Id, CreatorType.User)).Path;
+            var card = (await _paymentService.GetBankAccount(user.Id))?.Number;
+            AvatarPath = (await _fileService.GetAvatar(user.Id, CreatorType.User))?.Path;
 
             Input = new InputModel
             {
@@ -144,7 +144,7 @@ namespace WebApp.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            var card = (await _paymentService.GetBankAccount(user.UserId)).Number;
+            var card = (await _paymentService.GetBankAccount(user.UserId))?.Number;
             if (Input.Card != card)
             {
                 await _paymentService.UpdateBankAccount(

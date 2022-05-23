@@ -121,5 +121,18 @@ namespace WebApp.Pages
             
             return Redirect($"/Post?id={postId}");
         }
+
+        public async Task<bool> CheckAccess(PostModel post)
+        {
+            if (!_signInManager.IsSignedIn(User))
+                return false;
+
+            var userId = (await _userManager.GetUserAsync(User)).UserId;
+
+            var allowedUsers = (await _developerService.GetProjectUsers(post.ProjectId))
+                .Select(u => u.Id);
+            
+            return post.UserId == userId || allowedUsers.Contains(userId);
+        }
     }
 }

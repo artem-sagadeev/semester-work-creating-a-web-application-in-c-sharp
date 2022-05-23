@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,11 @@ namespace Files.API.Repositories
     public class FilePostgresRepository : IFileRepository
     {
         private readonly FilesDbContext _context;
+        
+        private readonly Avatar _defaultUserAvatar = new Avatar(0, "defaultUserAvatar.jpg", 0);
+        private readonly Avatar _defaultProjectAvatar = new Avatar(0, "defaultProjectAvatar.jpg", 1);
+        private readonly Avatar _defaultCompanyAvatar = new Avatar(0, "defaultCompanyAvatar.jpg", 2);
+        private readonly Cover _defaultCover = new Cover(0, "defaultCover.jpg");
 
         public FilePostgresRepository(FilesDbContext context)
         {
@@ -42,15 +48,32 @@ namespace Files.API.Repositories
 
         public async Task<Avatar> GetAvatarAsync(int creatorId, CreatorType creatorType)
         {
-            return await _context
-                .Avatar
-                .FirstAsync(avatar => avatar.CreatorId == creatorId && avatar.CreatorType == creatorType);
+            var avatar = await _context.Avatar
+                .FirstOrDefaultAsync(avatar => avatar.CreatorId == creatorId && avatar.CreatorType == creatorType);
+            
+            return avatar ?? creatorType switch
+            {
+                CreatorType.User => _defaultUserAvatar,
+                CreatorType.Project => _defaultProjectAvatar,
+                CreatorType.Company => _defaultCompanyAvatar,
+                _ => throw new ArgumentException()
+            };
         }
 
         public async Task CreateAvatarAsync(Avatar avatar)
         {
+            await DeleteAvatarAsync(avatar);
             _context.Avatar.Add(avatar);
             await _context.SaveChangesAsync();
+        }
+        
+        private async Task DeleteAvatarAsync(Avatar avatar)
+        {
+            var avatars = await _context.Avatar
+                .Where(x => x.CreatorId == avatar.CreatorId && x.CreatorType == avatar.CreatorType)
+                .ToListAsync();
+
+            _context.Avatar.RemoveRange(avatars);
         }
 
         public async Task CreateCoverAsync(Cover cover)
@@ -61,15 +84,23 @@ namespace Files.API.Repositories
 
         public async Task DeleteCoverAsync(int postId)
         {
-            _context.Cover.Remove(await GetCoverAsync(postId));
+            var cover = await _context.Cover
+                .Where(x => x.PostId == postId)
+                .FirstOrDefaultAsync();
+            
+            if (cover is null)
+                return;
+            
+            _context.Cover.Remove(cover);
             await _context.SaveChangesAsync();
         }
 
         public async Task<Cover> GetCoverAsync(int postId)
         {
-            return await _context
-                .Cover
-                .FirstAsync(cover => cover.PostId == postId);
+            var cover = await _context.Cover
+                .FirstOrDefaultAsync(cover => cover.PostId == postId);
+            
+            return cover ?? _defaultCover;
         }
     }
 }

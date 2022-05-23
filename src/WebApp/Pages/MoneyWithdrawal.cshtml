@@ -3,9 +3,14 @@
 @using WebApp.Models.Identity
 @using WebApp.Services.Payment
 @model WebApp.Pages.MoneyWithdrawalModel
+@{
+    ViewData["Title"] = "Money Withdrawal";
+}
+
 @inject SignInManager<ApplicationUser> _signInManager
 @inject UserManager<ApplicationUser> _userManager
 @inject IPaymentService _paymentService;
+
 @{
     var userId = (await _userManager.GetUserAsync(User)).UserId;
     var money = (await _paymentService.GetVirtualPurse(userId)).Money;

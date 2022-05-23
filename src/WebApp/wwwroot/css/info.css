@@ -33,3 +33,7 @@
     color: white;
     font-weight: bold;
 }
+
+.btn-subscribe:hover{
+    color: #4C45C2 !important;
+}

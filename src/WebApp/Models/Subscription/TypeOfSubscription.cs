@@ -2,8 +2,8 @@
 {
     public enum TypeOfSubscription
     {
-        User,
-        Project,
-        Team
+        User = 0,
+        Project = 1,
+        Team = 2
     }
 }

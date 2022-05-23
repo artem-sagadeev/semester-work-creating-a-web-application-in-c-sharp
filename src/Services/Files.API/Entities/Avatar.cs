@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -13,7 +14,8 @@ namespace Files.API.Entities
     
     public class Avatar
     {
-        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonRepresentation(BsonType.ObjectId)] // <-- for Mongo
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // <-- for EF
         public string Id { get; set; }
         public int CreatorId { get; set; }
         public string Name { get; set; }

@@ -42,6 +42,9 @@ namespace WebApp.Pages
             var subscriptions = (await _subscriptionService
                     .GetPaidSubscriptionsByUserId(user.UserId))
                     .ToList();
+            
+            if (!subscriptions.Any())
+                return Page();
 
             var posts = new List<PostModel>();
             
@@ -71,7 +74,9 @@ namespace WebApp.Pages
             foreach (var id in projectIds)
                 posts.AddRange(await _postsService.GetProjectPosts(id) ?? new List<PostModel>());
 
-            PostModels = posts.OrderByDescending(p => p.Id).Distinct();
+            PostModels = posts.GroupBy(p => p.Id)
+                .Select(p => p.First())
+                .OrderByDescending(p => p.Id);
             
             return Page();
         }

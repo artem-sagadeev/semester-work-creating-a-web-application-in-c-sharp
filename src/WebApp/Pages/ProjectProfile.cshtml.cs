@@ -35,9 +35,18 @@ namespace WebApp.Pages
         private readonly ISubscriptionService _subscriptionService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IServiceProvider _serviceProvider;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        
-        public ProjectProfile(IDeveloperService developerService, IPostsService postsService, IChatService chatService, ISubscriptionService subscriptionService, UserManager<ApplicationUser> userManager, IServiceProvider serviceProvider, IWebHostEnvironment appEnvironment, IFileService fileService)
+
+        public ProjectProfile(IDeveloperService developerService, 
+            IPostsService postsService, 
+            IChatService chatService, 
+            ISubscriptionService subscriptionService, 
+            UserManager<ApplicationUser> userManager, 
+            IServiceProvider serviceProvider, 
+            IWebHostEnvironment appEnvironment, 
+            IFileService fileService, 
+            SignInManager<ApplicationUser> signInManager)
         {
             _developerService = developerService;
             _postsService = postsService;
@@ -45,6 +54,7 @@ namespace WebApp.Pages
             _serviceProvider = serviceProvider;
             _appEnvironment = appEnvironment;
             _fileService = fileService;
+            _signInManager = signInManager;
             _chatService = chatService;
             _subscriptionService = subscriptionService;
         }
@@ -164,6 +174,20 @@ namespace WebApp.Pages
             }
 
             return messages;
+        }
+
+        public async Task<bool> CheckAccess(ProjectModel project)
+        {
+            if (!_signInManager.IsSignedIn(User))
+                return false;
+
+            var userId = (await _userManager.GetUserAsync(User)).UserId;
+            
+            var projectUsersIds = (await _developerService.GetProjectUsers(project.Id))
+                .Select(u => u.Id)
+                .ToList();
+            
+            return projectUsersIds.Contains(userId);
         }
     }
 }

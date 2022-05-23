@@ -2,6 +2,9 @@
 @using Microsoft.AspNetCore.Identity
 @using WebApp.Models.Identity
 @model WebApp.Pages.UserProfile
+@{
+    ViewData["Title"] = "Profile";
+}
 
 @inject SignInManager<ApplicationUser> _signInManager
 @inject UserManager<ApplicationUser> _userManager

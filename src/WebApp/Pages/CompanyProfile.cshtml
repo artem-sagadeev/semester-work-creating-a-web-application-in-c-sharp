@@ -2,6 +2,9 @@
 @using Microsoft.AspNetCore.Identity
 @using WebApp.Models.Identity
 @model WebApp.Pages.CompanyProfile
+@{
+    ViewData["Title"] = "Company Profile";
+}
 
 @inject SignInManager<ApplicationUser> _signInManager
 @inject UserManager<ApplicationUser> _userManager
@@ -12,7 +15,10 @@
             @await Html.PartialAsync("Shared/_CreatorPreviewPartial", Model.CompanyModel)
         </div>
         <div class="col" style="margin-top: 10px">
-            <a asp-page="/CompanySettings" asp-route-id="@Model.CompanyModel.Id" class="btn btn-main" style="max-width: 100px">Edit</a>
+            @if (await Model.CheckAccess(Model.CompanyModel))
+            {
+                <a asp-page="/CompanySettings" asp-route-id="@Model.CompanyModel.Id" class="btn btn-main" style="max-width: 100px">Edit</a>
+            }
             <div class="row row-cols-4">
                 @foreach (var user in Model.CompanyModel.Users)
                 {

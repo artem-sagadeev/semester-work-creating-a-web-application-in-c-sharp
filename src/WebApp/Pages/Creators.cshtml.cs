@@ -42,6 +42,9 @@ namespace WebApp.Pages
             if (needCompanies == "on" || needAll)
                 CreatorModels.AddRange(await SearchCompanies(searchString));
             
+            if (!CreatorModels.Any())
+                return Page();
+            
             if (sortOption != null)
                 Sort(sortOption);
 

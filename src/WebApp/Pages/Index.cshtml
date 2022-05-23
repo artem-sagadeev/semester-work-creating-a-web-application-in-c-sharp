@@ -1,14 +1,27 @@
 ﻿@page
+@using WebApp.Models.Identity
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
+
+@inject SignInManager<ApplicationUser> _signInManager
+
 <div class="container-fluid home-main">
     <div class="container">
         <h2>It's easy to find like-minded people</h2>
         <p>Devpoint is a web application for developers that allows you to conveniently place your work, development processes, code details and other information in your profile.</p>
         <p>Receive funding from subscribers and create even cooler projects. Chat in chats and leave comments.</p>
-        <a class="btn create" id="register" asp-area="Identity" asp-page="/Account/Register" style="max-width:220px">Create an account</a>
-        <a class="btn find" asp-area="" asp-page="/Creators" style="max-width:220px">Find creators</a>
+        @if (!_signInManager.IsSignedIn(User))
+        {
+            <a class="btn create" id="register" asp-area="Identity" asp-page="/Account/Register" style="max-width:220px">Create an account</a>
+            <a class="btn find" asp-area="" asp-page="/Creators" style="max-width:220px">Find creators</a>
+        }
+        else
+        {
+            <a class="btn btn-main" asp-area="" asp-page="/Creators" style="max-width:220px">Find creators</a>
+        }
     </div>
 </div>

@@ -1,5 +1,8 @@
 ﻿@page
 @model WebApp.Pages.Post
+@{
+    ViewData["Title"] = "Post";
+}
 
 @{
     var priceType = Model.PostModel.RequiredSubscriptionType;
@@ -26,33 +29,36 @@
             <a asp-page="FileDetails" asp-route-name="@file.Name">@file.Name.Split("_")[1]</a>
         </div>
     }
-    
-    <div class="container">
-        <p>
-            <a class="btn btn-main" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Edit
-            </a>
-        </p>
-        <div class="collapse" id="collapseExample">
-            <div class="card card-body">
-                <div class="change-text">
-                    <form method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="postId" value="@Model.PostModel.Id">
-                        <div>
-                            <label>Free</label>
-                            <input type="radio" name="type" value="free" @freeChecked>
-                            <label>Basic</label>
-                            <input type="radio" name="type" value="basic" @basicChecked>
-                            <label>Improved</label>
-                            <input type="radio" name="type" value="improved" @improvedChecked>
-                            <label>Max</label>
-                            <input type="radio" name="type" value="max" @maxChecked>
-                        </div>
-                        <input class="input-search form-control" type="text" name="text" value="@Model.PostModel.Text" style="margin-bottom: 10px">
-                        <button type="submit" class="btn btn-search">Send</button>
-                    </form>
+
+    @if (await Model.CheckAccess(Model.PostModel))
+    {
+        <div class="container">
+            <p>
+                <a class="btn btn-main" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Edit
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    <div class="change-text">
+                        <form method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="postId" value="@Model.PostModel.Id">
+                            <div>
+                                <label>Free</label>
+                                <input type="radio" name="type" value="free" @freeChecked>
+                                <label>Basic</label>
+                                <input type="radio" name="type" value="basic" @basicChecked>
+                                <label>Improved</label>
+                                <input type="radio" name="type" value="improved" @improvedChecked>
+                                <label>Max</label>
+                                <input type="radio" name="type" value="max" @maxChecked>
+                            </div>
+                            <input class="input-search form-control" type="text" name="text" value="@Model.PostModel.Text" style="margin-bottom: 10px">
+                            <button type="submit" class="btn btn-search">Save</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 </div>

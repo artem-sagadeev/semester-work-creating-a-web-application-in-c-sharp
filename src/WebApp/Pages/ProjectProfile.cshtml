@@ -3,6 +3,9 @@
 @using WebApp.Models.Developer
 @using WebApp.Models.Identity
 @model WebApp.Pages.ProjectProfile
+@{
+    ViewData["Title"] = "Project Profile";
+}
 
 @inject SignInManager<ApplicationUser> _signInManager
 @inject UserManager<ApplicationUser> _userManager
@@ -13,7 +16,10 @@
         @await Html.PartialAsync("Shared/_CreatorPreviewPartial", Model.ProjectModel)
     </div>
     <div class="col" style="margin-top: 10px">
-        <a asp-page="/ProjectSettings" asp-route-id="@Model.ProjectModel.Id" class="btn btn-main" style="max-width: 100px">Edit</a>
+        @if (await Model.CheckAccess(Model.ProjectModel))
+        {
+            <a asp-page="/ProjectSettings" asp-route-id="@Model.ProjectModel.Id" class="btn btn-main" style="max-width: 100px">Edit</a>
+        }
         <div class="row row-cols-4" style="margin-top: 5px">
             @foreach (var user in Model.ProjectModel.Users)
             {
@@ -58,7 +64,7 @@
                             <label class="custom-file-label" for="inputGroupFile02">Choose files</label>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-search">Send</button>
+                    <button type="submit" class="btn btn-search">Send post</button>
                 </form>
             }
             
@@ -75,7 +81,7 @@
                     <div class="form-floating">
                         <textarea class="input-search form-control" id="message" type="text" name="text" placeholder="Create message" style="margin-bottom: 4px"></textarea>
                     </div>
-                    <input type="button" id="sendBtn" class="btn btn-main" value="Отправить"/>
+                    <input type="button" id="sendBtn" class="btn btn-main" value="Send message"/>
                 </div>
                 
                 <div id="chatroom">

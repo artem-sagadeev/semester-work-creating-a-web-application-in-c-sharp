@@ -20,7 +20,10 @@ namespace WebApp.Pages
         private readonly SignInManager<ApplicationUser> _signInManager;
 
         public List<PaidSubscriptionModel> AllSubscriptions;
-        public SubscriptionsModel(UserManager<ApplicationUser> userManager, IDeveloperService developerService, ISubscriptionService subscriptionService, SignInManager<ApplicationUser> signInManager)
+        public SubscriptionsModel(UserManager<ApplicationUser> userManager, 
+            IDeveloperService developerService, 
+            ISubscriptionService subscriptionService, 
+            SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _developerService = developerService;
@@ -29,20 +32,16 @@ namespace WebApp.Pages
         }
         public async Task<ActionResult> OnGetAsync()
         {
-            if (_signInManager.IsSignedIn(User))
-            {
-                var developerId = (await _userManager.GetUserAsync(User)).UserId;
-                if (developerId != null)
-                {
-                    AllSubscriptions = (await _subscriptionService.GetPaidSubscriptionsByUserId(developerId)).ToList();
-                }
-
-                return Page();
-            }
-            else
-            {
+            if (!_signInManager.IsSignedIn(User))
                 return RedirectToPage("Index");
-            }
+            
+            var developer = (await _userManager.GetUserAsync(User));
+            if (developer is null)
+                return RedirectToPage("Index");
+            
+            AllSubscriptions = (await _subscriptionService.GetPaidSubscriptionsByUserId(developer.UserId)).ToList();
+            
+            return Page();
         }
     }
 }
